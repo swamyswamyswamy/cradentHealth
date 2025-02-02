@@ -58,7 +58,7 @@ class _InputfieldState extends State<Inputfield> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          height: 44,
+          height: 50,
           child: TextFormField(
             obscureText: widget.isPasswordField ? _obscureText : false,
             onChanged: (text) {
@@ -96,15 +96,15 @@ class _InputfieldState extends State<Inputfield> {
             decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                  color: widget.borderColor ?? AppColors.greyColor,
+                  color: widget.borderColor ?? AppColors.secondaryColor,
                 ),
-                borderRadius: BorderRadius.circular(6),
+                borderRadius: BorderRadius.circular(10),
               ),
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
                   color: widget.borderColor ?? AppColors.blackColor,
                 ),
-                borderRadius: BorderRadius.circular(6),
+                borderRadius: BorderRadius.circular(10),
               ),
               fillColor: widget.fillColor ?? AppColors.whiteColor,
               filled: true,
@@ -124,11 +124,14 @@ class _InputfieldState extends State<Inputfield> {
                       },
                     )
                   : widget.suffix,
-              hintStyle: GoogleFonts.robotoFlex(
-                  color: AppColors.blackColor.withOpacity(0.5),
+              hintStyle: GoogleFonts.poppins(
+                  color: AppColors.greyColor1,
                   fontSize: 14,
                   fontWeight: FontWeight.w500),
-              labelStyle: const TextStyle(color: Colors.white),
+              labelStyle: GoogleFonts.poppins(
+                  color: AppColors.greyColor1,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500),
               border:
                   OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
             ),

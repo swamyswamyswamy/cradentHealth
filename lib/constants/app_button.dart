@@ -59,7 +59,7 @@ class AppButton extends StatelessWidget {
           border: borderColor != null ? Border.all(color: borderColor!) : null,
           borderRadius: borderRadius != null
               ? BorderRadius.circular(borderRadius!)
-              : BorderRadius.circular(6), // Default radius if null
+              : BorderRadius.circular(10), // Default radius if null
         ),
         child: child ??
             Center(
@@ -68,8 +68,8 @@ class AppButton extends StatelessWidget {
                 textColor: textColor ??
                     AppColors.whiteColor, // Fallback to white color
                 fontWeightType: FontWeightType.semiBold,
-                fontFamily: FontFamily.robotoFlex,
-                fontSize: fontSize ?? 16, // Default font size if null
+                fontFamily: FontFamily.inter,
+                fontSize: fontSize ?? 14, // Default font size if null
               ),
             ),
       ),

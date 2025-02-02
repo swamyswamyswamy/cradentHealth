@@ -3,7 +3,7 @@ import 'package:cradenthealth/constants/localization/localStrings.dart';
 import 'package:cradenthealth/firebaseConfiguration.dart';
 import 'package:cradenthealth/localNotifications.dart';
 import 'package:cradenthealth/services/dependency_injection.dart';
-import 'package:cradenthealth/view/screens/login_screen.dart';
+import 'package:cradenthealth/view/screens/auth/login_screen.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';

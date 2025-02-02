@@ -4,12 +4,13 @@ import 'package:google_fonts/google_fonts.dart';
 
 // Enum for defining Google Fonts used in the CustomText widget
 enum FontFamily {
-  playfairDisplay, // Playfair Display font
-  montserrat, // Montserrat font
-  poppins, // Poppins font
-  robotoSerif, // Roboto Serif font
-  abeezee, // ABeeZee font
-  robotoFlex // Roboto Flex font
+  playfairDisplay,
+  montserrat,
+  poppins,
+  robotoSerif,
+  abeezee,
+  robotoFlex,
+  inter // Added Inter font
 }
 
 // Extension to get font names from FontFamily enum
@@ -25,18 +26,20 @@ extension FontFamilyExtension on FontFamily {
       case FontFamily.robotoSerif:
         return 'RobotoSerif';
       case FontFamily.abeezee:
-        return 'ABeeZee'; // Return name for ABeeZee font
+        return 'ABeeZee';
       case FontFamily.robotoFlex:
-        return 'RobotoFlex'; // Return name for Roboto Flex font
+        return 'RobotoFlex';
+      case FontFamily.inter:
+        return 'Inter'; // Return name for Inter font
       default:
-        return 'Montserrat'; // Default font
+        return 'Montserrat';
     }
   }
 }
 
 // Enum for different font weights used in the CustomText widget
 enum FontWeightType {
-  regular, // Changed from 'normal' to 'regular'
+  regular,
   medium,
   semiBold,
   bold,
@@ -47,7 +50,7 @@ enum FontWeightType {
 extension FontWeightTypeExtension on FontWeightType {
   FontWeight get fontWeight {
     switch (this) {
-      case FontWeightType.regular: // Return regular font weight
+      case FontWeightType.regular:
         return FontWeight.w400;
       case FontWeightType.medium:
         return FontWeight.w500;
@@ -58,43 +61,40 @@ extension FontWeightTypeExtension on FontWeightType {
       case FontWeightType.extraBold:
         return FontWeight.w800;
       default:
-        return FontWeight.w400; // Default to regular
+        return FontWeight.w400;
     }
   }
 }
 
 /// A customizable text widget that supports different Google Fonts and styles.
 class CustomText extends StatelessWidget {
-  final String textName; // Text to display
-  final TextAlign textAlign; // Text alignment
-  final Color textColor; // Text color
-  final double fontSize; // Font size
-  final TextOverflow overFlow; // Overflow behavior
-  final FontFamily fontFamily; // Selected font family
-  final FontWeightType fontWeightType; // Selected font weight
-  final int? maxLines; // Maximum lines for the text
-  final TextDecoration
-      decoration; // Text decoration (underline, strikethrough, etc.)
-  final Color? decorationColor; // Color for the decoration
+  final String textName;
+  final TextAlign textAlign;
+  final Color textColor;
+  final double fontSize;
+  final TextOverflow overFlow;
+  final FontFamily fontFamily;
+  final FontWeightType fontWeightType;
+  final int? maxLines;
+  final TextDecoration decoration;
+  final Color? decorationColor;
 
   const CustomText({
     super.key,
     required this.textName,
     this.maxLines,
-    this.textAlign = TextAlign.start, // Default alignment is start
-    this.textColor = const Color(0xFF000000), // Default black color
-    this.fontSize = 20, // Default font size
-    this.overFlow = TextOverflow.clip, // Default overflow behavior
-    this.fontFamily =
-        FontFamily.montserrat, // Default font family is Montserrat
-    this.fontWeightType = FontWeightType.bold, // Default to bold
-    this.decoration = TextDecoration.none, // Default to no decoration
-    this.decorationColor, // Optional decoration color
+    this.textAlign = TextAlign.start,
+    this.textColor = const Color(0xFF000000),
+    this.fontSize = 20,
+    this.overFlow = TextOverflow.clip,
+    this.fontFamily = FontFamily.montserrat,
+    this.fontWeightType = FontWeightType.bold,
+    this.decoration = TextDecoration.none,
+    this.decorationColor,
   });
 
   @override
   Widget build(BuildContext context) {
-    // Define text style based on the selected font family and other properties
     TextStyle textStyle;
     switch (fontFamily) {
       case FontFamily.playfairDisplay:
@@ -124,7 +124,7 @@ class CustomText extends StatelessWidget {
           decorationColor: decorationColor,
         );
         break;
-      case FontFamily.abeezee: // Handle ABeeZee font
+      case FontFamily.abeezee:
         textStyle = GoogleFonts.aBeeZee(
           fontWeight: fontWeightType.fontWeight,
           color: textColor,
@@ -133,8 +133,17 @@ class CustomText extends StatelessWidget {
           decorationColor: decorationColor,
         );
         break;
-      case FontFamily.robotoFlex: // Handle Roboto Flex font
+      case FontFamily.robotoFlex:
         textStyle = GoogleFonts.robotoFlex(
+          fontWeight: fontWeightType.fontWeight,
+          color: textColor,
+          fontSize: getProportionateScreenHeight(fontSize),
+          decoration: decoration,
+          decorationColor: decorationColor,
+        );
+        break;
+      case FontFamily.inter:
+        textStyle = GoogleFonts.inter(
           fontWeight: fontWeightType.fontWeight,
           color: textColor,
           fontSize: getProportionateScreenHeight(fontSize),
@@ -155,11 +164,11 @@ class CustomText extends StatelessWidget {
     }
 
     return Text(
-      textName, // Display the text
-      maxLines: maxLines, // Limit the number of lines
-      textAlign: textAlign, // Set text alignment
-      overflow: overFlow, // Set overflow behavior
-      style: textStyle, // Apply text style
+      textName,
+      maxLines: maxLines,
+      textAlign: textAlign,
+      overflow: overFlow,
+      style: textStyle,
     );
   }
 }
