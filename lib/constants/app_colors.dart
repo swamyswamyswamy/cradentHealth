@@ -9,6 +9,7 @@ class AppColors {
 
   static const Color greyColor = Color(0xFFD9D9D9);
   static const Color greyColor1 = Color(0xFF7F7F7F);
+  static const Color greyColor2 = Color(0xFF666666);
   final LinearGradient primaryLinearGradient = const LinearGradient(
     colors: [
       primaryColor,

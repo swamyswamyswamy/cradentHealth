@@ -6,6 +6,7 @@ import 'package:cradenthealth/constants/app_sizedbox.dart';
 import 'package:cradenthealth/constants/app_text.dart';
 import 'package:cradenthealth/constants/app_textfields.dart';
 import 'package:cradenthealth/view/screens/auth/otp_verification_screen.dart';
+import 'package:cradenthealth/view/screens/home/home_screen.dart';
 import 'package:cradenthealth/view_model/ui_controllers/otp_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -127,7 +128,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 AppButton(
                   height: 44,
                   onTap: () {
-                    Get.to(OtpVerificationScreen());
+                    Get.to(HomeScreen());
                   },
                   hasShadow: true,
                   label: "Login",
