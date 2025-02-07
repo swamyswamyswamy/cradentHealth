@@ -4,7 +4,7 @@ import 'package:cradenthealth/constants/app_mediaquery.dart';
 import 'package:cradenthealth/constants/app_sizedbox.dart';
 import 'package:cradenthealth/constants/app_text.dart';
 import 'package:cradenthealth/constants/appbar_component.dart';
-import 'package:cradenthealth/view/screens/home/doctor_details.dart';
+import 'package:cradenthealth/view/screens/doctor_screens/doctor_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -24,7 +24,7 @@ class RecentLookupsWidget extends StatelessWidget {
           child: AppButton(
             backgroundColor: AppColors.secondaryColor,
             onTap: () {
-              Get.to(DoctorDetails());
+              Get.to(DoctorDetailsScreen());
             },
             child: Padding(
               padding: EdgeInsets.all(getProportionateScreenHeight(9)),
@@ -88,13 +88,15 @@ class RecentLookupsWidget extends StatelessWidget {
                                 color: AppColors.redColor,
                               ),
                               CustomSizedBoxWidth(width: 5),
-                              CustomText(
-                                  textName:
-                                      "Kukatpally, Hyderabad......5Km away",
-                                  textColor: AppColors.blackColor,
-                                  fontWeightType: FontWeightType.regular,
-                                  fontFamily: FontFamily.poppins,
-                                  fontSize: 9),
+                              Expanded(
+                                child: CustomText(
+                                    textName:
+                                        "Kukatpally, Hyderabad......5Km away",
+                                    textColor: AppColors.blackColor,
+                                    fontWeightType: FontWeightType.regular,
+                                    fontFamily: FontFamily.poppins,
+                                    fontSize: 9),
+                              ),
                             ],
                           ),
                         ],

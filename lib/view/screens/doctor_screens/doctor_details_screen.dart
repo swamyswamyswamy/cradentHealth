@@ -3,13 +3,14 @@ import 'package:cradenthealth/constants/app_colors.dart';
 import 'package:cradenthealth/constants/app_mediaquery.dart';
 import 'package:cradenthealth/constants/app_sizedbox.dart';
 import 'package:cradenthealth/constants/app_text.dart';
+import 'package:cradenthealth/view/screens/doctor_screens/appointment_bottom_sheet.dart';
 import 'package:cradenthealth/view/screens/home/widgets/blogs_widget.dart';
 import 'package:cradenthealth/view/screens/home/widgets/recent_lookups_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class DoctorDetails extends StatelessWidget {
-  const DoctorDetails({super.key});
+class DoctorDetailsScreen extends StatelessWidget {
+  const DoctorDetailsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -124,6 +125,12 @@ class DoctorDetails extends StatelessWidget {
                   AppButton(
                     height: 44,
                     onTap: () {
+                      showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (BuildContext) {
+                            return AppointmentBottomSheet();
+                          });
                       // Get.to(HomeScreen());
                     },
                     hasShadow: true,

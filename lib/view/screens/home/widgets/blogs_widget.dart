@@ -3,7 +3,7 @@ import 'package:cradenthealth/constants/app_colors.dart';
 import 'package:cradenthealth/constants/app_mediaquery.dart';
 import 'package:cradenthealth/constants/app_sizedbox.dart';
 import 'package:cradenthealth/constants/app_text.dart';
-import 'package:cradenthealth/view/screens/home/doctor_details.dart';
+import 'package:cradenthealth/view/screens/doctor_screens/doctor_details_screen.dart';
 import 'package:cradenthealth/view/screens/home/widgets/recent_lookups_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,7 +22,7 @@ class BlogsWidget extends StatelessWidget {
               padding: EdgeInsets.only(right: 16),
               child: InkWell(
                 onTap: () {
-                  Get.to(DoctorDetails());
+                  Get.to(DoctorDetailsScreen());
                 },
                 child: Stack(
                   children: [
