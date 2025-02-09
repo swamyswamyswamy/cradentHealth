@@ -15,6 +15,7 @@ class BlogsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return IntrinsicHeight(
       child: SingleChildScrollView(
+        physics: NeverScrollableScrollPhysics(),
         scrollDirection: Axis.horizontal,
         child: Row(
           children: List.generate(4, (index) {

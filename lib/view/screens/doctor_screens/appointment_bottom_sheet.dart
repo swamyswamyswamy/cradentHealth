@@ -215,7 +215,7 @@ class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
                         ),
                       ),
                     ),
-                    CustomSizedBoxHeight(height: 22),
+                    CustomSizedBoxHeight(height: 20),
                     CustomText(
                         textName: "Available time slots",
                         textColor: AppColors.blackColor,
@@ -224,61 +224,80 @@ class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
                         fontSize: 18),
                     CustomSizedBoxHeight(height: 18),
                     Container(
-                      height: 31,
+                      height: 51,
                       color: AppColors.whiteColor,
-                      child: Center(
-                        child: ListView.builder(
-                          itemCount: 10,
-                          scrollDirection: Axis.horizontal,
-                          shrinkWrap: true,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Padding(
-                              padding: EdgeInsets.only(
-                                  right: getProportionateScreenWidth(8)),
-                              child: InkWell(
-                                onTap: () {
-                                  _appointmentController
-                                      .updateSelectedtimeSlot(index);
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      color: _appointmentController
-                                                  .selectedtimeSlot.value ==
-                                              index
-                                          ? AppColors.primaryColor
-                                          : AppColors.whiteColor,
-                                      borderRadius: BorderRadius.circular(8),
-                                      boxShadow: [
-                                        BoxShadow(
-                                            offset: Offset(0, 2),
-                                            blurRadius: 8,
-                                            spreadRadius: 0,
-                                            color: AppColors.blackColor
-                                                .withOpacity(0.15))
-                                      ]),
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal:
-                                            getProportionateScreenWidth(5)),
-                                    child: Center(
-                                      child: CustomText(
-                                          textName: "11:00 am",
-                                          textColor: _appointmentController
-                                                      .selectedtimeSlot.value ==
-                                                  index
-                                              ? AppColors.whiteColor
-                                              : AppColors.primaryColor,
-                                          fontWeightType: FontWeightType.medium,
-                                          fontFamily: FontFamily.poppins,
-                                          fontSize: 14),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: getProportionateScreenHeight(10)),
+                        child: _appointmentController.selectedtimeSlot.value ==
+                                100
+                            ? SizedBox()
+                            : ListView.builder(
+                                itemCount: 10,
+                                scrollDirection: Axis.horizontal,
+                                shrinkWrap: true,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Padding(
+                                    padding: EdgeInsets.only(
+                                        right: getProportionateScreenWidth(16)),
+                                    child: InkWell(
+                                      onTap: () {
+                                        _appointmentController
+                                            .updateSelectedtimeSlot(index);
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            color: _appointmentController
+                                                        .selectedtimeSlot
+                                                        .value ==
+                                                    index
+                                                ? AppColors.primaryColor
+                                                : AppColors.whiteColor,
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                  offset: Offset(0, 2),
+                                                  blurRadius: 8,
+                                                  spreadRadius: 0,
+                                                  color: AppColors.blackColor
+                                                      .withOpacity(0.15))
+                                            ]),
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal:
+                                                  getProportionateScreenWidth(
+                                                      5)),
+                                          child: Center(
+                                            child: CustomText(
+                                                textName: "11:00 am",
+                                                textColor: _appointmentController
+                                                            .selectedtimeSlot
+                                                            .value ==
+                                                        index
+                                                    ? AppColors.whiteColor
+                                                    : AppColors.primaryColor,
+                                                fontWeightType:
+                                                    FontWeightType.medium,
+                                                fontFamily: FontFamily.poppins,
+                                                fontSize: 14),
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
+                                  );
+                                },
                               ),
-                            );
-                          },
-                        ),
                       ),
+                    ),
+                    CustomSizedBoxHeight(height: 20),
+                    AppButton(
+                      height: 44,
+                      onTap: () {
+                        // Get.to(HomeScreen());
+                      },
+                      hasShadow: true,
+                      label: "Book Now",
                     ),
                     CustomSizedBoxHeight(height: 20)
                   ],

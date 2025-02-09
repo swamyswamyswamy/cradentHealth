@@ -16,6 +16,7 @@ class RecentLookupsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: 3,
+      physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       padding: EdgeInsets.zero,
       itemBuilder: (BuildContext context, int index) {
