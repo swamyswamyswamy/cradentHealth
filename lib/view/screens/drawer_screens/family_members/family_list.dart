@@ -7,6 +7,7 @@ import 'package:cradenthealth/constants/app_sizedbox.dart';
 import 'package:cradenthealth/constants/app_text.dart';
 import 'package:cradenthealth/constants/app_textfields.dart';
 import 'package:cradenthealth/view/screens/drawer_screens/family_members/add_family_members.dart';
+import 'package:cradenthealth/view/widgets/person_profile_details_widget.dart';
 import 'package:cradenthealth/view_model/ui_controllers/bookings_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -66,91 +67,7 @@ class FamilyList extends StatelessWidget {
                   itemCount: 2,
                   shrinkWrap: true,
                   itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                      padding: EdgeInsets.only(
-                          bottom: getProportionateScreenWidth(12)),
-                      child: AppButton(
-                        backgroundColor: AppColors.secondaryColor,
-                        borderRadius: 5,
-                        child: Padding(
-                          padding:
-                              EdgeInsets.all(getProportionateScreenHeight(10)),
-                          child: Row(
-                            children: [
-                              Container(
-                                height: getProportionateScreenHeight(60),
-                                width: getProportionateScreenWidth(60),
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    image: DecorationImage(
-                                        fit: BoxFit.fill,
-                                        image: NetworkImage(
-                                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQn9zilY2Yu2hc19pDZFxgWDTUDy5DId7ITqA&s"))),
-                              ),
-                              CustomSizedBoxWidth(width: 16),
-                              Expanded(
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        CustomText(
-                                            textName: "Name : ",
-                                            textColor: AppColors.blackColor,
-                                            fontWeightType:
-                                                FontWeightType.medium,
-                                            fontFamily: FontFamily.poppins,
-                                            fontSize: 12),
-                                        CustomText(
-                                            textName: "varma",
-                                            textColor: AppColors.blackColor,
-                                            fontWeightType:
-                                                FontWeightType.medium,
-                                            fontFamily: FontFamily.poppins,
-                                            fontSize: 12),
-                                      ],
-                                    ),
-                                    CustomSizedBoxHeight(height: 5),
-                                    Row(
-                                      children: [
-                                        CustomText(
-                                            textName: "AGE : ",
-                                            textColor: AppColors.blackColor,
-                                            fontWeightType:
-                                                FontWeightType.medium,
-                                            fontFamily: FontFamily.poppins,
-                                            fontSize: 12),
-                                        CustomText(
-                                            textName: "19",
-                                            textColor: AppColors.blackColor,
-                                            fontWeightType:
-                                                FontWeightType.medium,
-                                            fontFamily: FontFamily.poppins,
-                                            fontSize: 12),
-                                        CustomSizedBoxWidth(width: 8),
-                                        CustomText(
-                                            textName: "GENDER : ",
-                                            textColor: AppColors.blackColor,
-                                            fontWeightType:
-                                                FontWeightType.medium,
-                                            fontFamily: FontFamily.poppins,
-                                            fontSize: 12),
-                                        CustomText(
-                                            textName: "Male",
-                                            textColor: AppColors.blackColor,
-                                            fontWeightType:
-                                                FontWeightType.medium,
-                                            fontFamily: FontFamily.poppins,
-                                            fontSize: 12),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    );
+                    return PersonProfileDetailsWidget();
                   },
                 ),
               ],

@@ -8,6 +8,7 @@ import 'package:cradenthealth/constants/app_text.dart';
 import 'package:cradenthealth/view/screens/drawer_screens/family_members/add_family_members.dart';
 import 'package:cradenthealth/view/screens/drawer_screens/family_members/family_list.dart';
 import 'package:cradenthealth/view/screens/drawer_screens/profile_screen.dart';
+import 'package:cradenthealth/view/screens/pharmacy/screens/pharmacy_screens.dart';
 import 'package:cradenthealth/view_model/ui_controllers/bookings_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -119,7 +120,7 @@ class DrawerScreen extends StatelessWidget {
                       child: InkWell(
                         onTap: () {
                           index == 2
-                              ? Get.to(FamilyList())
+                              ? Get.to(PharmacyScreens())
                               : Get.to(ProfileScreen());
                         },
                         child: Row(
