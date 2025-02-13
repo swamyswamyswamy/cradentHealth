@@ -6,6 +6,7 @@ import 'package:cradenthealth/services/dependency_injection.dart';
 import 'package:cradenthealth/view/screens/auth/login_screen.dart';
 import 'package:cradenthealth/view/screens/bookings/bookings_screen.dart';
 import 'package:cradenthealth/view/screens/drawer_screens/drawer_screen.dart';
+import 'package:cradenthealth/view/screens/gym_fitness/gym_fitness_plans.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
       translations: LocaleString(),
       locale: const Locale('en', 'US'),
       title: 'HeloMate',
-      home: DrawerScreen(),
+      home: GymFitnessPlans(),
       // builder: EasyLoading.init(),
     );
   }
