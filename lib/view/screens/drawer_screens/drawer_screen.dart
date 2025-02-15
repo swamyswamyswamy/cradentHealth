@@ -112,6 +112,7 @@ class DrawerScreen extends StatelessWidget {
                     horizontal: getProportionateScreenWidth(16)),
                 child: ListView.builder(
                   itemCount: 5,
+                  physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemBuilder: (BuildContext context, int index) {
                     return Padding(
@@ -191,7 +192,7 @@ class DrawerScreen extends StatelessWidget {
                   label: "Logout",
                 ),
               ),
-              CustomSizedBoxHeight(height: 15),
+              CustomSizedBoxHeight(height: 40),
             ],
           ),
         ));
