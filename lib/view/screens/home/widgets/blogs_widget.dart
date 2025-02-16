@@ -23,7 +23,7 @@ class BlogsWidget extends StatelessWidget {
               padding: EdgeInsets.only(right: 16),
               child: InkWell(
                 onTap: () {
-                  Get.to(DoctorDetailsScreen());
+                  // Get.to(DoctorDetailsScreen());
                 },
                 child: Stack(
                   children: [

@@ -15,72 +15,79 @@ class PersonProfileDetailsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          height: getProportionateScreenHeight(60),
-          width: getProportionateScreenWidth(60),
-          decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                  fit: BoxFit.fill,
-                  image: NetworkImage(
-                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQn9zilY2Yu2hc19pDZFxgWDTUDy5DId7ITqA&s"))),
+    return AppButton(
+      backgroundColor: AppColors.secondaryColor,
+      borderRadius: 5,
+      child: Padding(
+        padding: EdgeInsets.all(getProportionateScreenHeight(10)),
+        child: Row(
+          children: [
+            Container(
+              height: getProportionateScreenHeight(60),
+              width: getProportionateScreenWidth(60),
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: NetworkImage(
+                          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQn9zilY2Yu2hc19pDZFxgWDTUDy5DId7ITqA&s"))),
+            ),
+            CustomSizedBoxWidth(width: 16),
+            Expanded(
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      CustomText(
+                          textName: "Name : ",
+                          textColor: AppColors.blackColor,
+                          fontWeightType: FontWeightType.medium,
+                          fontFamily: FontFamily.poppins,
+                          fontSize: 12),
+                      CustomText(
+                          textName: "varma",
+                          textColor: AppColors.blackColor,
+                          fontWeightType: FontWeightType.medium,
+                          fontFamily: FontFamily.poppins,
+                          fontSize: 12),
+                    ],
+                  ),
+                  CustomSizedBoxHeight(height: 5),
+                  Row(
+                    children: [
+                      CustomText(
+                          textName: "AGE : ",
+                          textColor: AppColors.blackColor,
+                          fontWeightType: FontWeightType.medium,
+                          fontFamily: FontFamily.poppins,
+                          fontSize: 12),
+                      CustomText(
+                          textName: "19",
+                          textColor: AppColors.blackColor,
+                          fontWeightType: FontWeightType.medium,
+                          fontFamily: FontFamily.poppins,
+                          fontSize: 12),
+                      CustomSizedBoxWidth(width: 8),
+                      CustomText(
+                          textName: "GENDER : ",
+                          textColor: AppColors.blackColor,
+                          fontWeightType: FontWeightType.medium,
+                          fontFamily: FontFamily.poppins,
+                          fontSize: 12),
+                      CustomText(
+                          textName: "Male",
+                          textColor: AppColors.blackColor,
+                          fontWeightType: FontWeightType.medium,
+                          fontFamily: FontFamily.poppins,
+                          fontSize: 12),
+                    ],
+                  ),
+                ],
+              ),
+            )
+          ],
         ),
-        CustomSizedBoxWidth(width: 16),
-        Expanded(
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  CustomText(
-                      textName: "Name : ",
-                      textColor: AppColors.blackColor,
-                      fontWeightType: FontWeightType.medium,
-                      fontFamily: FontFamily.poppins,
-                      fontSize: 12),
-                  CustomText(
-                      textName: "varma",
-                      textColor: AppColors.blackColor,
-                      fontWeightType: FontWeightType.medium,
-                      fontFamily: FontFamily.poppins,
-                      fontSize: 12),
-                ],
-              ),
-              CustomSizedBoxHeight(height: 5),
-              Row(
-                children: [
-                  CustomText(
-                      textName: "AGE : ",
-                      textColor: AppColors.blackColor,
-                      fontWeightType: FontWeightType.medium,
-                      fontFamily: FontFamily.poppins,
-                      fontSize: 12),
-                  CustomText(
-                      textName: "19",
-                      textColor: AppColors.blackColor,
-                      fontWeightType: FontWeightType.medium,
-                      fontFamily: FontFamily.poppins,
-                      fontSize: 12),
-                  CustomSizedBoxWidth(width: 8),
-                  CustomText(
-                      textName: "GENDER : ",
-                      textColor: AppColors.blackColor,
-                      fontWeightType: FontWeightType.medium,
-                      fontFamily: FontFamily.poppins,
-                      fontSize: 12),
-                  CustomText(
-                      textName: "Male",
-                      textColor: AppColors.blackColor,
-                      fontWeightType: FontWeightType.medium,
-                      fontFamily: FontFamily.poppins,
-                      fontSize: 12),
-                ],
-              ),
-            ],
-          ),
-        )
-      ],
+      ),
     );
   }
 }

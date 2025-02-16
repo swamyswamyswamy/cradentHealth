@@ -1,10 +1,9 @@
 import 'package:cradenthealth/constants/app_colors.dart';
-import 'package:cradenthealth/constants/app_text.dart';
 import 'package:cradenthealth/view/screens/bookings/bookings_screen.dart';
 import 'package:cradenthealth/view/screens/categories_screens.dart';
 import 'package:cradenthealth/view/screens/drawer_screens/drawer_screen.dart';
-import 'package:cradenthealth/view/screens/drawer_screens/profile_screen.dart';
 import 'package:cradenthealth/view/screens/home/home_screen.dart';
+import 'package:cradenthealth/view/screens/steps/steps_screen.dart';
 import 'package:cradenthealth/view_model/ui_controllers/app_bottom_navigation_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,8 +23,9 @@ class _AppBottomNavigationState extends State<AppBottomNavigation> {
   final List<Widget> _pages = <Widget>[
     HomeScreen(),
     BookingsScreen(),
-    HomeScreen(),
     CategoriesScreens(),
+    // CategoriesScreens(),
+    StepsScreen(),
     DrawerScreen(),
   ];
   final bottomNavigationController = Get.find<BottomNavigationController>();

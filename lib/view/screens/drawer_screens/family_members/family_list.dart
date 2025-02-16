@@ -67,7 +67,11 @@ class FamilyList extends StatelessWidget {
                   itemCount: 2,
                   shrinkWrap: true,
                   itemBuilder: (BuildContext context, int index) {
-                    return PersonProfileDetailsWidget();
+                    return Padding(
+                      padding: EdgeInsets.only(
+                          bottom: getProportionateScreenHeight(20)),
+                      child: PersonProfileDetailsWidget(),
+                    );
                   },
                 ),
               ],

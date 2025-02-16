@@ -26,44 +26,20 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppButton(
-      height: height,
-      gradient: gradient, // Use gradient if provided
-      backgroundColor: gradient == null
-          ? (backgroundColor ?? AppColors.primaryColor)
-          : null, // Fallback to default color if gradient is null
-      width: double.infinity,
-      child: Row(
-        children: [
-          CustomSizedBoxWidth(width: 12),
-          isBackButtonVisible
-              ? IconButton(
-                  onPressed: () {
-                    Get.back(); // Navigate back
-                  },
-                  icon: Icon(
-                    Icons.arrow_back,
-                    color: gradient == null
-                        ? AppColors.primaryColor
-                        : AppColors.whiteColor,
-                    size: 25,
-                  ),
-                )
-              : const SizedBox(),
-          CustomSizedBoxWidth(width: 12),
-          CustomText(
-            textName: title,
-            fontSize: 16,
-            textAlign: TextAlign.center,
-            fontFamily: FontFamily.abeezee,
-            fontWeightType: FontWeightType.semiBold,
-            textColor: gradient == null
-                ? AppColors.primaryColor
-                : AppColors.whiteColor,
-          ),
-          Spacer(),
-          CustomSizedBoxWidth(width: 16)
-        ],
+    return AppBar(
+      backgroundColor: AppColors.whiteColor,
+      surfaceTintColor: AppColors.whiteColor,
+      elevation: 4,
+      shadowColor: AppColors.blackColor.withOpacity(0.25),
+      centerTitle: true,
+      title: CustomText(
+        textName: title,
+        fontSize: 20,
+        textAlign: TextAlign.center,
+        fontFamily: FontFamily.poppins,
+        fontWeightType: FontWeightType.semiBold,
+        textColor:
+            gradient == null ? AppColors.primaryColor : AppColors.whiteColor,
       ),
     );
   }

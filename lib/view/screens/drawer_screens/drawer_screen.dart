@@ -5,8 +5,11 @@ import 'package:cradenthealth/constants/app_images.dart';
 import 'package:cradenthealth/constants/app_mediaquery.dart';
 import 'package:cradenthealth/constants/app_sizedbox.dart';
 import 'package:cradenthealth/constants/app_text.dart';
+import 'package:cradenthealth/constants/appbar_component.dart';
+import 'package:cradenthealth/view/screens/bookings/bookings_screen.dart';
 import 'package:cradenthealth/view/screens/drawer_screens/family_members/add_family_members.dart';
 import 'package:cradenthealth/view/screens/drawer_screens/family_members/family_list.dart';
+import 'package:cradenthealth/view/screens/drawer_screens/prescriptions_screen.dart';
 import 'package:cradenthealth/view/screens/drawer_screens/profile_screen.dart';
 import 'package:cradenthealth/view/screens/pharmacy/screens/pharmacy_screens.dart';
 import 'package:cradenthealth/view_model/ui_controllers/bookings_controller.dart';
@@ -22,63 +25,70 @@ class DrawerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
+        appBar: CustomAppBar(
           backgroundColor: AppColors.whiteColor,
-          surfaceTintColor: AppColors.whiteColor,
+          title: "Menu",
         ),
         backgroundColor: AppColors.whiteColor,
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Stack(
-                children: [
-                  AppButton(
-                    height: 70,
-                    width: 70,
-                    borderColor: AppColors.blackColor.withOpacity(0.1),
-                    backgroundColor: AppColors.whiteColor,
-                    borderRadius: 18,
-                    child: Padding(
-                        padding:
-                            EdgeInsets.all(getProportionateScreenHeight(4)),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  image: NetworkImage(
-                                      "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-600nw-1714666150.jpg"))),
-                        )),
-                  ),
-                  Positioned(
-                    bottom: -5,
-                    right: -15,
-                    child: Container(
-                      height: getProportionateScreenHeight(30),
-                      width: getProportionateScreenWidth(30),
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle, color: AppColors.whiteColor),
+              CustomSizedBoxHeight(height: 30),
+              InkWell(
+                onTap: () {
+                  Get.to(Get.to(ProfileScreen()));
+                },
+                child: Stack(
+                  children: [
+                    AppButton(
+                      height: 70,
+                      width: 70,
+                      borderColor: AppColors.blackColor.withOpacity(0.1),
+                      backgroundColor: AppColors.whiteColor,
+                      borderRadius: 18,
                       child: Padding(
-                        padding:
-                            EdgeInsets.all(getProportionateScreenHeight(2)),
-                        child: Container(
-                          height: getProportionateScreenHeight(30),
-                          width: getProportionateScreenWidth(30),
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: AppColors.blueColor),
-                          child: Center(
-                              child: Icon(
-                            Icons.edit,
-                            color: AppColors.whiteColor,
-                            size: 15,
+                          padding:
+                              EdgeInsets.all(getProportionateScreenHeight(4)),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                    image: NetworkImage(
+                                        "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-600nw-1714666150.jpg"))),
                           )),
+                    ),
+                    Positioned(
+                      bottom: -5,
+                      right: -15,
+                      child: Container(
+                        height: getProportionateScreenHeight(30),
+                        width: getProportionateScreenWidth(30),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: AppColors.whiteColor),
+                        child: Padding(
+                          padding:
+                              EdgeInsets.all(getProportionateScreenHeight(2)),
+                          child: Container(
+                            height: getProportionateScreenHeight(30),
+                            width: getProportionateScreenWidth(30),
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: AppColors.blueColor),
+                            child: Center(
+                                child: Icon(
+                              Icons.edit,
+                              color: AppColors.whiteColor,
+                              size: 15,
+                            )),
+                          ),
                         ),
                       ),
-                    ),
-                  )
-                ],
-                alignment: Alignment.bottomRight,
-                clipBehavior: Clip.none,
+                    )
+                  ],
+                  alignment: Alignment.bottomRight,
+                  clipBehavior: Clip.none,
+                ),
               ),
               CustomSizedBoxHeight(height: 8),
               CustomText(
@@ -120,11 +130,18 @@ class DrawerScreen extends StatelessWidget {
                           bottom: getProportionateScreenWidth(28)),
                       child: InkWell(
                         onTap: () {
-                          index == 2
+                          index == 0
                               ? Get.to(PharmacyScreens())
-                              : Get.to(ProfileScreen());
+                              : index == 1
+                                  ? Get.to(BookingsScreen())
+                                  : index == 2
+                                      ? Get.to(PrescriptionsScreen())
+                                      : index == 3
+                                          ? Get.to(FamilyList())
+                                          : Get.to(PrescriptionsScreen());
                         },
                         child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             AppButton(
                               height: 42,
@@ -132,10 +149,26 @@ class DrawerScreen extends StatelessWidget {
                               backgroundColor: AppColors.secondaryColor,
                               borderRadius: 3,
                               child: Center(
-                                child: Image.asset(
-                                  AppImages.forgotImage,
-                                  height: getProportionateScreenHeight(30),
-                                  width: getProportionateScreenWidth(30),
+                                child: Icon(
+                                  index == 0
+                                      ? Icons.account_balance_wallet
+                                      : index == 1
+                                          ? Icons.book_online
+                                          : index == 2
+                                              ? Icons.medical_services
+                                              : index == 3
+                                                  ? Icons.family_restroom
+                                                  : Icons.settings,
+                                  size: 24,
+                                  color: index == 0
+                                      ? AppColors.primaryColor
+                                      : index == 1
+                                          ? AppColors.pinkColor
+                                          : index == 2
+                                              ? AppColors.redColor
+                                              : index == 3
+                                                  ? AppColors.primaryColor
+                                                  : AppColors.blackColor,
                                 ),
                               ),
                             ),
