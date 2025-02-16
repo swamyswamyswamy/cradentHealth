@@ -15,11 +15,7 @@ class PrescriptionsScreen extends StatelessWidget {
         backgroundColor: AppColors.whiteColor,
         title: "Prescriptions",
       ),
-      body: Padding(
-        padding:
-            EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(16)),
-        child: BookingsWidget(),
-      ),
+      body: BookingsWidget(),
     );
   }
 }
