@@ -45,6 +45,7 @@ class GymPlanWidget extends StatelessWidget {
               CustomSizedBoxHeight(height: 20),
               ListView.builder(
                 itemCount: 3,
+                physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(

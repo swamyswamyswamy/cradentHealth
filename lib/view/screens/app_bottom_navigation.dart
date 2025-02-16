@@ -22,11 +22,13 @@ class _AppBottomNavigationState extends State<AppBottomNavigation> {
   // List of screens for each tab.
   final List<Widget> _pages = <Widget>[
     HomeScreen(),
-    BookingsScreen(),
-    CategoriesScreens(),
+    BookingsScreen(navigateBack: false),
+    CategoriesScreens(
+      navigateBack: false,
+    ),
     // CategoriesScreens(),
-    StepsScreen(),
-    DrawerScreen(),
+    StepsScreen(navigateBack: false),
+    DrawerScreen(navigateBack: false),
   ];
   final bottomNavigationController = Get.find<BottomNavigationController>();
   @override

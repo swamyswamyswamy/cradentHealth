@@ -5,6 +5,7 @@ import 'package:cradenthealth/constants/app_images.dart';
 import 'package:cradenthealth/constants/app_mediaquery.dart';
 import 'package:cradenthealth/constants/app_sizedbox.dart';
 import 'package:cradenthealth/constants/app_text.dart';
+import 'package:cradenthealth/constants/appbar_component.dart';
 import 'package:cradenthealth/view/screens/pharmacy/screens/pharmacy_payment_screen.dart';
 import 'package:cradenthealth/view_model/ui_controllers/home_controller.dart';
 import 'package:flutter/foundation.dart';
@@ -19,9 +20,9 @@ class PharmacyScreens extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: CustomAppBar(
         backgroundColor: AppColors.whiteColor,
-        surfaceTintColor: AppColors.whiteColor,
+        title: "Apollo Pharmacy",
       ),
       backgroundColor: AppColors.whiteColor,
       body: SingleChildScrollView(

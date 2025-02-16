@@ -128,7 +128,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 AppButton(
                   height: 44,
                   onTap: () {
-                    Get.to(HomeScreen());
+                    Get.to(OtpVerificationScreen());
                   },
                   hasShadow: true,
                   label: "Login",

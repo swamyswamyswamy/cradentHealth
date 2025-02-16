@@ -29,6 +29,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: AppColors.whiteColor,
       surfaceTintColor: AppColors.whiteColor,
+      leading: !isBackButtonVisible
+          ? SizedBox()
+          : InkWell(
+              onTap: () {
+                Get.back();
+              },
+              child: Icon(Icons.arrow_back)),
       elevation: 4,
       shadowColor: AppColors.blackColor.withOpacity(0.25),
       centerTitle: true,

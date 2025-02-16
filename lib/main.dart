@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
       translations: LocaleString(),
       locale: const Locale('en', 'US'),
       title: 'HeloMate',
-      home: AppBottomNavigation(),
+      home: LoginScreen(),
       // builder: EasyLoading.init(),
     );
   }

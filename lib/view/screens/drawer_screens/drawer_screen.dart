@@ -11,6 +11,7 @@ import 'package:cradenthealth/view/screens/drawer_screens/family_members/add_fam
 import 'package:cradenthealth/view/screens/drawer_screens/family_members/family_list.dart';
 import 'package:cradenthealth/view/screens/drawer_screens/prescriptions_screen.dart';
 import 'package:cradenthealth/view/screens/drawer_screens/profile_screen.dart';
+import 'package:cradenthealth/view/screens/drawer_screens/wallet_screen.dart';
 import 'package:cradenthealth/view/screens/pharmacy/screens/pharmacy_screens.dart';
 import 'package:cradenthealth/view_model/ui_controllers/bookings_controller.dart';
 import 'package:flutter/foundation.dart';
@@ -19,13 +20,15 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 class DrawerScreen extends StatelessWidget {
-  DrawerScreen({super.key});
+  bool navigateBack;
+  DrawerScreen({super.key, this.navigateBack = true});
   final _bookingsController = Get.put(BookingsController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: CustomAppBar(
+          isBackButtonVisible: navigateBack,
           backgroundColor: AppColors.whiteColor,
           title: "Menu",
         ),
@@ -131,7 +134,7 @@ class DrawerScreen extends StatelessWidget {
                       child: InkWell(
                         onTap: () {
                           index == 0
-                              ? Get.to(PharmacyScreens())
+                              ? Get.to(WalletScreen())
                               : index == 1
                                   ? Get.to(BookingsScreen())
                                   : index == 2

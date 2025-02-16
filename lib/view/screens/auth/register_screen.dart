@@ -5,6 +5,7 @@ import 'package:cradenthealth/constants/app_mediaquery.dart';
 import 'package:cradenthealth/constants/app_sizedbox.dart';
 import 'package:cradenthealth/constants/app_text.dart';
 import 'package:cradenthealth/constants/app_textfields.dart';
+import 'package:cradenthealth/view/screens/app_bottom_navigation.dart';
 import 'package:cradenthealth/view/screens/auth/otp_verification_screen.dart';
 import 'package:cradenthealth/view_model/ui_controllers/otp_controller.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +38,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               children: [
                 CustomSizedBoxHeight(height: 70),
                 Image.asset(
-                  AppImages.loginImage,
+                  AppImages.registrationImage,
                   height: getProportionateScreenHeight(150),
                   width: getProportionateScreenWidth(150),
                 ),
@@ -167,7 +168,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 AppButton(
                   height: 44,
                   onTap: () {
-                    Get.to(OtpVerificationScreen());
+                    Get.to(AppBottomNavigation());
                   },
                   hasShadow: true,
                   label: "Signup",

@@ -53,7 +53,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
               children: [
                 CustomSizedBoxHeight(height: 70),
                 Image.asset(
-                  AppImages.loginImage,
+                  AppImages.registrationImage,
                   height: getProportionateScreenHeight(150),
                   width: getProportionateScreenWidth(150),
                 ),

@@ -5,12 +5,14 @@ import 'package:cradenthealth/view/screens/steps/steps_semi_progressbar.dart';
 import 'package:flutter/material.dart';
 
 class StepsScreen extends StatelessWidget {
-  const StepsScreen({super.key});
+  bool navigateBack;
+  StepsScreen({super.key, this.navigateBack = true});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
+        isBackButtonVisible: navigateBack,
         backgroundColor: AppColors.whiteColor,
         title: "Activity tracker",
       ),

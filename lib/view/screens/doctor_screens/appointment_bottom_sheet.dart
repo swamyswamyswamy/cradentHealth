@@ -132,7 +132,7 @@ class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
                       width: 60,
                       child: Center(
                         child: Image.asset(
-                          AppImages.forgotImage,
+                          AppImages.hospitalImage,
                           height: getProportionateScreenHeight(36),
                           width: getProportionateScreenWidth(36),
                         ),

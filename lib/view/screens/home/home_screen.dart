@@ -5,6 +5,7 @@ import 'package:cradenthealth/constants/app_mediaquery.dart';
 import 'package:cradenthealth/constants/app_sizedbox.dart';
 import 'package:cradenthealth/constants/app_text.dart';
 import 'package:cradenthealth/view/screens/categories_screens.dart';
+import 'package:cradenthealth/view/screens/drawer_screens/wallet_screen.dart';
 import 'package:cradenthealth/view/screens/home/widgets/blogs_widget.dart';
 import 'package:cradenthealth/view/screens/home/widgets/recent_lookups_widget.dart';
 import 'package:cradenthealth/view/screens/steps/steps_semi_progressbar.dart';
@@ -60,18 +61,27 @@ class HomeScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Icon(
-                      Icons.wallet,
+                    InkWell(
+                      onTap: () {
+                        Get.to(WalletScreen());
+                      },
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.wallet,
+                          ),
+                          CustomSizedBoxWidth(width: 7),
+                          CustomText(
+                              textName: "10,000",
+                              textColor: AppColors.blackColor,
+                              decoration: TextDecoration.underline,
+                              decorationColor: AppColors.blackColor,
+                              fontWeightType: FontWeightType.regular,
+                              fontFamily: FontFamily.poppins,
+                              fontSize: 13),
+                        ],
+                      ),
                     ),
-                    CustomSizedBoxWidth(width: 7),
-                    CustomText(
-                        textName: "10,000",
-                        textColor: AppColors.blackColor,
-                        decoration: TextDecoration.underline,
-                        decorationColor: AppColors.blackColor,
-                        fontWeightType: FontWeightType.regular,
-                        fontFamily: FontFamily.poppins,
-                        fontSize: 13),
                     CustomSizedBoxWidth(width: 20),
                     AppButton(
                       height: 42,
@@ -90,12 +100,13 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
+            CustomSizedBoxHeight(height: 10),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CustomSizedBoxHeight(height: 35),
+                    CustomSizedBoxHeight(height: 25),
                     Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: getProportionateScreenWidth(16)),
@@ -265,7 +276,9 @@ class HomeScreen extends StatelessWidget {
                               fontFamily: FontFamily.montserrat,
                               fontSize: 16),
                           CustomSizedBoxHeight(height: 16),
-                          RecentLookupsWidget(),
+                          RecentLookupsWidget(
+                            entryFrom: "",
+                          ),
                           CustomSizedBoxHeight(height: 16),
                           CustomText(
                               textName: "Blogs",

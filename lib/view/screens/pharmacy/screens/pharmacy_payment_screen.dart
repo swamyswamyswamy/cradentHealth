@@ -3,6 +3,7 @@ import 'package:cradenthealth/constants/app_colors.dart';
 import 'package:cradenthealth/constants/app_mediaquery.dart';
 import 'package:cradenthealth/constants/app_sizedbox.dart';
 import 'package:cradenthealth/constants/app_text.dart';
+import 'package:cradenthealth/constants/appbar_component.dart';
 import 'package:cradenthealth/view/screens/doctor_screens/appointment_bottom_sheet.dart';
 import 'package:cradenthealth/view/screens/home/widgets/blogs_widget.dart';
 import 'package:cradenthealth/view/screens/home/widgets/recent_lookups_widget.dart';
@@ -17,15 +18,9 @@ class PharmacyPaymentScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
+        appBar: CustomAppBar(
           backgroundColor: AppColors.whiteColor,
-          surfaceTintColor: AppColors.whiteColor,
-          title: CustomText(
-              textName: "Book A Consultation",
-              textColor: AppColors.blackColor,
-              fontWeightType: FontWeightType.semiBold,
-              fontFamily: FontFamily.montserrat,
-              fontSize: 18),
+          title: "Vijaya Diagnostics",
         ),
         backgroundColor: AppColors.whiteColor,
         body: SingleChildScrollView(

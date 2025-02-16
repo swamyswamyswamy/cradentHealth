@@ -14,13 +14,14 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 class BookingsScreen extends StatelessWidget {
-  BookingsScreen({super.key});
+  bool navigateBack;
+  BookingsScreen({super.key, this.navigateBack = true});
   final _bookingsController = Get.put(BookingsController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: CustomAppBar(   isBackButtonVisible:navigateBack ,
         backgroundColor: AppColors.whiteColor,
         title: "My bookings",
       ),

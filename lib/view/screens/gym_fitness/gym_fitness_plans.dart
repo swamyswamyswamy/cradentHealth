@@ -6,6 +6,7 @@ import 'package:cradenthealth/constants/app_mediaquery.dart';
 import 'package:cradenthealth/constants/app_sizedbox.dart';
 import 'package:cradenthealth/constants/app_text.dart';
 import 'package:cradenthealth/constants/app_textfields.dart';
+import 'package:cradenthealth/constants/appbar_component.dart';
 import 'package:cradenthealth/view/screens/drawer_screens/family_members/add_family_members.dart';
 import 'package:cradenthealth/view/screens/gym_fitness/gym_fitness_plan_details.dart';
 import 'package:cradenthealth/view/screens/gym_fitness/gym_plan_widget.dart';
@@ -23,9 +24,9 @@ class GymFitnessPlans extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
+        appBar: CustomAppBar(
           backgroundColor: AppColors.whiteColor,
-          surfaceTintColor: AppColors.whiteColor,
+          title: "Gym & Fitness",
         ),
         backgroundColor: AppColors.whiteColor,
         body: Padding(
@@ -58,10 +59,10 @@ class GymFitnessPlans extends StatelessWidget {
                       padding: EdgeInsets.only(
                           bottom: getProportionateScreenHeight(12)),
                       child: InkWell(
-                        onTap: (){
-                          Get.to(GymFitnessPlanDetails());
-                        },
-                        child: GymPlanWidget() ),
+                          onTap: () {
+                            Get.to(GymFitnessPlanDetails());
+                          },
+                          child: GymPlanWidget()),
                     );
                   },
                 ),

@@ -6,6 +6,7 @@ import 'package:cradenthealth/constants/app_mediaquery.dart';
 import 'package:cradenthealth/constants/app_sizedbox.dart';
 import 'package:cradenthealth/constants/app_text.dart';
 import 'package:cradenthealth/constants/app_textfields.dart';
+import 'package:cradenthealth/constants/appbar_component.dart';
 import 'package:cradenthealth/view/screens/drawer_screens/family_members/add_family_members.dart';
 import 'package:cradenthealth/view/screens/gym_fitness/gym_plan_widget.dart';
 import 'package:cradenthealth/view/widgets/person_profile_details_widget.dart';
@@ -22,9 +23,9 @@ class GymFitnessPlanDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
+        appBar: CustomAppBar(
           backgroundColor: AppColors.whiteColor,
-          surfaceTintColor: AppColors.whiteColor,
+          title: "My Subscription",
         ),
         backgroundColor: AppColors.whiteColor,
         body: SingleChildScrollView(
@@ -75,6 +76,7 @@ class GymFitnessPlanDetails extends StatelessWidget {
                 child: ListView.builder(
                   itemCount: 3,
                   shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (BuildContext context, int index) {
                     return Padding(
                       padding: EdgeInsets.only(
