@@ -34,16 +34,14 @@ class RecentLookupsWidget extends StatelessWidget {
                       ? Get.to(PharmacyScreens())
                       : entryFrom == "Opticles"
                           ? Get.to(DoctorDetailsScreen(
-                              entryFromOpticles: true,
+                              entryFrom: true,
                             ))
                           : entryFrom == "Diagnostics"
-                              ? Get.to(DiagnosticScreen(
-                                
-                                ))
+                              ? Get.to(DiagnosticScreen())
                               : Get.to(DoctorDetailsScreen());
                 },
                 child: DoctorProfileDetailsWidget(
-                  entryFromOpticles: entryFrom == "Opticles" ? true : false,
+                  entryFrom: entryFrom,
                 )));
       },
     );

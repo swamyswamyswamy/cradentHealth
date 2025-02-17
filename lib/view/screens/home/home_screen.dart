@@ -5,6 +5,7 @@ import 'package:cradenthealth/constants/app_mediaquery.dart';
 import 'package:cradenthealth/constants/app_sizedbox.dart';
 import 'package:cradenthealth/constants/app_text.dart';
 import 'package:cradenthealth/view/screens/categories_screens.dart';
+import 'package:cradenthealth/view/screens/doctor_screens/consultation_doctors.dart';
 import 'package:cradenthealth/view/screens/drawer_screens/wallet_screen.dart';
 import 'package:cradenthealth/view/screens/home/widgets/blogs_widget.dart';
 import 'package:cradenthealth/view/screens/home/widgets/recent_lookups_widget.dart';
@@ -188,9 +189,15 @@ class HomeScreen extends StatelessWidget {
                                     top: getProportionateScreenHeight(10)),
                                 child: InkWell(
                                   onTap: () {
-                                    index != 2
-                                        ? null
-                                        : Get.to(CategoriesScreens());
+                                    index == 0
+                                        ? Get.to(ConsultationDoctors(
+                                            title: "Diagnostics",
+                                          ))
+                                        : index == 1
+                                            ? Get.to(ConsultationDoctors(
+                                                title: "Pharmacy",
+                                              ))
+                                            : Get.to(CategoriesScreens());
                                   },
                                   child: Container(
                                     width: getProportionateScreenWidth(81),

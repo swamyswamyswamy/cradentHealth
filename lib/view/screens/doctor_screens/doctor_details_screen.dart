@@ -10,8 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DoctorDetailsScreen extends StatelessWidget {
-  bool entryFromOpticles;
-  DoctorDetailsScreen({super.key, this.entryFromOpticles = false});
+  bool entryFrom;
+  DoctorDetailsScreen({super.key, this.entryFrom = false});
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +20,7 @@ class DoctorDetailsScreen extends StatelessWidget {
         backgroundColor: AppColors.whiteColor,
         surfaceTintColor: AppColors.whiteColor,
         title: CustomText(
-            textName:
-                entryFromOpticles ? "N Shade Eye Ware" : "Book A Consultation",
+            textName: entryFrom ? "N Shade Eye Ware" : "Book A Consultation",
             textColor: AppColors.blackColor,
             fontWeightType: FontWeightType.semiBold,
             fontFamily: FontFamily.montserrat,
@@ -38,7 +37,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                   // borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
                       fit: BoxFit.cover,
-                      image: NetworkImage(entryFromOpticles
+                      image: NetworkImage(entryFrom
                           ? "https://media.istockphoto.com/id/160136810/photo/eyeglasses-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=NBiS2jW0MsOIzviDdikgXWHNRcBHw1fwVjIWkYJ6CpU="
                           : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSL0qLy1fo2Uvhti1TexQM137vp8pwBiwmgaIqvDA3q5W_C2XspyH-3ZspOY2BZdFqGCdI&usqp=CAU"))),
             ),
@@ -55,7 +54,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                       Expanded(
                         child: RichText(
                           text: TextSpan(
-                            text: entryFromOpticles
+                            text: entryFrom
                                 ? "N Shade Eye Ware"
                                 : "Dr. Vineeth, ",
                             style: GoogleFonts.poppins(
@@ -64,7 +63,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                                 fontWeight: FontWeight.w600),
                             children: [
                               TextSpan(
-                                text: entryFromOpticles ? "" : "( MBBS )",
+                                text: entryFrom ? "" : "( MBBS )",
                                 style: GoogleFonts.poppins(
                                     color: AppColors.blackColor,
                                     fontSize: 14,
@@ -130,7 +129,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                   AppButton(
                     height: 44,
                     onTap: () {
-                      entryFromOpticles
+                      entryFrom
                           ? null
                           : showModalBottomSheet(
                               context: context,

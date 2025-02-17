@@ -133,7 +133,9 @@ class DiagnosticScreen extends StatelessWidget {
                                         Spacer(),
                                         AppButton(
                                           onTap: () {
-                                            Get.to(PharmacyPaymentScreen());
+                                            Get.to(PharmacyPaymentScreen(
+                                              entryFrom: "Diagnostics",
+                                            ));
                                           },
                                           borderRadius: 5,
                                           child: Padding(

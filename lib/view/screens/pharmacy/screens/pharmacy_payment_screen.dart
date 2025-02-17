@@ -13,14 +13,17 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PharmacyPaymentScreen extends StatelessWidget {
-  const PharmacyPaymentScreen({super.key});
+  String entryFrom;
+  PharmacyPaymentScreen({super.key, required this.entryFrom});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: CustomAppBar(
           backgroundColor: AppColors.whiteColor,
-          title: "Vijaya Diagnostics",
+          title: entryFrom == "Pharmacy"
+              ? "Apollo Pharmacy"
+              : "Vijaya Diagnostics",
         ),
         backgroundColor: AppColors.whiteColor,
         body: SingleChildScrollView(
@@ -30,7 +33,9 @@ class PharmacyPaymentScreen extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: getProportionateScreenWidth(16)),
-                child: DoctorProfileDetailsWidget(),
+                child: DoctorProfileDetailsWidget(
+                  entryFrom: "Pharmacy",
+                ),
               ),
               CustomSizedBoxHeight(height: 24),
               Divider(
@@ -233,12 +238,12 @@ class PharmacyPaymentScreen extends StatelessWidget {
                 child: AppButton(
                   height: 44,
                   onTap: () {
-                    showModalBottomSheet(
-                        context: context,
-                        isScrollControlled: true,
-                        builder: (BuildContext) {
-                          return AppointmentBottomSheet();
-                        });
+                    // showModalBottomSheet(
+                    //     context: context,
+                    //     isScrollControlled: true,
+                    //     builder: (BuildContext) {
+                    //       return AppointmentBottomSheet();
+                    //     });
                     // Get.to(HomeScreen());
                   },
                   hasShadow: true,

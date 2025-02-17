@@ -158,7 +158,9 @@ class PharmacyScreens extends StatelessWidget {
                                     children: [
                                       AppButton(
                                         onTap: () {
-                                          Get.to(PharmacyPaymentScreen());
+                                          Get.to(PharmacyPaymentScreen(
+                                            entryFrom: "Pharmacy",
+                                          ));
                                         },
                                         borderRadius: 5,
                                         child: Padding(
