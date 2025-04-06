@@ -6,6 +6,7 @@ import 'package:cradenthealth/constants/app_mediaquery.dart';
 import 'package:cradenthealth/constants/app_sizedbox.dart';
 import 'package:cradenthealth/constants/app_text.dart';
 import 'package:cradenthealth/constants/appbar_component.dart';
+import 'package:cradenthealth/view/screens/auth/login_screen.dart';
 import 'package:cradenthealth/view/screens/bookings/bookings_screen.dart';
 import 'package:cradenthealth/view/screens/drawer_screens/family_members/add_family_members.dart';
 import 'package:cradenthealth/view/screens/drawer_screens/family_members/family_list.dart';
@@ -222,7 +223,7 @@ class DrawerScreen extends StatelessWidget {
                   height: 44,
                   backgroundColor: AppColors.redColor,
                   onTap: () {
-                    // Get.to(HomeScreen());
+                    Get.to(LoginScreen());
                   },
                   hasShadow: true,
                   label: "Logout",

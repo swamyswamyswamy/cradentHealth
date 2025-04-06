@@ -48,7 +48,7 @@ class DoctorProfileDetailsWidget extends StatelessWidget {
                                   ? "N Shade Eye Ware"
                                   : entryFrom == "Pharmacy"
                                       ? "Apollo"
-                                      : "Dr. Vineeth",
+                                      : "Vijaya Diagnostics",
                               textColor: AppColors.blackColor,
                               fontWeightType: FontWeightType.semiBold,
                               fontFamily: FontFamily.poppins,

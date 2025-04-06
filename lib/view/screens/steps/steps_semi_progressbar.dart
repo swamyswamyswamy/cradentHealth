@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:cradenthealth/constants/app_colors.dart';
@@ -6,8 +7,9 @@ import 'package:cradenthealth/constants/app_mediaquery.dart';
 import 'package:cradenthealth/constants/app_sizedbox.dart';
 import 'package:cradenthealth/constants/app_text.dart';
 import 'package:flutter/material.dart';
+import 'package:pedometer/pedometer.dart';
 
-class SemiCircularProgressIndicator extends StatelessWidget {
+class SemiCircularProgressIndicator extends StatefulWidget {
   final double progress; // Progress value (0.0 to 1.0)
   final int stepCount; // Step count to display
 
@@ -17,6 +19,78 @@ class SemiCircularProgressIndicator extends StatelessWidget {
     required this.stepCount,
   });
 
+  static const double _stepLength = 0.000762;
+  @override
+  State<SemiCircularProgressIndicator> createState() =>
+      _SemiCircularProgressIndicatorState();
+}
+
+class _SemiCircularProgressIndicatorState
+    extends State<SemiCircularProgressIndicator> {
+  int _steps = 0;
+
+  final int _dailyGoal = 1000;
+
+  double _distance = 0.0;
+  // Distance in kilometers
+  late Stream<StepCount> _stepCountStream;
+
+  DateTime? _startTime;
+
+  late Timer _timer;
+
+  String _timeSpent = "0:00:00";
+
+  // Average step length in km
+  @override
+  void initState() {
+    super.initState();
+    _initializePedometer();
+    _startTimer();
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+  void _initializePedometer() {
+    _stepCountStream = Pedometer.stepCountStream;
+    _stepCountStream.listen(_onStepCount).onError(_onStepCountError);
+    _startTime = DateTime.now();
+  }
+
+  void _onStepCount(StepCount event) {
+    setState(() {
+      _steps = event.steps;
+      _distance = _steps *
+          SemiCircularProgressIndicator._stepLength; // Calculate distance in km
+    });
+  }
+
+  void _onStepCountError(error) {
+    print("Pedometer Error: $error");
+  }
+
+  void _startTimer() {
+    _timer = Timer.periodic(Duration(seconds: 1), (_) {
+      setState(() {
+        final duration = DateTime.now().difference(_startTime!);
+        _timeSpent = _formatDuration(duration);
+      });
+    });
+  }
+
+  String _formatDuration(Duration duration) {
+    final hours = duration.inHours.toString().padLeft(2, '0');
+    final minutes = (duration.inMinutes % 60).toString().padLeft(2, '0');
+    final seconds = (duration.inSeconds % 60).toString().padLeft(2, '0');
+    return "$hours:$minutes:$seconds";
+  }
+
+  double get _progress => (_steps / _dailyGoal).clamp(0.0, 1.0);
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -25,7 +99,7 @@ class SemiCircularProgressIndicator extends StatelessWidget {
       children: [
         CustomPaint(
           size: const Size(200, 100), // Size of the arc
-          painter: SemiCirclePainter(progress),
+          painter: SemiCirclePainter(_progress),
         ),
         Positioned(
           bottom: -20,
@@ -40,7 +114,7 @@ class SemiCircularProgressIndicator extends StatelessWidget {
               ),
               CustomSizedBoxHeight(height: 3),
               CustomText(
-                  textName: "$stepCount",
+                  textName: "${_steps}",
                   textColor: AppColors.blackColor,
                   fontWeightType: FontWeightType.medium,
                   fontFamily: FontFamily.montserrat,

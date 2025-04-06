@@ -5,13 +5,16 @@ import 'package:cradenthealth/constants/app_mediaquery.dart';
 import 'package:cradenthealth/constants/app_sizedbox.dart';
 import 'package:cradenthealth/constants/app_text.dart';
 import 'package:cradenthealth/constants/app_textfields.dart';
+import 'package:cradenthealth/constants/app_toast_msgs.dart';
 import 'package:cradenthealth/view/screens/auth/otp_verification_screen.dart';
 import 'package:cradenthealth/view/screens/home/home_screen.dart';
+import 'package:cradenthealth/view_model/ui_controllers/auth_controller.dart';
 import 'package:cradenthealth/view_model/ui_controllers/otp_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -23,6 +26,23 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final OtpController otpController = Get.put(OtpController());
   bool _isChecked = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    requestPermissions();
+  }
+
+  void requestPermissions() async {
+    if (await Permission.activityRecognition.isDenied) {
+      await Permission.activityRecognition.request();
+    }
+  }
+
+  final _authController = Get.find<AuthController>();
+  final _mobileNumberController = TextEditingController();
+  final _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -61,9 +81,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 CustomSizedBoxHeight(height: 37),
                 Inputfield(
                     fillColor: AppColors.secondaryColor,
-                    controller: TextEditingController(),
+                    controller: _mobileNumberController,
                     // maxLength: 10,
-                    label: "Enter Mobile Number",
+                    label: "Enter your mail id or mobile number",
+                    keyboardType: TextInputType.text,
+                    hinttext: ""),
+                CustomSizedBoxHeight(height: 16),
+                Inputfield(
+                    fillColor: AppColors.secondaryColor,
+                    controller: _passwordController,
+                    // maxLength: 10,
+                    label: "Enter Password",
                     keyboardType: TextInputType.text,
                     hinttext: ""),
                 CustomSizedBoxHeight(height: 16),
@@ -125,14 +153,63 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
                 CustomSizedBoxHeight(height: 50),
-                AppButton(
-                  height: 44,
-                  onTap: () {
-                    Get.to(OtpVerificationScreen());
-                  },
-                  hasShadow: true,
-                  label: "Login",
-                ),
+                Obx(() {
+                  return AppButton(
+                    width: double.infinity,
+                    height: 44,
+                    onTap: () {
+                      if (_authController.isLoadingLogin == true) return null;
+                      String? errorMessage;
+                      if (_mobileNumberController.text == "") {
+                        errorMessage =
+                            "Please enter correct mobile number or email.";
+                      } else if (_passwordController.text == "") {
+                        errorMessage = "Please enter password.";
+                      }
+
+                      if (errorMessage != null) {
+                        AppToastMsgs.failedToast("Error", errorMessage);
+                      } else {
+                        _authController.loginUser(
+                            phone: _mobileNumberController.text,
+                            password: _passwordController.text);
+                      }
+
+                      // Get.to(DashBoardScreen());
+                    },
+                    hasShadow: true,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        _authController.isLoadingLogin == true
+                            ? Container(
+                                height: 20,
+                                width: 20,
+                                child: CircularProgressIndicator(
+                                  color: AppColors.whiteColor,
+                                ),
+                              )
+                            : SizedBox(),
+                        _authController.isLoadingLogin == true
+                            ? CustomSizedBoxWidth(width: 20)
+                            : SizedBox(),
+                        CustomText(
+                          textName: _authController.isLoadingLogin == true
+                              ? "isLoading....."
+                              : "Login",
+                          fontSize:
+                              _authController.isLoadingLogin == true ? 16 : 18,
+                          // textAlign: TextAlign.center,
+                          fontFamily: FontFamily.poppins,
+                          fontWeightType: _authController.isLoadingLogin == true
+                              ? FontWeightType.regular
+                              : FontWeightType.semiBold,
+                          textColor: AppColors.whiteColor,
+                        ),
+                      ],
+                    ),
+                  );
+                }),
                 CustomSizedBoxHeight(height: 30),
               ],
             ),
