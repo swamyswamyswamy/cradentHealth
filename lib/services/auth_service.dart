@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:cradenthealth/constants/app_base_urls.dart';
 import 'package:cradenthealth/constants/app_toast_msgs.dart';
+import 'package:cradenthealth/constants/app_tokens.dart';
 import 'package:cradenthealth/view/screens/app_bottom_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,12 +16,13 @@ class AuthService {
     required String phone,
     required String password,
   }) async {
+    SharedPreferences accessTokenInstance =
+        await SharedPreferences.getInstance();
+    SharedPreferences userIdInstance = await SharedPreferences.getInstance();
     try {
-      var headers = {
-        'Content-Type': 'application/json',
-      };
-      var request =
-          http.Request('POST', Uri.parse('${AppBaseUrls.baseUrl}login'));
+      var headers = {'Content-Type': 'application/json'};
+      var request = http.Request(
+          'POST', Uri.parse('${AppBaseUrls.baseUrl}api/staff/login-staff'));
       request.body = json.encode({"email": phone, "password": password});
       request.headers.addAll(headers);
 
@@ -30,8 +32,10 @@ class AuthService {
         var responseString = await response.stream.bytesToString();
         final decodedMap = json.decode(responseString);
 
-        // await accessTokenInstance.setString("accessToken", decodedMap['token']);
-        // await AppTokens().setAccessToken(decodedMap['token']);
+        await accessTokenInstance.setString("accessToken", decodedMap['token']);
+        await userIdInstance.setString("userId", decodedMap['staff']['_id']);
+        await AppTokens().setAccessToken(decodedMap['token']);
+        await AppTokens().setuserId(decodedMap['staff']['_id']);
 
         Get.offAll(() => AppBottomNavigation());
         AppToastMsgs.successToast("Success", decodedMap['message']);

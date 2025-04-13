@@ -33,9 +33,9 @@ class PharmacyPaymentScreen extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: getProportionateScreenWidth(16)),
-                child: DoctorProfileDetailsWidget(
-                  entryFrom: "Pharmacy",
-                ),
+                // child: DoctorProfileDetailsWidget(
+                //   entryFrom: "Pharmacy",
+                // ),
               ),
               CustomSizedBoxHeight(height: 24),
               Divider(

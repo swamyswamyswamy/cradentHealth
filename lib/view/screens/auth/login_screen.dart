@@ -165,6 +165,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             "Please enter correct mobile number or email.";
                       } else if (_passwordController.text == "") {
                         errorMessage = "Please enter password.";
+                      } else if (_isChecked == false) {
+                        errorMessage = "Please accept the terms and conditions";
                       }
 
                       if (errorMessage != null) {

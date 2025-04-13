@@ -5,14 +5,17 @@ import 'package:cradenthealth/constants/app_mediaquery.dart';
 import 'package:cradenthealth/constants/app_sizedbox.dart';
 import 'package:cradenthealth/constants/app_text.dart';
 import 'package:cradenthealth/constants/appbar_component.dart';
+import 'package:cradenthealth/models/diagnostics/diagnosticlist_model.dart';
 import 'package:cradenthealth/view/screens/doctor_screens/doctor_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 class DoctorProfileDetailsWidget extends StatelessWidget {
-  String entryFrom;
-  DoctorProfileDetailsWidget({super.key, required this.entryFrom});
+  // String entryFrom;
+  DiagnosticModel diagnosticModel;
+  DoctorProfileDetailsWidget({super.key, required this.diagnosticModel});
+  // DoctorProfileDetailsWidget({super.key, required this.entryFrom});
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +34,7 @@ class DoctorProfileDetailsWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: NetworkImage(entryFrom == "Opticles"
-                            ? "https://media.istockphoto.com/id/160136810/photo/eyeglasses-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=NBiS2jW0MsOIzviDdikgXWHNRcBHw1fwVjIWkYJ6CpU="
-                            : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSL0qLy1fo2Uvhti1TexQM137vp8pwBiwmgaIqvDA3q5W_C2XspyH-3ZspOY2BZdFqGCdI&usqp=CAU"))),
+                        image: NetworkImage(diagnosticModel.image!))),
               ),
               CustomSizedBoxWidth(width: 14),
               Expanded(
@@ -44,11 +45,7 @@ class DoctorProfileDetailsWidget extends StatelessWidget {
                       children: [
                         Expanded(
                           child: CustomText(
-                              textName: entryFrom == "Opticles"
-                                  ? "N Shade Eye Ware"
-                                  : entryFrom == "Pharmacy"
-                                      ? "Apollo"
-                                      : "Vijaya Diagnostics",
+                              textName: diagnosticModel.name!,
                               textColor: AppColors.blackColor,
                               fontWeightType: FontWeightType.semiBold,
                               fontFamily: FontFamily.poppins,
@@ -64,19 +61,18 @@ class DoctorProfileDetailsWidget extends StatelessWidget {
                     ),
                     CustomSizedBoxHeight(height: 4),
                     CustomText(
-                        textName:
-                            entryFrom == "Pharmacy" ? "Pharmacy" : "Cardiology",
+                        textName: diagnosticModel.name!,
                         textColor: AppColors.greyColor2,
                         fontWeightType: FontWeightType.medium,
                         fontFamily: FontFamily.poppins,
                         fontSize: 12),
-                    CustomSizedBoxHeight(height: 4),
-                    CustomText(
-                        textName: "Neurology (from Greek: νεῦρον (neûron),",
-                        textColor: AppColors.blackColor,
-                        fontWeightType: FontWeightType.regular,
-                        fontFamily: FontFamily.poppins,
-                        fontSize: 8),
+                    // CustomSizedBoxHeight(height: 4),
+                    // CustomText(
+                    //     textName: "Neurology (from Greek: νεῦρον (neûron),",
+                    //     textColor: AppColors.blackColor,
+                    //     fontWeightType: FontWeightType.regular,
+                    //     fontFamily: FontFamily.poppins,
+                    //     fontSize: 8),
                     CustomSizedBoxHeight(height: 4),
                     Row(
                       children: [
@@ -87,7 +83,7 @@ class DoctorProfileDetailsWidget extends StatelessWidget {
                         CustomSizedBoxWidth(width: 5),
                         Expanded(
                           child: CustomText(
-                              textName: "Kukatpally, Hyderabad......5Km away",
+                              textName: diagnosticModel.address!,
                               textColor: AppColors.blackColor,
                               fontWeightType: FontWeightType.regular,
                               fontFamily: FontFamily.poppins,

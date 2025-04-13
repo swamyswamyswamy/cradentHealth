@@ -5,7 +5,7 @@ import 'package:cradenthealth/constants/app_mediaquery.dart';
 import 'package:cradenthealth/constants/app_sizedbox.dart';
 import 'package:cradenthealth/constants/app_text.dart';
 import 'package:cradenthealth/view/screens/categories_screens.dart';
-import 'package:cradenthealth/view/screens/doctor_screens/consultation_doctors.dart';
+import 'package:cradenthealth/view/screens/diagnostics/diagnosticslist_screen.dart';
 import 'package:cradenthealth/view/screens/drawer_screens/wallet_screen.dart';
 import 'package:cradenthealth/view/screens/home/widgets/blogs_widget.dart';
 import 'package:cradenthealth/view/screens/home/widgets/recent_lookups_widget.dart';
@@ -190,12 +190,12 @@ class HomeScreen extends StatelessWidget {
                                 child: InkWell(
                                   onTap: () {
                                     index == 0
-                                        ? Get.to(ConsultationDoctors(
-                                            title: "Diagnostics",
+                                        ? Get.to(DiagnosticslistScreen(
+                                           
                                           ))
                                         : index == 1
-                                            ? Get.to(ConsultationDoctors(
-                                                title: "Pharmacy",
+                                            ? Get.to(DiagnosticslistScreen(
+                                            
                                               ))
                                             : Get.to(CategoriesScreens());
                                   },
@@ -283,9 +283,9 @@ class HomeScreen extends StatelessWidget {
                               fontFamily: FontFamily.montserrat,
                               fontSize: 16),
                           CustomSizedBoxHeight(height: 16),
-                          RecentLookupsWidget(
-                            entryFrom: "",
-                          ),
+                          // RecentLookupsWidget(
+                          //   entryFrom: "",
+                          // ),
                           CustomSizedBoxHeight(height: 16),
                           CustomText(
                               textName: "Blogs",

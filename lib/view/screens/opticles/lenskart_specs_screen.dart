@@ -43,9 +43,9 @@ class LenskartSpecsScreen extends StatelessWidget {
             },
           ),
           CustomSizedBoxHeight(height: 26),
-          RecentLookupsWidget(
-            entryFrom: title,
-          )
+          // RecentLookupsWidget(
+          //   entryFrom: title,
+          // )
         ]),
       )),
     );

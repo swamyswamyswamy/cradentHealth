@@ -6,7 +6,6 @@ import 'package:cradenthealth/constants/app_sizedbox.dart';
 import 'package:cradenthealth/constants/app_text.dart';
 import 'package:cradenthealth/constants/appbar_component.dart';
 import 'package:cradenthealth/view/screens/bookings/bookings_screen.dart';
-import 'package:cradenthealth/view/screens/doctor_screens/consultation_doctors.dart';
 import 'package:cradenthealth/view/screens/gym_fitness/gym_fitness_plans.dart';
 import 'package:cradenthealth/view/screens/hra/hra_screen.dart';
 import 'package:cradenthealth/view/screens/opticles/lenskart_specs_screen.dart';

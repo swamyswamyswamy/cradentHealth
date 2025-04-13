@@ -1,5 +1,7 @@
 import 'package:cradenthealth/constants/app_tokens.dart';
 import 'package:cradenthealth/services/auth_service.dart';
+import 'package:cradenthealth/services/diagnostic_service.dart';
+import 'package:cradenthealth/view_model/api_controllers/diagnostics_controller.dart';
 import 'package:cradenthealth/view_model/ui_controllers/app_bottom_navigation_controller.dart';
 import 'package:cradenthealth/view_model/ui_controllers/auth_controller.dart';
 import 'package:cradenthealth/view_model/ui_controllers/timer_controller.dart';
@@ -12,7 +14,7 @@ class DependencyInjection {
     Get.put(TokenController());
     Get.put(BottomNavigationController());
     Get.put(TimerController());
-    
+
     Get.put(AuthService());
     Get.put(AuthController(Get.find<AuthService>()));
 
@@ -27,7 +29,10 @@ class DependencyInjection {
     }
   }
 
-  static void apiInit() async {}
+  static void apiInit() async {
+    Get.put(DiagnosticService());
+    Get.put(DiagnosticsController(Get.find<DiagnosticService>()));
+  }
 
   static resetControllers() {}
 }
