@@ -12,6 +12,7 @@ class DiagnosticsController extends GetxController {
   var isLoading = false.obs; // Observable for loading state
   var isLoadingDiagnosticTests = false.obs; // Observable for loading state
   var isLoadingDiagnosticCheckout = false.obs; // Observable for loading state
+  var isLoadingDiagnosticBooking = false.obs; // Observable for loading state
   DiagnosticsController(this.diagnosticService);
 
   void fetchDiagnostics() async {
@@ -60,6 +61,36 @@ class DiagnosticsController extends GetxController {
     }
   }
 
+  Future<void> deleteTests(
+      {required String testId, required String bookingId}) async {
+    // Find the index of the test in the list
+    print('Test with ID $testId removed successfully.');
+    int testIndex = diagnosticCheckoutResponse.value.booking!.tests!
+        .indexWhere((test) => test.id == testId);
+
+    if (testIndex != -1) {
+      // Remove the test from the list
+      diagnosticCheckoutResponse.value.booking!.tests!.removeAt(testIndex);
+      diagnosticCheckoutResponse.refresh();
+
+      try {
+        isLoadingDiagnosticTests.value = true; // Set loading to false
+        await diagnosticService.removeDiagnosticsTests(
+            bookingId: bookingId, testId: testId);
+        isLoadingDiagnosticTests.value = false; // Set loading to false
+      } catch (e) {
+        // Handle error
+        isLoadingDiagnosticTests.value = false; // Set loading to false
+      } finally {
+        isLoadingDiagnosticTests.value = false; // Set loading to false
+      }
+
+      print('Test with ID $testId removed successfully.');
+    } else {
+      print('Test with ID $testId not found.');
+    }
+  }
+
   var selectedDiagnosticTests = <TestModel>[].obs;
 
   // int get totalPrice => selectedTests.fold(0, (sum, item) => sum + int.parse(item.price!));
@@ -76,6 +107,21 @@ class DiagnosticsController extends GetxController {
     } else {
       selectedDiagnosticTests.add(test);
       print("selectedTests${selectedDiagnosticTests}");
+    }
+  }
+
+  void bookDiagnosticsTests({
+    required String bookingId,
+  }) async {
+    try {
+      isLoadingDiagnosticBooking.value = true; // Set loading to false
+      await diagnosticService.bookDiagnosticsTests(bookingId: bookingId);
+      isLoadingDiagnosticBooking.value = false; // Set loading to false
+    } catch (e) {
+      // Handle error
+      isLoadingDiagnosticBooking.value = false; // Set loading to false
+    } finally {
+      isLoadingDiagnosticBooking.value = false; // Set loading to false
     }
   }
 

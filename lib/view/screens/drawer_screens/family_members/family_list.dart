@@ -70,7 +70,12 @@ class FamilyList extends StatelessWidget {
                     return Padding(
                       padding: EdgeInsets.only(
                           bottom: getProportionateScreenHeight(20)),
-                      child: PersonProfileDetailsWidget(),
+                      child: PersonProfileDetailsWidget(
+                        name: "Swamy",
+                        age: "24",
+                        gender: "Male",
+                        imageUrl: "https://yourdomain.com/path-to-image.jpg",
+                      ),
                     );
                   },
                 ),

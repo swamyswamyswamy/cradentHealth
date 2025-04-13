@@ -300,6 +300,9 @@ class _DiagnosticTestsScreenState extends State<DiagnosticTestsScreen> {
                           ),
                           AppButton(
                             onTap: () {
+                              Get.to(PharmacyPaymentScreen(
+                                entryFrom: "Diagnostics",
+                              ));
                               _diagnosticsController.fetchDiagnosticsCheckout(
                                   diagnosticId: widget.diagnosticId,
                                   tests: _diagnosticsController
@@ -308,9 +311,6 @@ class _DiagnosticTestsScreenState extends State<DiagnosticTestsScreen> {
                                       .toList());
                               // _diagnosticsController.addDiagnosticTest(
                               //     diagnosticTestsList[index]);
-                              // Get.to(PharmacyPaymentScreen(
-                              //   entryFrom: "Diagnostics",
-                              // ));
                             },
                             borderRadius: 5,
                             child: Padding(
