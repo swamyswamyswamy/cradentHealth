@@ -1,3 +1,4 @@
+import 'package:cradenthealth/models/diagnostics/diagnostic_checkout_model.dart';
 import 'package:cradenthealth/models/diagnostics/diagnosticlist_model.dart';
 import 'package:cradenthealth/services/diagnostic_service.dart';
 import 'package:get/get.dart';
@@ -5,10 +6,12 @@ import 'package:get/get.dart';
 class DiagnosticsController extends GetxController {
   var diagnosticResponse = DiagnosticResponse().obs;
   var diagnosticTestResponse = DiagnosticTestResponse().obs;
+  var diagnosticCheckoutResponse = DiagnosticCheckoutResponse().obs;
   final DiagnosticService diagnosticService;
 
   var isLoading = false.obs; // Observable for loading state
   var isLoadingDiagnosticTests = false.obs; // Observable for loading state
+  var isLoadingDiagnosticCheckout = false.obs; // Observable for loading state
   DiagnosticsController(this.diagnosticService);
 
   void fetchDiagnostics() async {
@@ -24,7 +27,9 @@ class DiagnosticsController extends GetxController {
     }
   }
 
-  void fetchDiagnosticsTests({required String diagnosticId}) async {
+  void fetchDiagnosticsTests({
+    required String diagnosticId,
+  }) async {
     try {
       isLoadingDiagnosticTests.value = true; // Set loading to false
       diagnosticTestResponse.value = await diagnosticService
@@ -35,6 +40,23 @@ class DiagnosticsController extends GetxController {
       isLoadingDiagnosticTests.value = false; // Set loading to false
     } finally {
       isLoadingDiagnosticTests.value = false; // Set loading to false
+    }
+  }
+
+  void fetchDiagnosticsCheckout({
+    required String diagnosticId,
+    required List tests,
+  }) async {
+    try {
+      isLoadingDiagnosticCheckout.value = true; // Set loading to false
+      diagnosticCheckoutResponse.value = await diagnosticService
+          .fetchDiagnosticsCheckout(diagnosticId: diagnosticId, tests: tests);
+      isLoadingDiagnosticCheckout.value = false; // Set loading to false
+    } catch (e) {
+      // Handle error
+      isLoadingDiagnosticCheckout.value = false; // Set loading to false
+    } finally {
+      isLoadingDiagnosticCheckout.value = false; // Set loading to false
     }
   }
 

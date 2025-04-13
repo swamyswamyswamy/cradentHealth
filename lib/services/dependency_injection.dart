@@ -1,8 +1,10 @@
 import 'package:cradenthealth/constants/app_tokens.dart';
 import 'package:cradenthealth/services/auth_service.dart';
 import 'package:cradenthealth/services/diagnostic_service.dart';
+import 'package:cradenthealth/services/profile_service.dart';
 import 'package:cradenthealth/services/wallet_service.dart';
 import 'package:cradenthealth/view_model/api_controllers/diagnostics_controller.dart';
+import 'package:cradenthealth/view_model/api_controllers/profile_controller.dart';
 import 'package:cradenthealth/view_model/api_controllers/wallet_controller.dart';
 import 'package:cradenthealth/view_model/ui_controllers/app_bottom_navigation_controller.dart';
 import 'package:cradenthealth/view_model/ui_controllers/auth_controller.dart';
@@ -38,6 +40,8 @@ class DependencyInjection {
     Get.put(DiagnosticsController(Get.find<DiagnosticService>()));
     Get.put(WalletService());
     Get.put(WalletController(Get.find<WalletService>()));
+    Get.put(ProfileService());
+    Get.put(ProfileController(Get.find<ProfileService>()));
   }
 
   static resetControllers() {}

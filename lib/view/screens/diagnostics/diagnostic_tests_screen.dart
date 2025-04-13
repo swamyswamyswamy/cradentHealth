@@ -14,6 +14,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:get/get.dart';
 
 class DiagnosticTestsScreen extends StatefulWidget {
@@ -299,11 +300,17 @@ class _DiagnosticTestsScreenState extends State<DiagnosticTestsScreen> {
                           ),
                           AppButton(
                             onTap: () {
+                              _diagnosticsController.fetchDiagnosticsCheckout(
+                                  diagnosticId: widget.diagnosticId,
+                                  tests: _diagnosticsController
+                                      .selectedDiagnosticTests
+                                      .map((e) => e.id)
+                                      .toList());
                               // _diagnosticsController.addDiagnosticTest(
                               //     diagnosticTestsList[index]);
-                              Get.to(PharmacyPaymentScreen(
-                                entryFrom: "Diagnostics",
-                              ));
+                              // Get.to(PharmacyPaymentScreen(
+                              //   entryFrom: "Diagnostics",
+                              // ));
                             },
                             borderRadius: 5,
                             child: Padding(

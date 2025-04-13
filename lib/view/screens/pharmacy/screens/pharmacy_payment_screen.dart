@@ -9,19 +9,32 @@ import 'package:cradenthealth/view/screens/home/widgets/blogs_widget.dart';
 import 'package:cradenthealth/view/screens/home/widgets/recent_lookups_widget.dart';
 import 'package:cradenthealth/view/widgets/doctor_profile_details_widget.dart';
 import 'package:cradenthealth/view/widgets/person_profile_details_widget.dart';
+import 'package:cradenthealth/view_model/api_controllers/diagnostics_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class PharmacyPaymentScreen extends StatelessWidget {
+class PharmacyPaymentScreen extends StatefulWidget {
   String entryFrom;
   PharmacyPaymentScreen({super.key, required this.entryFrom});
+
+  @override
+  State<PharmacyPaymentScreen> createState() => _PharmacyPaymentScreenState();
+}
+
+class _PharmacyPaymentScreenState extends State<PharmacyPaymentScreen> {
+  final _diagnosticsController = Get.find<DiagnosticsController>();
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: CustomAppBar(
           backgroundColor: AppColors.whiteColor,
-          title: entryFrom == "Pharmacy"
+          title: widget.entryFrom == "Pharmacy"
               ? "Apollo Pharmacy"
               : "Vijaya Diagnostics",
         ),
