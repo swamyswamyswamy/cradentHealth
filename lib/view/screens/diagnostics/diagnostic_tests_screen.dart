@@ -57,6 +57,7 @@ class _DiagnosticTestsScreenState extends State<DiagnosticTestsScreen> {
                   CustomSizedBoxHeight(height: 24),
                   ListView.builder(
                     itemCount: diagnosticTestsList.length,
+                    physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (BuildContext context, int index) {
                       return Padding(
@@ -136,34 +137,59 @@ class _DiagnosticTestsScreenState extends State<DiagnosticTestsScreen> {
                                                         FontFamily.poppins,
                                                     fontSize: 18),
                                                 Spacer(),
-                                                AppButton(
-                                                  onTap: () {
-                                                    Get.to(
-                                                        PharmacyPaymentScreen(
-                                                      entryFrom: "Diagnostics",
-                                                    ));
-                                                  },
-                                                  borderRadius: 5,
-                                                  child: Padding(
-                                                    padding: EdgeInsets.symmetric(
-                                                        vertical:
-                                                            getProportionateScreenHeight(
-                                                                4),
-                                                        horizontal:
-                                                            getProportionateScreenWidth(
-                                                                21)),
-                                                    child: CustomText(
-                                                        textName: "ADD",
-                                                        textColor: AppColors
-                                                            .whiteColor,
-                                                        fontWeightType:
-                                                            FontWeightType
-                                                                .semiBold,
-                                                        fontFamily:
-                                                            FontFamily.inter,
-                                                        fontSize: 10),
-                                                  ),
-                                                ),
+                                                Obx(() {
+                                                  return AppButton(
+                                                    onTap: () {
+                                                      _diagnosticsController
+                                                          .addDiagnosticTest(
+                                                              diagnosticTestsList[
+                                                                  index]);
+                                                      // Get.to(
+                                                      //     PharmacyPaymentScreen(
+                                                      //   entryFrom: "Diagnostics",
+                                                      // ));
+                                                    },
+                                                    borderRadius: 5,
+                                                    backgroundColor:
+                                                        (_diagnosticsController
+                                                                .selectedDiagnosticTests
+                                                                .any((e) =>
+                                                                    e.id ==
+                                                                    diagnosticTestsList[
+                                                                            index]
+                                                                        .id))
+                                                            ? AppColors.redColor
+                                                            : AppColors
+                                                                .primaryColor,
+                                                    child: Padding(
+                                                      padding: EdgeInsets.symmetric(
+                                                          vertical:
+                                                              getProportionateScreenHeight(
+                                                                  4),
+                                                          horizontal:
+                                                              getProportionateScreenWidth(
+                                                                  21)),
+                                                      child: CustomText(
+                                                          textName: (_diagnosticsController
+                                                                  .selectedDiagnosticTests
+                                                                  .any((e) =>
+                                                                      e.id ==
+                                                                      diagnosticTestsList[
+                                                                              index]
+                                                                          .id))
+                                                              ? "Remove"
+                                                              : "ADD",
+                                                          textColor: AppColors
+                                                              .whiteColor,
+                                                          fontWeightType:
+                                                              FontWeightType
+                                                                  .semiBold,
+                                                          fontFamily:
+                                                              FontFamily.inter,
+                                                          fontSize: 10),
+                                                    ),
+                                                  );
+                                                }),
                                               ],
                                             )
                                           ],
@@ -186,6 +212,122 @@ class _DiagnosticTestsScreenState extends State<DiagnosticTestsScreen> {
                   ),
                 ]),
               ));
+      }),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: Obx(() {
+        return _diagnosticsController.selectedDiagnosticTests.isEmpty
+            ? SizedBox()
+            : Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                child: Container(
+                  height: 62,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                            offset: Offset(1, 1),
+                            spreadRadius: 1,
+                            blurRadius: 1,
+                            color: AppColors.blackColor.withOpacity(0.25))
+                      ],
+                      borderRadius: BorderRadius.circular(5),
+                      color: AppColors.whiteColor),
+                  child: FloatingActionButton(
+                    onPressed: () {},
+                    child: Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                CustomSizedBoxHeight(height: 7),
+                                CustomText(
+                                    textName: "Vijaya Diagnostics",
+                                    textColor: AppColors.blackColor,
+                                    fontWeightType: FontWeightType.regular,
+                                    fontFamily: FontFamily.inter,
+                                    fontSize: 14),
+                                CustomSizedBoxHeight(height: 5),
+                                CustomText(
+                                    textName: _diagnosticsController
+                                        .selectedDiagnosticTests
+                                        .map((e) => e.testName!)
+                                        .join(', '),
+                                    textColor:
+                                        AppColors.blackColor.withOpacity(0.7),
+                                    fontWeightType: FontWeightType.regular,
+                                    fontFamily: FontFamily.inter,
+                                    fontSize: 10),
+                                Row(
+                                  children: [
+                                    CustomText(
+                                        textName: "Actual Price ",
+                                        textColor: AppColors.blackColor
+                                            .withOpacity(0.7),
+                                        fontWeightType: FontWeightType.regular,
+                                        fontFamily: FontFamily.inter,
+                                        fontSize: 10),
+                                    CustomText(
+                                        textName:
+                                            "₹${_diagnosticsController.selectedDiagnosticTests.fold(0, (sum, item) => sum + int.parse(item.price!)).toString()}  ",
+                                        textColor: AppColors.blackColor
+                                            .withOpacity(0.7),
+                                        fontWeightType: FontWeightType.medium,
+                                        fontFamily: FontFamily.inter,
+                                        fontSize: 10),
+                                    CustomText(
+                                        textName: "Discount Price ",
+                                        textColor: AppColors.blackColor,
+                                        fontWeightType: FontWeightType.regular,
+                                        fontFamily: FontFamily.inter,
+                                        fontSize: 10),
+                                    CustomText(
+                                        textName:
+                                            "₹${_diagnosticsController.selectedDiagnosticTests.fold(0, (sum, item) => sum + int.parse(item.offerPrice!)).toString()}",
+                                        textColor: AppColors.blackColor,
+                                        fontWeightType: FontWeightType.medium,
+                                        fontFamily: FontFamily.inter,
+                                        fontSize: 10),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                          AppButton(
+                            onTap: () {
+                              // _diagnosticsController.addDiagnosticTest(
+                              //     diagnosticTestsList[index]);
+                              Get.to(PharmacyPaymentScreen(
+                                entryFrom: "Diagnostics",
+                              ));
+                            },
+                            borderRadius: 5,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: getProportionateScreenHeight(14),
+                                  horizontal: getProportionateScreenWidth(16)),
+                              child: CustomText(
+                                  textName:
+                                      "₹ ${_diagnosticsController.selectedDiagnosticTests.fold(0, (sum, item) => sum + int.parse(item.offerPrice!)).toString()}  Next ",
+                                  textColor: AppColors.whiteColor,
+                                  fontWeightType: FontWeightType.semiBold,
+                                  fontFamily: FontFamily.inter,
+                                  fontSize: 12),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    backgroundColor: AppColors.whiteColor,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5)),
+                  ),
+                ),
+              );
       }),
     );
   }

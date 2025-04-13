@@ -38,6 +38,25 @@ class DiagnosticsController extends GetxController {
     }
   }
 
+  var selectedDiagnosticTests = <TestModel>[].obs;
+
+  // int get totalPrice => selectedTests.fold(0, (sum, item) => sum + int.parse(item.price!));
+  // int get totalOfferPrice =>
+  //     selectedTests.fold(0, (sum, item) => sum + item.offerPrice);
+  // List<String> get selectedIds => selectedTests.map((e) => e.id).toList();
+  // List<String> get selectedNames =>
+  //     selectedTests.map((e) => e.testName!).toList();
+
+  void addDiagnosticTest(TestModel test) {
+    if (selectedDiagnosticTests.any((e) => e.id == test.id)) {
+      selectedDiagnosticTests.removeWhere((e) => e.id == test.id);
+      print("selectedTests${selectedDiagnosticTests}");
+    } else {
+      selectedDiagnosticTests.add(test);
+      print("selectedTests${selectedDiagnosticTests}");
+    }
+  }
+
   @override
   void onInit() {
     // fetchSupportService(); // Fetch data on controller initialization
