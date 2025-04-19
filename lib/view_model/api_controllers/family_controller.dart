@@ -1,18 +1,33 @@
 import 'package:cradenthealth/models/diagnostics/diagnosticlist_model.dart';
 import 'package:cradenthealth/models/diagnostics/wallet_model.dart';
+import 'package:cradenthealth/models/familyMember_model.dart';
 import 'package:cradenthealth/services/diagnostic_service.dart';
 import 'package:cradenthealth/services/family_service.dart';
 import 'package:cradenthealth/services/wallet_service.dart';
 import 'package:get/get.dart';
 
 class FamilyController extends GetxController {
-  var walletResponse = WalletResponse().obs;
+  var familyResponseModel = FamilyResponseModel().obs;
 
   final FamilyService familyService;
 
   var isLoadingCreateFamilyMember = false.obs; // Observable for loading state
 
+  var isLoading = false.obs; // Observable for loading state
   FamilyController(this.familyService);
+
+  void fetchFamilyList() async {
+    try {
+      isLoading.value = true; // Set loading to false
+      familyResponseModel.value = await familyService.fetchFamilyList();
+      isLoading.value = false; // Set loading to false
+    } catch (e) {
+      // Handle error
+      isLoading.value = false; // Set loading to false
+    } finally {
+      isLoading.value = false; // Set loading to false
+    }
+  }
 
   void createFamilyMember({
     required String fullName,
@@ -30,7 +45,7 @@ class FamilyController extends GetxController {
   }) async {
     try {
       isLoadingCreateFamilyMember.value = true; // Set loading to false
-      walletResponse.value = await familyService.createFamilyMember(
+      await familyService.createFamilyMember(
           fullName: fullName,
           mobileNumber: mobileNumber,
           age: age,
@@ -67,7 +82,6 @@ class FamilyController extends GetxController {
   var relation = ''.obs;
   var staffId = ''.obs;
 //ui
-
 
   @override
   void onInit() {

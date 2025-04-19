@@ -8,6 +8,7 @@ class FamilyResponseModel {
   });
 
   factory FamilyResponseModel.fromJson(Map<String, dynamic> json) {
+    // print("family member data ${json['family_members']}");
     return FamilyResponseModel(
       message: json['message']?.toString(),
       familyMembers: (json['family_members'] as List<dynamic>?)

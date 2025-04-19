@@ -135,6 +135,18 @@ class AddFamilyMembers extends StatelessWidget {
               Inputfield(
                 fillColor: AppColors.secondaryColor,
                 controller: TextEditingController(
+                    text: _familyController.relation.value),
+                label: "Relation",
+                keyboardType: TextInputType.text,
+                hinttext: "",
+                onChanged: (value) {
+                  _familyController.relation.value = value!;
+                },
+              ),
+              CustomSizedBoxHeight(height: 20),
+              Inputfield(
+                fillColor: AppColors.secondaryColor,
+                controller: TextEditingController(
                     text: _familyController.eyeSight.value),
                 label: "Eye Sight",
                 keyboardType: TextInputType.text,

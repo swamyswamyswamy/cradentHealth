@@ -8,15 +8,30 @@ import 'package:cradenthealth/constants/app_text.dart';
 import 'package:cradenthealth/constants/app_textfields.dart';
 import 'package:cradenthealth/view/screens/drawer_screens/family_members/add_family_members.dart';
 import 'package:cradenthealth/view/widgets/person_profile_details_widget.dart';
+import 'package:cradenthealth/view_model/api_controllers/family_controller.dart';
 import 'package:cradenthealth/view_model/ui_controllers/bookings_controller.dart';
+import 'package:cradenthealth/view_model/ui_controllers/otp_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
-class FamilyList extends StatelessWidget {
+class FamilyList extends StatefulWidget {
   FamilyList({super.key});
+
+  @override
+  State<FamilyList> createState() => _FamilyListState();
+}
+
+class _FamilyListState extends State<FamilyList> {
+  final _familyController = Get.find<FamilyController>();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _familyController.fetchFamilyList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +41,8 @@ class FamilyList extends StatelessWidget {
           surfaceTintColor: AppColors.whiteColor,
         ),
         backgroundColor: AppColors.whiteColor,
-        body: SingleChildScrollView(
-          child: Padding(
+        body: Obx(() {
+          return Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: getProportionateScreenWidth(16)),
             child: Column(
@@ -63,25 +78,35 @@ class FamilyList extends StatelessWidget {
                   ),
                 ),
                 CustomSizedBoxHeight(height: 12),
-                ListView.builder(
-                  itemCount: 2,
-                  shrinkWrap: true,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                      padding: EdgeInsets.only(
-                          bottom: getProportionateScreenHeight(20)),
-                      child: PersonProfileDetailsWidget(
-                        name: "Swamy",
-                        age: "24",
-                        gender: "Male",
-                        imageUrl: "https://yourdomain.com/path-to-image.jpg",
+                _familyController.isLoading.value
+                    ? Center(child: CircularProgressIndicator())
+                    : Expanded(
+                        child: ListView.builder(
+                          physics: AlwaysScrollableScrollPhysics(),
+                          itemCount: _familyController
+                              .familyResponseModel.value.familyMembers!.length,
+                          shrinkWrap: true,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Padding(
+                              padding: EdgeInsets.only(
+                                  bottom: getProportionateScreenHeight(20)),
+                              child: PersonProfileDetailsWidget(
+                                name: _familyController.familyResponseModel
+                                    .value.familyMembers![index].fullName!,
+                                age: _familyController.familyResponseModel.value
+                                    .familyMembers![index].age!,
+                                gender: _familyController.familyResponseModel
+                                    .value.familyMembers![index].gender!,
+                                imageUrl: _familyController.familyResponseModel
+                                    .value.familyMembers![index].eyeSight!,
+                              ),
+                            );
+                          },
+                        ),
                       ),
-                    );
-                  },
-                ),
               ],
             ),
-          ),
-        ));
+          );
+        }));
   }
 }

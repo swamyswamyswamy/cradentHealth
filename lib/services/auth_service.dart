@@ -4,6 +4,7 @@ import 'package:cradenthealth/constants/app_base_urls.dart';
 import 'package:cradenthealth/constants/app_toast_msgs.dart';
 import 'package:cradenthealth/constants/app_tokens.dart';
 import 'package:cradenthealth/models/profile_model.dart';
+import 'package:cradenthealth/services/dependency_injection.dart';
 import 'package:cradenthealth/view/screens/app_bottom_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -39,6 +40,7 @@ class AuthService {
         await AppTokens().setuserId(decodedMap['staff']['_id']);
 
         Get.offAll(() => AppBottomNavigation());
+        DependencyInjection.apiInit();
         AppToastMsgs.successToast("Success", decodedMap['message']);
       } else {
         var responseString = await response.stream.bytesToString();
