@@ -4,20 +4,22 @@ import 'package:cradenthealth/constants/app_images.dart';
 import 'package:cradenthealth/constants/app_mediaquery.dart';
 import 'package:cradenthealth/constants/app_sizedbox.dart';
 import 'package:cradenthealth/constants/app_text.dart';
-import 'package:cradenthealth/view_model/ui_controllers/appointment_controller.dart';
+import 'package:cradenthealth/models/doctors/doctor_model.dart';
+import 'package:cradenthealth/view_model/api_controllers/doctors_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppointmentBottomSheet extends StatefulWidget {
-  const AppointmentBottomSheet({super.key});
+  DoctorModel doctorDetails;
+  AppointmentBottomSheet({super.key, required this.doctorDetails});
 
   @override
   State<AppointmentBottomSheet> createState() => _AppointmentBottomSheetState();
 }
 
 class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
-  final _appointmentController = Get.put(AppointmentController());
+  final _doctorsController = Get.find<DoctorsController>();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -38,16 +40,18 @@ class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CustomText(
-                        textName: _appointmentController
-                                    .selectedAvailableDate.value ==
-                                100
-                            ? ""
-                            : "Book  your Appointment",
-                        textColor: AppColors.primaryColor,
-                        fontWeightType: FontWeightType.bold,
-                        fontFamily: FontFamily.poppins,
-                        fontSize: 20),
+                    Center(
+                      child: CustomText(
+                          textName:
+                              _doctorsController.selectedAvailableDate.value ==
+                                      100
+                                  ? ""
+                                  : "Book  your Appointment",
+                          textColor: AppColors.primaryColor,
+                          fontWeightType: FontWeightType.bold,
+                          fontFamily: FontFamily.poppins,
+                          fontSize: 20),
+                    ),
                     CustomSizedBoxHeight(height: 18),
                     Row(
                       children: [
@@ -69,46 +73,51 @@ class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
                                   image: DecorationImage(
                                       fit: BoxFit.fill,
                                       image: NetworkImage(
-                                          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSL0qLy1fo2Uvhti1TexQM137vp8pwBiwmgaIqvDA3q5W_C2XspyH-3ZspOY2BZdFqGCdI&usqp=CAU"))),
+                                          widget.doctorDetails.image!))),
                             ),
                           ),
                         ),
                         CustomSizedBoxWidth(width: 20),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            RichText(
-                              text: TextSpan(
-                                text: "Dr. Vineeth, ",
-                                style: GoogleFonts.poppins(
-                                    color: AppColors.blackColor,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w800),
-                                children: [
-                                  TextSpan(
-                                    text: "( MBBS )",
-                                    style: GoogleFonts.poppins(
-                                        color: AppColors.blackColor,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                ],
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              RichText(
+                                text: TextSpan(
+                                  text: "${widget.doctorDetails.name!} ",
+                                  style: GoogleFonts.poppins(
+                                      color: AppColors.blackColor,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w800),
+                                  children: [
+                                    TextSpan(
+                                      text:
+                                          "( ${widget.doctorDetails.qualification!} )",
+                                      style: GoogleFonts.poppins(
+                                          color: AppColors.blackColor,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            CustomText(
-                                textName: "Neurology specialist",
-                                textColor: AppColors.blackColor,
-                                fontWeightType: FontWeightType.regular,
-                                fontFamily: FontFamily.poppins,
-                                fontSize: 16),
-                            CustomSizedBoxHeight(height: 4),
-                            CustomText(
-                                textName: "₹ 1500",
-                                textColor: AppColors.blackColor,
-                                fontWeightType: FontWeightType.semiBold,
-                                fontFamily: FontFamily.poppins,
-                                fontSize: 18),
-                          ],
+                              CustomText(
+                                  textName:
+                                      widget.doctorDetails.specialization!,
+                                  textColor: AppColors.blackColor,
+                                  fontWeightType: FontWeightType.regular,
+                                  fontFamily: FontFamily.poppins,
+                                  fontSize: 16),
+                              CustomSizedBoxHeight(height: 4),
+                              CustomText(
+                                  textName:
+                                      "₹ ${widget.doctorDetails.consultationFee!}",
+                                  textColor: AppColors.blackColor,
+                                  fontWeightType: FontWeightType.semiBold,
+                                  fontFamily: FontFamily.poppins,
+                                  fontSize: 18),
+                            ],
+                          ),
                         )
                       ],
                     ),
@@ -171,11 +180,11 @@ class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
                                   right: getProportionateScreenWidth(8)),
                               child: AppButton(
                                 onTap: () {
-                                  _appointmentController
+                                  _doctorsController
                                       .updateSelectedAvailableDate(index);
                                 },
                                 width: 53,
-                                backgroundColor: _appointmentController
+                                backgroundColor: _doctorsController
                                             .selectedAvailableDate.value ==
                                         index
                                     ? AppColors.primaryColor
@@ -186,7 +195,7 @@ class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
                                   children: [
                                     CustomText(
                                         textName: "Sun",
-                                        textColor: _appointmentController
+                                        textColor: _doctorsController
                                                     .selectedAvailableDate
                                                     .value ==
                                                 index
@@ -198,7 +207,7 @@ class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
                                     CustomSizedBoxHeight(height: 10),
                                     CustomText(
                                         textName: "1",
-                                        textColor: _appointmentController
+                                        textColor: _doctorsController
                                                     .selectedAvailableDate
                                                     .value ==
                                                 index
@@ -229,8 +238,7 @@ class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
                       child: Padding(
                         padding: EdgeInsets.symmetric(
                             vertical: getProportionateScreenHeight(10)),
-                        child: _appointmentController.selectedtimeSlot.value ==
-                                100
+                        child: _doctorsController.selectedtimeSlot.value == 100
                             ? SizedBox()
                             : ListView.builder(
                                 itemCount: 10,
@@ -242,12 +250,12 @@ class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
                                         right: getProportionateScreenWidth(16)),
                                     child: InkWell(
                                       onTap: () {
-                                        _appointmentController
+                                        _doctorsController
                                             .updateSelectedtimeSlot(index);
                                       },
                                       child: Container(
                                         decoration: BoxDecoration(
-                                            color: _appointmentController
+                                            color: _doctorsController
                                                         .selectedtimeSlot
                                                         .value ==
                                                     index
@@ -271,7 +279,7 @@ class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
                                           child: Center(
                                             child: CustomText(
                                                 textName: "11:00 am",
-                                                textColor: _appointmentController
+                                                textColor: _doctorsController
                                                             .selectedtimeSlot
                                                             .value ==
                                                         index
@@ -294,6 +302,15 @@ class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
                     AppButton(
                       height: 44,
                       onTap: () {
+                        _doctorsController.bookDoctorAppointment(
+                            diagnosticId: widget.doctorDetails.id!,
+                            patientName: "dfdf",
+                            patientRelation: "fdfd",
+                            appointmentDate: _doctorsController
+                                .selectedAvailableDate
+                                .toString(),
+                            appointmentTime:
+                                _doctorsController.selectedtimeSlot.toString());
                         // Get.to(HomeScreen());
                       },
                       hasShadow: true,

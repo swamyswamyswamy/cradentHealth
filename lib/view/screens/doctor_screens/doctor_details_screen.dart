@@ -3,15 +3,17 @@ import 'package:cradenthealth/constants/app_colors.dart';
 import 'package:cradenthealth/constants/app_mediaquery.dart';
 import 'package:cradenthealth/constants/app_sizedbox.dart';
 import 'package:cradenthealth/constants/app_text.dart';
+import 'package:cradenthealth/models/doctors/doctor_model.dart';
 import 'package:cradenthealth/view/screens/doctor_screens/appointment_bottom_sheet.dart';
 import 'package:cradenthealth/view/screens/home/widgets/blogs_widget.dart';
 import 'package:cradenthealth/view/screens/home/widgets/recent_lookups_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DoctorDetailsScreen extends StatelessWidget {
-  bool entryFrom;
-  DoctorDetailsScreen({super.key, this.entryFrom = false});
+  DoctorModel doctorDetails;
+  DoctorDetailsScreen({super.key, required this.doctorDetails});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class DoctorDetailsScreen extends StatelessWidget {
         backgroundColor: AppColors.whiteColor,
         surfaceTintColor: AppColors.whiteColor,
         title: CustomText(
-            textName: entryFrom ? "N Shade Eye Ware" : "Book A Consultation",
+            textName: "Book A Consultation",
             textColor: AppColors.blackColor,
             fontWeightType: FontWeightType.semiBold,
             fontFamily: FontFamily.montserrat,
@@ -36,10 +38,8 @@ class DoctorDetailsScreen extends StatelessWidget {
               decoration: BoxDecoration(
                   // borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(entryFrom
-                          ? "https://media.istockphoto.com/id/160136810/photo/eyeglasses-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=NBiS2jW0MsOIzviDdikgXWHNRcBHw1fwVjIWkYJ6CpU="
-                          : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSL0qLy1fo2Uvhti1TexQM137vp8pwBiwmgaIqvDA3q5W_C2XspyH-3ZspOY2BZdFqGCdI&usqp=CAU"))),
+                      // fit: BoxFit.cover,
+                      image: NetworkImage(doctorDetails.image!))),
             ),
             CustomSizedBoxHeight(height: 7),
             CustomSizedBoxWidth(width: 14),
@@ -54,16 +54,14 @@ class DoctorDetailsScreen extends StatelessWidget {
                       Expanded(
                         child: RichText(
                           text: TextSpan(
-                            text: entryFrom
-                                ? "N Shade Eye Ware"
-                                : "Dr. Vineeth, ",
+                            text: "${doctorDetails.name} ",
                             style: GoogleFonts.poppins(
                                 color: AppColors.blackColor,
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600),
                             children: [
                               TextSpan(
-                                text: entryFrom ? "" : "( MBBS )",
+                                text: "( ${doctorDetails.qualification} )",
                                 style: GoogleFonts.poppins(
                                     color: AppColors.blackColor,
                                     fontSize: 14,
@@ -74,7 +72,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                         ),
                       ),
                       CustomText(
-                          textName: "₹ 1500",
+                          textName: "₹ ${doctorDetails.consultationFee}",
                           textColor: AppColors.blackColor,
                           fontWeightType: FontWeightType.semiBold,
                           fontFamily: FontFamily.poppins,
@@ -82,7 +80,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                     ],
                   ),
                   CustomText(
-                      textName: "Neurology specialist",
+                      textName: doctorDetails.specialization!,
                       textColor: AppColors.greyColor2,
                       fontWeightType: FontWeightType.regular,
                       fontFamily: FontFamily.poppins,
@@ -110,7 +108,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                       ),
                       CustomSizedBoxWidth(width: 10),
                       CustomText(
-                          textName: "Kukatpally, Hyderabad......5Km away",
+                          textName: doctorDetails.address!,
                           textColor: AppColors.blackColor,
                           fontWeightType: FontWeightType.regular,
                           fontFamily: FontFamily.poppins,
@@ -119,33 +117,38 @@ class DoctorDetailsScreen extends StatelessWidget {
                   ),
                   CustomSizedBoxHeight(height: 19),
                   CustomText(
-                      textName:
-                          "Neurology (from Greek: νεῦρον (neûron), and the suffix -logia, is the branch of medicine dealing with the diagnosis and treatment of all categoriesof conditions and disease involving the nervous system,which comprises the brain, the spinal cord and theperipheral nerves.[1] Neurological practice relies heavilyon the field of neuroscience, the scientific study of thenervous system and disease involving the nervous system,which comprises the brain, the spinal cord and theperipheral nerves.[1] Neurological practice relies heavilyon the field of neuroscience, the scientific study of thenervous system .",
+                      textName: doctorDetails.address!,
                       textColor: AppColors.blackColor,
                       fontWeightType: FontWeightType.regular,
                       fontFamily: FontFamily.poppins,
                       fontSize: 12),
                   CustomSizedBoxHeight(height: 15),
-                  AppButton(
-                    height: 44,
-                    onTap: () {
-                      entryFrom
-                          ? null
-                          : showModalBottomSheet(
-                              context: context,
-                              isScrollControlled: true,
-                              builder: (BuildContext) {
-                                return AppointmentBottomSheet();
-                              });
-                      // Get.to(HomeScreen());
-                    },
-                    hasShadow: true,
-                    label: "Book Now",
-                  ),
                 ],
               ),
             ),
           ],
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.only(
+            bottom: getProportionateScreenHeight(30),
+            right: getProportionateScreenWidth(16),
+            left: getProportionateScreenWidth(16)),
+        child: AppButton(
+          height: 44,
+          onTap: () {
+            showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                builder: (BuildContext) {
+                  return AppointmentBottomSheet(
+                    doctorDetails: doctorDetails,
+                  );
+                });
+            // Get.to(HomeScreen());
+          },
+          hasShadow: true,
+          label: "Book Now",
         ),
       ),
     );

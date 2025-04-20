@@ -9,6 +9,7 @@ import 'package:cradenthealth/constants/appbar_component.dart';
 import 'package:cradenthealth/models/diagnostics/diagnosticlist_model.dart';
 import 'package:cradenthealth/view/screens/bookings/bookings_screen.dart';
 import 'package:cradenthealth/view/screens/diagnostics/diagnostic_tests_screen.dart';
+import 'package:cradenthealth/view/screens/doctor_screens/doctor_details_screen.dart';
 import 'package:cradenthealth/view/screens/home/widgets/recent_lookups_widget.dart';
 import 'package:cradenthealth/view/widgets/doctor_profile_details_widget.dart';
 import 'package:cradenthealth/view_model/api_controllers/diagnostics_controller.dart';
@@ -99,6 +100,10 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
                               bottom: getProportionateScreenHeight(12)),
                           child: InkWell(
                               onTap: () {
+                                Get.to(DoctorDetailsScreen(
+                                  doctorDetails: _doctorsController
+                                      .doctorModel.value[index],
+                                ));
                                 // Get.to(DiagnosticTestsScreen(
                                 //   diagnosticId: _diagnosticsController
                                 //       .diagnosticResponse
@@ -128,7 +133,10 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
                                               image: DecorationImage(
                                                   fit: BoxFit.cover,
                                                   image: NetworkImage(
-                                                      diagnosticModel.image!))),
+                                                      _doctorsController
+                                                          .doctorModel
+                                                          .value[index]
+                                                          .image!))),
                                         ),
                                         CustomSizedBoxWidth(width: 14),
                                         Expanded(
@@ -141,7 +149,9 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
                                                   Expanded(
                                                     child: CustomText(
                                                         textName:
-                                                            diagnosticModel
+                                                            _doctorsController
+                                                                .doctorModel
+                                                                .value[index]
                                                                 .name!,
                                                         textColor: AppColors
                                                             .blackColor,
@@ -153,7 +163,8 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
                                                         fontSize: 16),
                                                   ),
                                                   CustomText(
-                                                      textName: "₹ 1500",
+                                                      textName:
+                                                          "₹ ${_doctorsController.doctorModel.value[index].consultationFee!}",
                                                       textColor:
                                                           AppColors.redColor,
                                                       fontWeightType:
@@ -166,8 +177,23 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
                                               ),
                                               CustomSizedBoxHeight(height: 4),
                                               CustomText(
-                                                  textName:
-                                                      diagnosticModel.name!,
+                                                  textName: _doctorsController
+                                                      .doctorModel
+                                                      .value[index]
+                                                      .qualification!,
+                                                  textColor:
+                                                      AppColors.greyColor2,
+                                                  fontWeightType:
+                                                      FontWeightType.medium,
+                                                  fontFamily:
+                                                      FontFamily.poppins,
+                                                  fontSize: 12),
+                                              CustomSizedBoxHeight(height: 4),
+                                              CustomText(
+                                                  textName: _doctorsController
+                                                      .doctorModel
+                                                      .value[index]
+                                                      .specialization!,
                                                   textColor:
                                                       AppColors.greyColor2,
                                                   fontWeightType:
@@ -193,7 +219,9 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
                                                   Expanded(
                                                     child: CustomText(
                                                         textName:
-                                                            diagnosticModel
+                                                            _doctorsController
+                                                                .doctorModel
+                                                                .value[index]
                                                                 .address!,
                                                         textColor: AppColors
                                                             .blackColor,

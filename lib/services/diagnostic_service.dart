@@ -178,4 +178,50 @@ class DiagnosticService {
       throw Exception("error");
     }
   }
+
+  Future<DiagnosticCheckoutResponse> bookDoctorAppointment({
+    required String diagnosticId,
+    required String patientName,
+    required String patientRelation,
+    required String appointmentDate, // Format: yyyy-MM-dd
+    required String appointmentTime, // Format: HH:mm
+  }) async {
+    try {
+      var headers = {'Content-Type': 'application/json'};
+
+      var request = http.Request(
+        'POST',
+        Uri.parse(
+            '${AppBaseUrls.baseUrl}api/staff/bookappoint/${AppTokens().userId}/$diagnosticId'),
+      );
+
+      request.body = json.encode({
+        "appointment_date": appointmentDate,
+        "appointment_time": appointmentTime,
+        "patient_name": patientName,
+        "patient_relation": patientRelation
+      });
+
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        var responseString = await response.stream.bytesToString();
+        final decodedMap = json.decode(responseString);
+        return DiagnosticCheckoutResponse.fromJson(decodedMap);
+      } else {
+        var responseString = await response.stream.bytesToString();
+        final decodedMap = json.decode(responseString);
+        AppToastMsgs.failedToast(
+            "Error", decodedMap['message'] ?? 'Unknown error');
+        throw Exception(decodedMap['message'] ?? 'Unknown error');
+      }
+    } catch (e) {
+      AppToastMsgs.failedToast("Server Error",
+          "Failed to connect to the server. Please try again later. $e");
+      print("Error during diagnostics checkout: $e");
+      throw Exception("error");
+    }
+  }
 }
