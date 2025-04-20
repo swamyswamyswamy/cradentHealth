@@ -61,6 +61,9 @@ class DoctorsController extends GetxController {
           patientRelation: patientRelation,
           appointmentDate: appointmentDate,
           appointmentTime: appointmentTime);
+
+
+          
       isLoading.value = false; // Set loading to false
     } catch (e) {
       // Handle error

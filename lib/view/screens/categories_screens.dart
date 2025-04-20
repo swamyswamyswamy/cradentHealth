@@ -10,15 +10,50 @@ import 'package:cradenthealth/view/screens/doctor_screens/doctors_list_screen.da
 import 'package:cradenthealth/view/screens/gym_fitness/gym_fitness_plans.dart';
 import 'package:cradenthealth/view/screens/hra/hra_screen.dart';
 import 'package:cradenthealth/view/screens/opticles/lenskart_specs_screen.dart';
-import 'package:cradenthealth/view/screens/pharmacy/screens/pharmacy_payment_screen.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 class CategoriesScreens extends StatelessWidget {
-  bool navigateBack;
+  final bool navigateBack;
   CategoriesScreens({super.key, this.navigateBack = true});
+
+  final List<Map<String, dynamic>> categories = [
+    {
+      'title': "Schedule a consultation",
+      'image': AppImages.consultationImage,
+      'navigate': DoctorsListScreen(),
+    },
+    // {
+    //   'title': "Pharmacy",
+    //   'image': AppImages.pharmacyImage,
+    //   'navigate': PharmacyPaymentScreen(),
+    // },
+    // {
+    //   'title': "Opticles",
+    //   'image': AppImages.opticleImage,
+    //   'navigate': LenskartSpecsScreen(title: "Opticles"),
+    // },
+    // {
+    //   'title': "Gym & Fitness",
+    //   'image': AppImages.gymFitnessImage,
+    //   'navigate': GymFitnessPlans(),
+    // },
+    // {
+    //   'title': "EAP",
+    //   'image': AppImages.hraImage,
+    //   'navigate': HraScreen(title: "EAP"),
+    // },
+    {
+      'title': "Diagnostics",
+      'image': AppImages.diagnosticsImage,
+      'navigate': DiagnosticslistScreen(),
+    },
+    // {
+    //   'title': "HRA",
+    //   'image': AppImages.hraImage,
+    //   'navigate': HraScreen(title: "HRA"),
+    // },
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -37,97 +72,56 @@ class CategoriesScreens extends StatelessWidget {
             children: [
               CustomSizedBoxHeight(height: 35),
               Column(
-                children: List.generate(7, (rowIndex) {
+                children:
+                    List.generate((categories.length / 2).ceil(), (rowIndex) {
                   return Row(
                     children: List.generate(2, (colIndex) {
                       final index = (rowIndex * 2) + colIndex;
-                      if (index < 7) {
+                      if (index < categories.length) {
+                        final category = categories[index];
                         return Expanded(
                           child: Padding(
                             padding: EdgeInsets.only(
-                                left: getProportionateScreenHeight(
-                                    colIndex != 1 ? 0 : 16),
-                                right: getProportionateScreenHeight(
-                                    colIndex == 1 ? 0 : 16),
-                                bottom: getProportionateScreenWidth(26)),
+                              left: getProportionateScreenHeight(
+                                  colIndex != 1 ? 0 : 16),
+                              right: getProportionateScreenHeight(
+                                  colIndex == 1 ? 0 : 16),
+                              bottom: getProportionateScreenWidth(26),
+                            ),
                             child: InkWell(
                               onTap: () {
-                                index == 0
-                                    ? Get.to(DoctorsListScreen())
-                                    : index == 1
-                                        ? Get.to(DiagnosticslistScreen())
-                                        : index == 2
-                                            ? Get.to(LenskartSpecsScreen(
-                                                title: "Opticles",
-                                              ))
-                                            : index == 3
-                                                ? Get.to(GymFitnessPlans())
-                                                : index == 4
-                                                    ? Get.to(HraScreen(
-                                                        title: "EAP",
-                                                      ))
-                                                    : index == 5
-                                                        ? Get.to(
-                                                            DiagnosticslistScreen())
-                                                        : Get.to(HraScreen(
-                                                            title: "HRA",
-                                                          ));
+                                Get.to(category['navigate']);
                               },
                               child: Container(
-                                // height: 70,\
                                 decoration: BoxDecoration(
-                                    color: AppColors.whiteColor,
-                                    borderRadius: BorderRadius.circular(10),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          offset: Offset(2, 2),
-                                          blurRadius: 4,
-                                          spreadRadius: 0,
-                                          color: AppColors.blackColor
-                                              .withOpacity(0.25))
-                                    ]),
+                                  color: AppColors.whiteColor,
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      offset: Offset(2, 2),
+                                      blurRadius: 4,
+                                      spreadRadius: 0,
+                                      color: AppColors.blackColor
+                                          .withOpacity(0.25),
+                                    )
+                                  ],
+                                ),
                                 child: Column(
                                   children: [
                                     CustomSizedBoxHeight(height: 19),
                                     Image.asset(
-                                      index == 0
-                                          ? AppImages.consultationImage
-                                          : index == 1
-                                              ? AppImages.pharmacyImage
-                                              : index == 2
-                                                  ? AppImages.opticleImage
-                                                  : index == 3
-                                                      ? AppImages
-                                                          .gymFitnessImage
-                                                      : index == 4
-                                                          ? AppImages.hraImage
-                                                          : index == 5
-                                                              ? AppImages
-                                                                  .diagnosticsImage
-                                                              : AppImages
-                                                                  .hraImage,
+                                      category['image'],
                                       height: getProportionateScreenHeight(80),
                                       width: getProportionateScreenWidth(80),
                                     ),
                                     CustomSizedBoxHeight(height: 8),
                                     CustomText(
-                                        textName: index == 0
-                                            ? "Schedule a consultation"
-                                            : index == 1
-                                                ? "Pharmacy"
-                                                : index == 2
-                                                    ? "Opticles"
-                                                    : index == 3
-                                                        ? "Gym & Fitness"
-                                                        : index == 4
-                                                            ? "EAP"
-                                                            : index == 5
-                                                                ? "Diagnostics"
-                                                                : "HRA",
-                                        textColor: AppColors.blackColor,
-                                        fontWeightType: FontWeightType.medium,
-                                        fontFamily: FontFamily.montserrat,
-                                        fontSize: 10),
+                                      textName: category['title'],
+                                      textColor: AppColors.blackColor,
+                                      fontWeightType: FontWeightType.medium,
+                                      fontFamily: FontFamily.montserrat,
+                                      fontSize: 10,
+                                    ),
                                     CustomSizedBoxHeight(height: 19),
                                   ],
                                 ),

@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:cradenthealth/constants/app_button.dart';
 import 'package:cradenthealth/constants/app_colors.dart';
+import 'package:cradenthealth/constants/app_constants.dart';
 import 'package:cradenthealth/constants/app_dropdown.dart';
 import 'package:cradenthealth/constants/app_images.dart';
 import 'package:cradenthealth/constants/app_mediaquery.dart';
@@ -12,10 +15,12 @@ import 'package:cradenthealth/view/screens/drawer_screens/family_members/add_fam
 import 'package:cradenthealth/view/screens/drawer_screens/family_members/family_list.dart';
 import 'package:cradenthealth/view/screens/drawer_screens/prescriptions_screen.dart';
 import 'package:cradenthealth/view/screens/drawer_screens/profile_screen.dart';
+import 'package:cradenthealth/view/screens/drawer_screens/support_screen.dart';
 import 'package:cradenthealth/view/screens/drawer_screens/wallet_screen.dart';
 import 'package:cradenthealth/view/screens/pharmacy/screens/pharmacy_screens.dart';
 import 'package:cradenthealth/view_model/api_controllers/profile_controller.dart';
 import 'package:cradenthealth/view_model/ui_controllers/bookings_controller.dart';
+import 'package:cradenthealth/view_model/ui_controllers/imagepicker_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -31,10 +36,13 @@ class DrawerScreen extends StatefulWidget {
 
 class _DrawerScreenState extends State<DrawerScreen> {
   final _profileController = Get.find<ProfileController>();
+
+  final _imagePickerController = Get.find<ImagePickerController>();
   @override
   void initState() {
     super.initState();
     _profileController.fetctProfile();
+    _imagePickerController.uploadImage.value = null;
   }
 
   @override
@@ -65,6 +73,11 @@ class _DrawerScreenState extends State<DrawerScreen> {
                             AppButton(
                               height: 70,
                               width: 70,
+                              onTap: () {
+                                _imagePickerController.pickImage(
+                                    imageType: "uploadImage",
+                                    isEditProfile: true);
+                              },
                               borderColor:
                                   AppColors.blackColor.withOpacity(0.1),
                               backgroundColor: AppColors.whiteColor,
@@ -76,13 +89,12 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                     decoration: BoxDecoration(
                                         shape: BoxShape.circle,
                                         image: DecorationImage(
-                                            image: _profileController
-                                                        .profileModelResponse
-                                                        .value
-                                                        .staff!
-                                                        .profileImage ==
+                                            image: _imagePickerController
+                                                        .uploadImage.value !=
                                                     null
-                                                ? NetworkImage("")
+                                                ? FileImage(
+                                                    _imagePickerController
+                                                        .uploadImage.value!)
                                                 : NetworkImage(
                                                     _profileController
                                                         .profileModelResponse
@@ -158,7 +170,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                         padding: EdgeInsets.symmetric(
                             horizontal: getProportionateScreenWidth(16)),
                         child: ListView.builder(
-                          itemCount: 5,
+                          itemCount: AppConstants.drawerNames.length,
                           physics: NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           itemBuilder: (BuildContext context, int index) {
@@ -167,16 +179,26 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                   bottom: getProportionateScreenWidth(28)),
                               child: InkWell(
                                 onTap: () {
-                                  index == 0
-                                      ? Get.to(WalletScreen())
-                                      : index == 1
-                                          ? Get.to(BookingsScreen())
-                                          : index == 2
-                                              ? Get.to(PrescriptionsScreen())
-                                              : index == 3
-                                                  ? Get.to(FamilyList())
-                                                  : Get.to(
-                                                      PrescriptionsScreen());
+                                  switch (index) {
+                                    case 0:
+                                      Get.to(WalletScreen());
+                                      break;
+                                    case 1:
+                                      Get.to(BookingsScreen());
+                                      break;
+                                    case 2:
+                                      Get.to(PrescriptionsScreen());
+                                      break;
+                                    case 3:
+                                      Get.to(FamilyList());
+                                      break;
+                                    case 4:
+                                      Get.to(
+                                          SupportListScreen()); // Make sure SupportScreen is created
+                                      break;
+                                    default:
+                                      Get.to(PrescriptionsScreen());
+                                  }
                                 },
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -188,28 +210,10 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                       borderRadius: 3,
                                       child: Center(
                                         child: Icon(
-                                          index == 0
-                                              ? Icons.account_balance_wallet
-                                              : index == 1
-                                                  ? Icons.book_online
-                                                  : index == 2
-                                                      ? Icons.medical_services
-                                                      : index == 3
-                                                          ? Icons
-                                                              .family_restroom
-                                                          : Icons.settings,
+                                          AppConstants.drawerIcons[index],
                                           size: 24,
-                                          color: index == 0
-                                              ? AppColors.primaryColor
-                                              : index == 1
-                                                  ? AppColors.pinkColor
-                                                  : index == 2
-                                                      ? AppColors.redColor
-                                                      : index == 3
-                                                          ? AppColors
-                                                              .primaryColor
-                                                          : AppColors
-                                                              .blackColor,
+                                          color:
+                                              AppConstants.randomColors[index],
                                         ),
                                       ),
                                     ),
@@ -220,15 +224,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                           Row(
                                             children: [
                                               CustomText(
-                                                  textName: index == 0
-                                                      ? "Wallet"
-                                                      : index == 1
-                                                          ? "Bookings"
-                                                          : index == 2
-                                                              ? "Prescription"
-                                                              : index == 3
-                                                                  ? "Family Members"
-                                                                  : "Settings",
+                                                  textName: AppConstants
+                                                      .drawerNames[index],
                                                   textColor:
                                                       AppColors.blackColor,
                                                   fontWeightType:

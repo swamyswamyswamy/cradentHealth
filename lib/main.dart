@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       translations: LocaleString(),
       locale: const Locale('en', 'US'),
-      title: 'HeloMate',
+      title: 'cradenthealth',
       home: TokenLoader(),
       // builder: EasyLoading.init(),
     );

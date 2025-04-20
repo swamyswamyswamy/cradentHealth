@@ -5,7 +5,7 @@ class DiagnosticResponse {
   DiagnosticResponse({this.message, this.diagnostics});
 
   DiagnosticResponse.fromJson(Map<String, dynamic> json) {
-    message = json['message']?.toString();
+    message = json['message']?.toString() ?? "";
     if (json['diagnostics'] != null) {
       diagnostics = <DiagnosticModel>[];
       json['diagnostics'].forEach((v) {
@@ -22,7 +22,7 @@ class DiagnosticTestResponse {
   DiagnosticTestResponse({this.message, this.tests});
 
   DiagnosticTestResponse.fromJson(Map<String, dynamic> json) {
-    message = json['message']?.toString();
+    message = json['message']?.toString() ?? "";
     if (json['tests'] != null) {
       tests = <TestModel>[];
       json['tests'].forEach((v) {
@@ -54,19 +54,19 @@ class DiagnosticModel {
   });
 
   DiagnosticModel.fromJson(Map<String, dynamic> json) {
-    id = json['_id']?.toString();
-    name = json['name']?.toString();
-    image = json['image']?.toString();
-    address = json['address']?.toString();
+    id = json['_id']?.toString() ?? "";
+    name = json['name']?.toString() ?? "";
+    image = json['image']?.toString() ?? "";
+    address = json['address']?.toString() ?? "";
     if (json['tests'] != null) {
       tests = <TestModel>[];
       json['tests'].forEach((v) {
         tests!.add(TestModel.fromJson(v));
       });
     }
-    createdAt = json['createdAt']?.toString();
-    updatedAt = json['updatedAt']?.toString();
-    v = json['__v']?.toString();
+    createdAt = json['createdAt']?.toString() ?? "";
+    updatedAt = json['updatedAt']?.toString() ?? "";
+    v = json['__v']?.toString() ?? "";
   }
 }
 
@@ -88,11 +88,11 @@ class TestModel {
   });
 
   TestModel.fromJson(Map<String, dynamic> json) {
-    testName = json['test_name']?.toString();
-    description = json['description']?.toString();
-    price = json['price']?.toString();
-    offerPrice = json['offerPrice']?.toString();
-    image = json['image']?.toString();
+    testName = json['test_name']?.toString() ?? "";
+    description = json['description']?.toString() ?? "";
+    price = json['price']?.toString() ?? "";
+    offerPrice = json['offerPrice']?.toString() ?? "";
+    image = json['image']?.toString() ?? "";
     id = (json['_id'] ?? json['testId'])?.toString();
   }
 }

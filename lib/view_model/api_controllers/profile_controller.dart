@@ -28,6 +28,20 @@ class ProfileController extends GetxController {
     }
   }
 
+  void upadateProfile({required String profileImage}) async {
+    try {
+      // isLoading.value = true; // Set loading to false
+
+      await profileService.upadateProfile(profileImage: profileImage);
+      isLoading.value = false; // Set loading to false
+    } catch (e) {
+      // Handle error
+      isLoading.value = false; // Set loading to false
+    } finally {
+      isLoading.value = false; // Set loading to false
+    }
+  }
+
   @override
   void onInit() {
     // fetchSupportService(); // Fetch data on controller initialization

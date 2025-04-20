@@ -6,8 +6,9 @@ class ProfileModelResponse {
 
   factory ProfileModelResponse.fromJson(Map<String, dynamic> json) {
     return ProfileModelResponse(
-      message: json['message']?.toString(),
-      staff: json['staff'] != null ? ProfileModel.fromJson(json['staff']) : null,
+      message: json['message']?.toString() ?? "",
+      staff:
+          json['staff'] != null ? ProfileModel.fromJson(json['staff']) : null,
     );
   }
 }
@@ -19,6 +20,7 @@ class ProfileModel {
   String? contactNumber;
   String? address;
   String? role;
+  String? wallet_balance;
   String? profileImage;
 
   ProfileModel({
@@ -28,18 +30,20 @@ class ProfileModel {
     this.contactNumber,
     this.address,
     this.role,
+    this.wallet_balance,
     this.profileImage,
   });
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) {
     return ProfileModel(
-      id: json['_id']?.toString(),
-      name: json['name']?.toString(),
-      email: json['email']?.toString(),
-      contactNumber: json['contact_number']?.toString(),
-      address: json['address']?.toString(),
-      role: json['role']?.toString(),
-      profileImage: json['profileImage']?.toString(),
+      id: json['_id']?.toString() ?? "",
+      name: json['name']?.toString() ?? "",
+      email: json['email']?.toString() ?? "",
+      contactNumber: json['contact_number']?.toString() ?? "",
+      address: json['address']?.toString() ?? "",
+      role: json['role']?.toString() ?? "",
+      wallet_balance: json['wallet_balance']?.toString() ?? "",
+      profileImage: json['profileImage']?.toString() ?? "",
     );
   }
 }

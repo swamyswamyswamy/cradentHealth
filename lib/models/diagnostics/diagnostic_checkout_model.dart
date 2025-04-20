@@ -11,9 +11,9 @@ class DiagnosticCheckoutResponse {
 
   factory DiagnosticCheckoutResponse.fromJson(Map<String, dynamic> json) {
     return DiagnosticCheckoutResponse(
-      message: json['message']?.toString(),
-      bookingId: json['bookingId']?.toString(),
-      total: json['total']?.toString(),
+      message: json['message']?.toString() ?? "",
+      bookingId: json['bookingId']?.toString() ?? "",
+      total: json['total']?.toString() ?? "",
       booking:
           json['booking'] != null ? Booking.fromJson(json['booking']) : null,
     );
@@ -57,22 +57,22 @@ class Booking {
 
   factory Booking.fromJson(Map<String, dynamic> json) {
     return Booking(
-      patientName: json['patient_name']?.toString(),
-      staffName: json['staff_name']?.toString(),
-      diagnosticName: json['diagnostic_name']?.toString(),
-      diagnosticImage: json['diagnostic_image']?.toString(),
-      diagnosticAddress: json['diagnostic_address']?.toString(),
-      consultationFee: json['consultation_fee']?.toString(),
+      patientName: json['patient_name']?.toString() ?? "",
+      staffName: json['staff_name']?.toString() ?? "",
+      diagnosticName: json['diagnostic_name']?.toString() ?? "",
+      diagnosticImage: json['diagnostic_image']?.toString() ?? "",
+      diagnosticAddress: json['diagnostic_address']?.toString() ?? "",
+      consultationFee: json['consultation_fee']?.toString() ?? "",
       tests:
           (json['tests'] as List?)?.map((e) => TestModel.fromJson(e)).toList(),
-      appointmentDate: json['appointment_date']?.toString(),
-      gender: json['gender']?.toString(),
-      age: json['age']?.toString(),
-      subtotal: json['subtotal']?.toString(),
-      gstOnTests: json['gst_on_tests']?.toString(),
-      gstOnConsultation: json['gst_on_consultation']?.toString(),
-      total: json['total']?.toString(),
-      status: json['status']?.toString(),
+      appointmentDate: json['appointment_date']?.toString() ?? "",
+      gender: json['gender']?.toString() ?? "",
+      age: json['age']?.toString() ?? "",
+      subtotal: json['subtotal']?.toString() ?? "",
+      gstOnTests: json['gst_on_tests']?.toString() ?? "",
+      gstOnConsultation: json['gst_on_consultation']?.toString() ?? "",
+      total: json['total']?.toString() ?? "",
+      status: json['status']?.toString() ?? "",
     );
   }
 }
