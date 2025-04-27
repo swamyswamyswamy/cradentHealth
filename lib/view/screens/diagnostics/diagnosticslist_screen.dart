@@ -5,11 +5,13 @@ import 'package:cradenthealth/constants/app_mediaquery.dart';
 import 'package:cradenthealth/constants/app_sizedbox.dart';
 import 'package:cradenthealth/constants/app_text.dart';
 import 'package:cradenthealth/constants/appbar_component.dart';
+import 'package:cradenthealth/models/familyMember_model.dart';
 import 'package:cradenthealth/view/screens/bookings/bookings_screen.dart';
 import 'package:cradenthealth/view/screens/diagnostics/diagnostic_tests_screen.dart';
 import 'package:cradenthealth/view/screens/home/widgets/recent_lookups_widget.dart';
 import 'package:cradenthealth/view/widgets/doctor_profile_details_widget.dart';
 import 'package:cradenthealth/view_model/api_controllers/diagnostics_controller.dart';
+import 'package:cradenthealth/view_model/api_controllers/family_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -27,10 +29,12 @@ class DiagnosticslistScreen extends StatefulWidget {
 
 class _DiagnosticslistScreenState extends State<DiagnosticslistScreen> {
   final _diagnosticsController = Get.find<DiagnosticsController>();
+  final _familyController = Get.find<FamilyController>();
   @override
   void initState() {
     super.initState();
     _diagnosticsController.fetchDiagnostics();
+    _familyController.fetchFamilyList();
   }
 
   @override
@@ -70,21 +74,22 @@ class _DiagnosticslistScreenState extends State<DiagnosticslistScreen> {
                   //   ],
                   // ),
                   // CustomSizedBoxHeight(height: 16),
-                  // CustomDropdown(
-                  //   dropdownItems: [
-                  //     'Narasimha',
-                  //   ],
-                  //   getItemName: (item) => item, // Simply returns the item itself
-                  //   getItemId: (item) => item, // ID same as the item in this case
-                  //   initialValue: 'Narasimha', // Optional initial value
-                  //   hintName: 'Narasimha',
+                  CustomDropdown<FamilyMember>(
+                    dropdownItems: _familyController
+                        .familyResponseModel.value.familyMembers!,
+                    getItemName: (item) =>
+                        item.fullName!, // Simply returns the item itself
+                    getItemId: (item) =>
+                        item.id!, // ID same as the item in this case
+                    // initialValue: 'Narasimha', // Optional initial value
+                    hintName: 'Narasimha',
 
-                  //   textColor: Colors.black,
-                  //   onChanged: (selectedValue) {
-                  //     print('Selected: $selectedValue');
-                  //   },
-                  // ),
-                  // CustomSizedBoxHeight(height: 26),
+                    textColor: Colors.black,
+                    onChanged: (selectedValue) {
+                      print('Selected: $selectedValue');
+                    },
+                  ),
+                  CustomSizedBoxHeight(height: 26),
                   ListView.builder(
                     itemCount: _diagnosticsController
                         .diagnosticResponse.value.diagnostics!.length,

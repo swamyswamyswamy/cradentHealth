@@ -1,3 +1,4 @@
+import 'package:cradenthealth/models/diagnostics/booking_history_diagnostic.dart';
 import 'package:cradenthealth/models/diagnostics/diagnostic_checkout_model.dart';
 import 'package:cradenthealth/models/diagnostics/diagnosticlist_model.dart';
 import 'package:cradenthealth/services/diagnostic_service.dart';
@@ -7,12 +8,16 @@ class DiagnosticsController extends GetxController {
   var diagnosticResponse = DiagnosticResponse().obs;
   var diagnosticTestResponse = DiagnosticTestResponse().obs;
   var diagnosticCheckoutResponse = DiagnosticCheckoutResponse().obs;
+  var bookingsHistoryDiagnosticResponseModel =
+      BookingsHistoryDiagnosticResponseModel().obs;
   final DiagnosticService diagnosticService;
 
   var isLoading = false.obs; // Observable for loading state
   var isLoadingDiagnosticTests = false.obs; // Observable for loading state
   var isLoadingDiagnosticCheckout = false.obs; // Observable for loading state
   var isLoadingDiagnosticBooking = false.obs; // Observable for loading state
+  var isLoadingDiagnosticBookingHistory =
+      false.obs; // Observable for loading state
   DiagnosticsController(this.diagnosticService);
 
   void fetchDiagnostics() async {
@@ -122,6 +127,20 @@ class DiagnosticsController extends GetxController {
       isLoadingDiagnosticBooking.value = false; // Set loading to false
     } finally {
       isLoadingDiagnosticBooking.value = false; // Set loading to false
+    }
+  }
+
+  void fetchDiagnosticHistory() async {
+    try {
+      isLoadingDiagnosticBookingHistory.value = true; // Set loading to false
+      bookingsHistoryDiagnosticResponseModel.value =
+          await diagnosticService.fetchDiagnosticHistory();
+      isLoadingDiagnosticBookingHistory.value = false; // Set loading to false
+    } catch (e) {
+      // Handle error
+      isLoadingDiagnosticBookingHistory.value = false; // Set loading to false
+    } finally {
+      isLoadingDiagnosticBookingHistory.value = false; // Set loading to false
     }
   }
 
