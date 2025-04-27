@@ -5,6 +5,7 @@ import 'package:cradenthealth/constants/app_tokens.dart';
 import 'package:cradenthealth/models/diagnostics/diagnosticlist_model.dart';
 import 'package:cradenthealth/models/familyMember_model.dart';
 import 'package:cradenthealth/models/profile_model.dart';
+import 'package:cradenthealth/view_model/api_controllers/family_controller.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -23,6 +24,7 @@ class FamilyService {
     required String sugar,
     required String relation,
   }) async {
+    final _familyController = Get.find<FamilyController>();
     try {
       var headers = {'Content-Type': 'application/json'};
 
@@ -55,7 +57,8 @@ class FamilyService {
         var responseString = await response.stream.bytesToString();
         final decodedMap = json.decode(responseString);
 
-        // print(decodedMap);
+        Get.back();
+        _familyController.fetchFamilyList(); // print(decodedMap);
         AppToastMsgs.successToast("Success", decodedMap['message']);
       } else {
         var responseString = await response.stream.bytesToString();
