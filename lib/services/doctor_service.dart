@@ -65,14 +65,15 @@ class DoctorService {
 
       request.headers.addAll(headers);
 
-      print("print the bod of the appointment ${request.body}");
       http.StreamedResponse response = await request.send();
 
-      if (response.statusCode == 200) {
+      print("print the bod of the doctor appointment ${request.body}");
+      print("print the bod of the doctor appointment ${response.statusCode}");
+      if (response.statusCode == 201) {
         var responseString = await response.stream.bytesToString();
         final decodedMap = json.decode(responseString);
-        AppToastMsgs.failedToast(
-            "Error", decodedMap['message'] ?? 'Unknown error');
+        AppToastMsgs.successToast(
+            "Success", decodedMap['message'] ?? 'Unknown error');
         return AppointmentModel.fromJson(decodedMap);
       } else {
         var responseString = await response.stream.bytesToString();

@@ -23,19 +23,10 @@ class DoctorsController extends GetxController {
       false.obs; // Observable for loading state
   DoctorsController(this.doctorService);
 
-  final selectedAvailableDate = 0.obs; // Observable variable
-
-  // Method to update the selectedAvailableDate field
-  void updateSelectedAvailableDate(int value) {
-    selectedAvailableDate.value = value;
-  }
-
-  final selectedtimeSlot = 0.obs; // Observable variable
-
-  // Method to update the selectedAvailableDate field
-  void updateSelectedtimeSlot(int value) {
-    selectedtimeSlot.value = value;
-  }
+  final selectedAvailableDateIndex = 0.obs; // Observable variable
+  final selectedtimeSlotIndex = 0.obs; // Observable variable
+  final selectedAvailableDate = "".obs; // Observable variable
+  final selectedtimeSlot = "".obs; // Observable variable
 
   void fetctDoctors() async {
     try {

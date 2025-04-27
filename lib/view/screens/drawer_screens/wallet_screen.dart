@@ -9,7 +9,7 @@ import 'package:cradenthealth/view/screens/bookings/bookings_screen.dart';
 import 'package:cradenthealth/view/screens/gym_fitness/gym_fitness_plans.dart';
 import 'package:cradenthealth/view/screens/hra/hra_screen.dart';
 import 'package:cradenthealth/view/screens/opticles/lenskart_specs_screen.dart';
-import 'package:cradenthealth/view/screens/pharmacy/screens/pharmacy_payment_screen.dart';
+import 'package:cradenthealth/view/screens/diagnostics/diagnostic_payment_screen.dart';
 import 'package:cradenthealth/view_model/api_controllers/wallet_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

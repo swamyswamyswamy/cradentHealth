@@ -52,11 +52,19 @@ class DiagnosticsController extends GetxController {
   void fetchDiagnosticsCheckout({
     required String diagnosticId,
     required List tests,
+    required String gender,
+    required String patient_name,
+    required String age,
   }) async {
     try {
       isLoadingDiagnosticCheckout.value = true; // Set loading to false
-      diagnosticCheckoutResponse.value = await diagnosticService
-          .fetchDiagnosticsCheckout(diagnosticId: diagnosticId, tests: tests);
+      diagnosticCheckoutResponse.value =
+          await diagnosticService.fetchDiagnosticsCheckout(
+              diagnosticId: diagnosticId,
+              gender: gender,
+              patient_name: patient_name,
+              age: age,
+              tests: tests);
       isLoadingDiagnosticCheckout.value = false; // Set loading to false
     } catch (e) {
       // Handle error
@@ -82,6 +90,7 @@ class DiagnosticsController extends GetxController {
         isLoadingDiagnosticTests.value = true; // Set loading to false
         await diagnosticService.removeDiagnosticsTests(
             bookingId: bookingId, testId: testId);
+        selectedDiagnosticTests.removeWhere((e) => e.id == testId);
         isLoadingDiagnosticTests.value = false; // Set loading to false
       } catch (e) {
         // Handle error
@@ -115,12 +124,12 @@ class DiagnosticsController extends GetxController {
     }
   }
 
-  void bookDiagnosticsTests({
+  void paymentDiagnosticsTests({
     required String bookingId,
   }) async {
     try {
       isLoadingDiagnosticBooking.value = true; // Set loading to false
-      await diagnosticService.bookDiagnosticsTests(bookingId: bookingId);
+      await diagnosticService.paymentDiagnosticsTests(bookingId: bookingId);
       isLoadingDiagnosticBooking.value = false; // Set loading to false
     } catch (e) {
       // Handle error

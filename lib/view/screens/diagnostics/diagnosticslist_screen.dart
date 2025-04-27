@@ -82,11 +82,19 @@ class _DiagnosticslistScreenState extends State<DiagnosticslistScreen> {
                     getItemId: (item) =>
                         item.id!, // ID same as the item in this case
                     // initialValue: 'Narasimha', // Optional initial value
-                    hintName: 'Narasimha',
+                    hintName: 'Select family member',
 
                     textColor: Colors.black,
                     onChanged: (selectedValue) {
-                      print('Selected: $selectedValue');
+                      _familyController.selectedPatientName.value =
+                          selectedValue!.fullName!;
+                      _familyController.selectedPatientAge.value =
+                          selectedValue!.age!;
+                      _familyController.selectedPatientGender.value =
+                          selectedValue!.gender!;
+
+                      print(
+                          'Selected: ${_familyController.selectedPatientName.value}');
                     },
                   ),
                   CustomSizedBoxHeight(height: 26),
@@ -103,6 +111,11 @@ class _DiagnosticslistScreenState extends State<DiagnosticslistScreen> {
                           child: InkWell(
                               onTap: () {
                                 Get.to(DiagnosticTestsScreen(
+                                  diagnoticName: _diagnosticsController
+                                      .diagnosticResponse
+                                      .value
+                                      .diagnostics![index]
+                                      .name!,
                                   diagnosticId: _diagnosticsController
                                       .diagnosticResponse
                                       .value
@@ -111,6 +124,7 @@ class _DiagnosticslistScreenState extends State<DiagnosticslistScreen> {
                                 ));
                               },
                               child: DoctorProfileDetailsWidget(
+                                
                                 diagnosticModel: _diagnosticsController
                                     .diagnosticResponse
                                     .value

@@ -6,6 +6,7 @@ import 'package:cradenthealth/constants/app_sizedbox.dart';
 import 'package:cradenthealth/constants/app_text.dart';
 import 'package:cradenthealth/models/doctors/doctor_model.dart';
 import 'package:cradenthealth/view_model/api_controllers/doctors_controller.dart';
+import 'package:cradenthealth/view_model/api_controllers/family_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -20,6 +21,7 @@ class AppointmentBottomSheet extends StatefulWidget {
 
 class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
   final _doctorsController = Get.find<DoctorsController>();
+  final _familyController = Get.find<FamilyController>();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -42,11 +44,11 @@ class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
                   children: [
                     Center(
                       child: CustomText(
-                          textName:
-                              _doctorsController.selectedAvailableDate.value ==
-                                      100
-                                  ? ""
-                                  : "Book  your Appointment",
+                          textName: _doctorsController
+                                      .selectedAvailableDateIndex.value ==
+                                  100
+                              ? ""
+                              : "Book  your Appointment",
                           textColor: AppColors.primaryColor,
                           fontWeightType: FontWeightType.bold,
                           fontFamily: FontFamily.poppins,
@@ -171,7 +173,7 @@ class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
                         padding:
                             EdgeInsets.all(getProportionateScreenHeight(12)),
                         child: ListView.builder(
-                          itemCount: 10,
+                          itemCount: widget.doctorDetails.schedule!.length,
                           scrollDirection: Axis.horizontal,
                           shrinkWrap: true,
                           itemBuilder: (BuildContext context, int index) {
@@ -181,11 +183,15 @@ class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
                               child: AppButton(
                                 onTap: () {
                                   _doctorsController
-                                      .updateSelectedAvailableDate(index);
+                                      .selectedAvailableDateIndex.value = index;
+                                  _doctorsController
+                                          .selectedAvailableDate.value =
+                                      widget
+                                          .doctorDetails.schedule![index].date!;
                                 },
                                 width: 53,
                                 backgroundColor: _doctorsController
-                                            .selectedAvailableDate.value ==
+                                            .selectedAvailableDateIndex.value ==
                                         index
                                     ? AppColors.primaryColor
                                     : AppColors.whiteColor,
@@ -194,9 +200,17 @@ class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     CustomText(
-                                        textName: "Sun",
+                                        textName: (widget.doctorDetails
+                                                .schedule![index].day!
+                                                .substring(0, 3)
+                                                .toLowerCase()[0]
+                                                .toUpperCase() +
+                                            widget.doctorDetails
+                                                .schedule![index].day!
+                                                .substring(1, 3)
+                                                .toLowerCase()),
                                         textColor: _doctorsController
-                                                    .selectedAvailableDate
+                                                    .selectedAvailableDateIndex
                                                     .value ==
                                                 index
                                             ? AppColors.whiteColor
@@ -206,9 +220,11 @@ class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
                                         fontSize: 14),
                                     CustomSizedBoxHeight(height: 10),
                                     CustomText(
-                                        textName: "1",
+                                        textName: widget.doctorDetails
+                                            .schedule![index].date!
+                                            .split("-")[1],
                                         textColor: _doctorsController
-                                                    .selectedAvailableDate
+                                                    .selectedAvailableDateIndex
                                                     .value ==
                                                 index
                                             ? AppColors.whiteColor
@@ -238,10 +254,16 @@ class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
                       child: Padding(
                         padding: EdgeInsets.symmetric(
                             vertical: getProportionateScreenHeight(10)),
-                        child: _doctorsController.selectedtimeSlot.value == 100
+                        child: _doctorsController.selectedtimeSlotIndex.value ==
+                                100
                             ? SizedBox()
                             : ListView.builder(
-                                itemCount: 10,
+                                itemCount: widget
+                                    .doctorDetails
+                                    .schedule![_doctorsController
+                                        .selectedAvailableDateIndex.value]
+                                    .timeSlots!
+                                    .length,
                                 scrollDirection: Axis.horizontal,
                                 shrinkWrap: true,
                                 itemBuilder: (BuildContext context, int index) {
@@ -250,13 +272,22 @@ class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
                                         right: getProportionateScreenWidth(16)),
                                     child: InkWell(
                                       onTap: () {
+                                        _doctorsController.selectedtimeSlotIndex
+                                            .value = index;
                                         _doctorsController
-                                            .updateSelectedtimeSlot(index);
+                                                .selectedtimeSlot.value =
+                                            widget
+                                                .doctorDetails
+                                                .schedule![_doctorsController
+                                                    .selectedAvailableDateIndex
+                                                    .value]
+                                                .timeSlots![index]
+                                                .time!;
                                       },
                                       child: Container(
                                         decoration: BoxDecoration(
                                             color: _doctorsController
-                                                        .selectedtimeSlot
+                                                        .selectedtimeSlotIndex
                                                         .value ==
                                                     index
                                                 ? AppColors.primaryColor
@@ -278,9 +309,15 @@ class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
                                                       5)),
                                           child: Center(
                                             child: CustomText(
-                                                textName: "11:00 am",
+                                                textName: widget
+                                                    .doctorDetails
+                                                    .schedule![_doctorsController
+                                                        .selectedAvailableDateIndex
+                                                        .value]
+                                                    .timeSlots![index]
+                                                    .time!,
                                                 textColor: _doctorsController
-                                                            .selectedtimeSlot
+                                                            .selectedtimeSlotIndex
                                                             .value ==
                                                         index
                                                     ? AppColors.whiteColor
@@ -304,13 +341,16 @@ class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
                       onTap: () {
                         _doctorsController.bookDoctorAppointment(
                             diagnosticId: widget.doctorDetails.id!,
-                            patientName: "dfdf",
-                            patientRelation: "fdfd",
+                            patientName:
+                                _familyController.selectedPatientAge.value,
+                            patientRelation:
+                                _familyController.selectedPatientGender.value,
                             appointmentDate: _doctorsController
-                                .selectedAvailableDate
+                                .selectedAvailableDateIndex
                                 .toString(),
-                            appointmentTime:
-                                _doctorsController.selectedtimeSlot.toString());
+                            appointmentTime: _doctorsController
+                                .selectedtimeSlotIndex
+                                .toString());
                         // Get.to(HomeScreen());
                       },
                       hasShadow: true,

@@ -6,7 +6,7 @@ import 'package:cradenthealth/constants/app_mediaquery.dart';
 import 'package:cradenthealth/constants/app_sizedbox.dart';
 import 'package:cradenthealth/constants/app_text.dart';
 import 'package:cradenthealth/constants/appbar_component.dart';
-import 'package:cradenthealth/view/screens/pharmacy/screens/pharmacy_payment_screen.dart';
+import 'package:cradenthealth/view/screens/diagnostics/diagnostic_payment_screen.dart';
 import 'package:cradenthealth/view_model/ui_controllers/home_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -158,9 +158,9 @@ class PharmacyScreens extends StatelessWidget {
                                     children: [
                                       AppButton(
                                         onTap: () {
-                                          Get.to(PharmacyPaymentScreen(
-                                            entryFrom: "Pharmacy",
-                                          ));
+                                          // Get.to(DiagnosticPaymentScreen(
+                                          //   entryFrom: "Pharmacy",
+                                          // ));
                                         },
                                         borderRadius: 5,
                                         child: Padding(

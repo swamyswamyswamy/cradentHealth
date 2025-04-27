@@ -8,8 +8,9 @@ import 'package:cradenthealth/constants/app_text.dart';
 import 'package:cradenthealth/constants/appbar_component.dart';
 import 'package:cradenthealth/view/screens/bookings/bookings_screen.dart';
 import 'package:cradenthealth/view/screens/home/widgets/recent_lookups_widget.dart';
-import 'package:cradenthealth/view/screens/pharmacy/screens/pharmacy_payment_screen.dart';
+import 'package:cradenthealth/view/screens/diagnostics/diagnostic_payment_screen.dart';
 import 'package:cradenthealth/view_model/api_controllers/diagnostics_controller.dart';
+import 'package:cradenthealth/view_model/api_controllers/family_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -19,7 +20,9 @@ import 'package:get/get.dart';
 
 class DiagnosticTestsScreen extends StatefulWidget {
   String diagnosticId;
-  DiagnosticTestsScreen({super.key, required this.diagnosticId});
+  String diagnoticName;
+  DiagnosticTestsScreen(
+      {super.key, required this.diagnosticId, required this.diagnoticName});
 
   @override
   State<DiagnosticTestsScreen> createState() => _DiagnosticTestsScreenState();
@@ -27,18 +30,23 @@ class DiagnosticTestsScreen extends StatefulWidget {
 
 class _DiagnosticTestsScreenState extends State<DiagnosticTestsScreen> {
   final _diagnosticsController = Get.find<DiagnosticsController>();
+  final _familyController = Get.find<FamilyController>();
   @override
   void initState() {
     super.initState();
-    _diagnosticsController.fetchDiagnosticsTests(
-        diagnosticId: widget.diagnosticId);
+
+    Future.delayed(Duration.zero, () {
+      _diagnosticsController.fetchDiagnosticsTests(
+          diagnosticId: widget.diagnosticId);
+      _diagnosticsController.selectedDiagnosticTests.clear();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-          backgroundColor: AppColors.whiteColor, title: "Vijaya Diagnostics"),
+          backgroundColor: AppColors.whiteColor, title: widget.diagnoticName),
       backgroundColor: AppColors.whiteColor,
       body: Obx(() {
         final diagnosticTestsList =
@@ -146,7 +154,7 @@ class _DiagnosticTestsScreenState extends State<DiagnosticTestsScreen> {
                                                               diagnosticTestsList[
                                                                   index]);
                                                       // Get.to(
-                                                      //     PharmacyPaymentScreen(
+                                                      //     DiagnosticPaymentScreen(
                                                       //   entryFrom: "Diagnostics",
                                                       // ));
                                                     },
@@ -300,15 +308,22 @@ class _DiagnosticTestsScreenState extends State<DiagnosticTestsScreen> {
                           ),
                           AppButton(
                             onTap: () {
-                              Get.to(PharmacyPaymentScreen(
-                                entryFrom: "Diagnostics",
+                              Get.to(DiagnosticPaymentScreen(
+                                diagnoticName: widget.diagnoticName,
                               ));
                               _diagnosticsController.fetchDiagnosticsCheckout(
                                   diagnosticId: widget.diagnosticId,
+                                  patient_name: _familyController
+                                      .selectedPatientAge.value,
+                                  gender: _familyController
+                                      .selectedPatientGender.value,
+                                  age: _familyController
+                                      .selectedPatientAge.value,
                                   tests: _diagnosticsController
                                       .selectedDiagnosticTests
                                       .map((e) => e.id)
                                       .toList());
+
                               // _diagnosticsController.addDiagnosticTest(
                               //     diagnosticTestsList[index]);
                             },

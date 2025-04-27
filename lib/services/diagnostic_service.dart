@@ -5,6 +5,9 @@ import 'package:cradenthealth/constants/app_tokens.dart';
 import 'package:cradenthealth/models/diagnostics/booking_history_diagnostic.dart';
 import 'package:cradenthealth/models/diagnostics/diagnostic_checkout_model.dart';
 import 'package:cradenthealth/models/diagnostics/diagnosticlist_model.dart';
+import 'package:cradenthealth/services/dependency_injection.dart';
+import 'package:cradenthealth/view/screens/app_bottom_navigation.dart';
+import 'package:cradenthealth/view_model/api_controllers/family_controller.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -68,6 +71,9 @@ class DiagnosticService {
 
   Future<DiagnosticCheckoutResponse> fetchDiagnosticsCheckout({
     required String diagnosticId,
+    required String gender,
+    required String patient_name,
+    required String age,
     required List tests,
   }) async {
     try {
@@ -76,18 +82,18 @@ class DiagnosticService {
           Uri.parse('${AppBaseUrls.baseUrl}api/booking/book-appointment'));
       request.body = json.encode({
         "staffId": AppTokens().userId,
-        "patient_name": "John Doe",
         "diagnosticId": diagnosticId,
         "tests": tests,
         "appointment_date": "2025-04-15T09:00:00Z",
-        "gender": "Male",
-        "age": 30
+        "patient_name": patient_name,
+        "gender": gender,
+        "age": age
       });
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
 
-      print("print the body checkout${request.body}");
+      print("print the body checkout dia${response.statusCode}");
       // var request = http.Request('GET',
       //     Uri.parse('${AppBaseUrls.baseUrl}api/admin/alltest/${diagnosticId}'));
 
@@ -130,7 +136,7 @@ class DiagnosticService {
       if (response.statusCode == 200) {
         var responseString = await response.stream.bytesToString();
         final decodedMap = json.decode(responseString);
-
+        // print("print the datials fjdfkd${decodedMap}");
         AppToastMsgs.successToast("Success", decodedMap['message']);
         // return DiagnosticTestResponse.fromJson(decodedMap);
       } else {
@@ -148,11 +154,11 @@ class DiagnosticService {
     }
   }
 
-  Future bookDiagnosticsTests({required String bookingId}) async {
+  Future paymentDiagnosticsTests({required String bookingId}) async {
     try {
       var headers = {'Content-Type': 'application/json'};
       var request = http.Request(
-          'PATCH',
+          'POST',
           Uri.parse(
               '${AppBaseUrls.baseUrl}api/booking/payment/${bookingId}/${AppTokens().userId}'));
 
@@ -163,6 +169,8 @@ class DiagnosticService {
         final decodedMap = json.decode(responseString);
 
         AppToastMsgs.successToast("Success", decodedMap['message']);
+        Get.offAll(() => AppBottomNavigation());
+        DependencyInjection.apiInit();
         // return DiagnosticTestResponse.fromJson(decodedMap);
       } else {
         var responseString = await response.stream.bytesToString();

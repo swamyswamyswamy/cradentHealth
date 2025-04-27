@@ -15,15 +15,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class PharmacyPaymentScreen extends StatefulWidget {
-  String entryFrom;
-  PharmacyPaymentScreen({super.key, required this.entryFrom});
+class DiagnosticPaymentScreen extends StatefulWidget {
+  String diagnoticName;
+  DiagnosticPaymentScreen({super.key, required this.diagnoticName});
 
   @override
-  State<PharmacyPaymentScreen> createState() => _PharmacyPaymentScreenState();
+  State<DiagnosticPaymentScreen> createState() =>
+      _DiagnosticPaymentScreenState();
 }
 
-class _PharmacyPaymentScreenState extends State<PharmacyPaymentScreen> {
+class _DiagnosticPaymentScreenState extends State<DiagnosticPaymentScreen> {
   final _diagnosticsController = Get.find<DiagnosticsController>();
   @override
   void initState() {
@@ -35,9 +36,7 @@ class _PharmacyPaymentScreenState extends State<PharmacyPaymentScreen> {
     return Scaffold(
         appBar: CustomAppBar(
           backgroundColor: AppColors.whiteColor,
-          title: widget.entryFrom == "Pharmacy"
-              ? "Apollo Pharmacy"
-              : "Vijaya Diagnostics",
+          title: widget.diagnoticName,
         ),
         backgroundColor: AppColors.whiteColor,
         body: Obx(() {
@@ -330,7 +329,7 @@ class _PharmacyPaymentScreenState extends State<PharmacyPaymentScreen> {
                                   .isLoadingDiagnosticBooking.value) {
                                 return null;
                               } else {
-                                _diagnosticsController.bookDiagnosticsTests(
+                                _diagnosticsController.paymentDiagnosticsTests(
                                     bookingId: _diagnosticsController
                                         .diagnosticCheckoutResponse
                                         .value!

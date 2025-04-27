@@ -40,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // {
     //   'title': "Pharmacy",
     //   'image': AppImages.pharmacyImage,
-    //   'navigate': PharmacyPaymentScreen(),
+    //   'navigate': DiagnosticPaymentScreen(),
     // },
     // {
     //   'title': "Opticles",
@@ -320,13 +320,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          CustomText(
-                              textName: "Recent lookups",
-                              textColor: AppColors.blackColor,
-                              fontWeightType: FontWeightType.semiBold,
-                              fontFamily: FontFamily.montserrat,
-                              fontSize: 16),
-                          CustomSizedBoxHeight(height: 16),
+                          // CustomText(
+                          //     textName: "Recent lookups",
+                          //     textColor: AppColors.blackColor,
+                          //     fontWeightType: FontWeightType.semiBold,
+                          //     fontFamily: FontFamily.montserrat,
+                          //     fontSize: 16),
+                          // CustomSizedBoxHeight(height: 16),
                           // RecentLookupsWidget(
                           //   entryFrom: "",
                           // ),

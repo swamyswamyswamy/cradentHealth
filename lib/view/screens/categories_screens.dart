@@ -26,7 +26,7 @@ class CategoriesScreens extends StatelessWidget {
     // {
     //   'title': "Pharmacy",
     //   'image': AppImages.pharmacyImage,
-    //   'navigate': PharmacyPaymentScreen(),
+    //   'navigate': DiagnosticPaymentScreen(),
     // },
     // {
     //   'title': "Opticles",

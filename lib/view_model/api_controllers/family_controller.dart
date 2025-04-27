@@ -83,6 +83,9 @@ class FamilyController extends GetxController {
   var staffId = ''.obs;
 //ui
 
+  var selectedPatientName = ''.obs;
+  var selectedPatientAge = ''.obs;
+  var selectedPatientGender = ''.obs;
   @override
   void onInit() {
     // fetchSupportService(); // Fetch data on controller initialization

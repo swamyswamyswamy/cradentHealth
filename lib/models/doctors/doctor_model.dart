@@ -49,22 +49,41 @@ class DoctorModel {
 
 class DoctorSchedule {
   String? day;
-  String? startTime;
-  String? endTime;
+  String? date;
+  List<TimeSlot>? timeSlots;
   String? id;
 
   DoctorSchedule({
     this.day,
-    this.startTime,
-    this.endTime,
+    this.date,
+    this.timeSlots,
     this.id,
   });
 
   factory DoctorSchedule.fromJson(Map<String, dynamic> json) {
     return DoctorSchedule(
       day: json['day']?.toString() ?? "",
-      startTime: json['startTime']?.toString() ?? "",
-      endTime: json['endTime']?.toString() ?? "",
+      date: json['date']?.toString() ?? "",
+      timeSlots: (json['time_slots'] as List<dynamic>?)
+          ?.map((e) => TimeSlot.fromJson(e))
+          .toList(),
+      id: json['_id']?.toString() ?? "",
+    );
+  }
+}
+
+class TimeSlot {
+  String? time;
+  String? id;
+
+  TimeSlot({
+    this.time,
+    this.id,
+  });
+
+  factory TimeSlot.fromJson(Map<String, dynamic> json) {
+    return TimeSlot(
+      time: json['time']?.toString() ?? "",
       id: json['_id']?.toString() ?? "",
     );
   }
