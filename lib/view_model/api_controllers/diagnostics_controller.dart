@@ -139,11 +139,11 @@ class DiagnosticsController extends GetxController {
     }
   }
 
-  void fetchDiagnosticHistory() async {
+  void fetchDiagnosticHistory({required String status}) async {
     try {
       isLoadingDiagnosticBookingHistory.value = true; // Set loading to false
       bookingsHistoryDiagnosticResponseModel.value =
-          await diagnosticService.fetchDiagnosticHistory();
+          await diagnosticService.fetchDiagnosticHistory(status: status);
       isLoadingDiagnosticBookingHistory.value = false; // Set loading to false
     } catch (e) {
       // Handle error

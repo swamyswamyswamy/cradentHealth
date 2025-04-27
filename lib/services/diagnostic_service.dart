@@ -233,14 +233,14 @@ class DiagnosticService {
     }
   }
 
-  Future<BookingsHistoryDiagnosticResponseModel>
-      fetchDiagnosticHistory() async {
+  Future<BookingsHistoryDiagnosticResponseModel> fetchDiagnosticHistory(
+      {required String status}) async {
     try {
       var request = http.Request(
           'GET',
           Uri.parse(
               '${AppBaseUrls.baseUrl}api/staff/getalldiagbookings/${AppTokens().userId}'));
-
+      request.body = json.encode({"status": status});
       http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 200) {

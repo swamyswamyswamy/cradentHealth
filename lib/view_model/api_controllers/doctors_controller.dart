@@ -19,8 +19,11 @@ class DoctorsController extends GetxController {
   final DoctorService doctorService;
 
   var isLoading = false.obs; // Observable for loading state
+  var isLoadingBookDoctorAppointment =
+      false.obs; // Observable for loading state
   var isLoadingDoctorsBookingHistory =
       false.obs; // Observable for loading state
+  var isLoadingDoctorsPayment = false.obs; // Observable for loading state
   DoctorsController(this.doctorService);
 
   final selectedAvailableDateIndex = 0.obs; // Observable variable
@@ -49,7 +52,7 @@ class DoctorsController extends GetxController {
     required String appointmentTime, // Format: HH:mm
   }) async {
     try {
-      isLoading.value = true; // Set loading to false
+      isLoadingBookDoctorAppointment.value = true; // Set loading to false
       appointmentModel.value = await doctorService.bookDoctorAppointment(
           diagnosticId: diagnosticId,
           patientName: patientName,
@@ -57,26 +60,41 @@ class DoctorsController extends GetxController {
           appointmentDate: appointmentDate,
           appointmentTime: appointmentTime);
 
-      isLoading.value = false; // Set loading to false
+      isLoadingBookDoctorAppointment.value = false; // Set loading to false
     } catch (e) {
       // Handle error
-      isLoading.value = false; // Set loading to false
+      isLoadingBookDoctorAppointment.value = false; // Set loading to false
     } finally {
-      isLoading.value = false; // Set loading to false
+      isLoadingBookDoctorAppointment.value = false; // Set loading to false
     }
   }
 
-  void fetchDoctorsBookingHistory() async {
+  void fetchDoctorsBookingHistory({required String status}) async {
     try {
       isLoadingDoctorsBookingHistory.value = true; // Set loading to false
       bookingHistoryDoctorsResponseModel.value =
-          await doctorService.fetchDoctorsBookingHistory();
+          await doctorService.fetchDoctorsBookingHistory(status: status);
       isLoadingDoctorsBookingHistory.value = false; // Set loading to false
     } catch (e) {
       // Handle error
       isLoadingDoctorsBookingHistory.value = false; // Set loading to false
     } finally {
       isLoadingDoctorsBookingHistory.value = false; // Set loading to false
+    }
+  }
+
+  void paymentDoctorBooking({
+    required String bookingId,
+  }) async {
+    try {
+      isLoadingDoctorsPayment.value = true; // Set loading to false
+      await doctorService.paymentDoctorBooking(bookingId: bookingId);
+      isLoadingDoctorsPayment.value = false; // Set loading to false
+    } catch (e) {
+      // Handle error
+      isLoadingDoctorsPayment.value = false; // Set loading to false
+    } finally {
+      isLoadingDoctorsPayment.value = false; // Set loading to false
     }
   }
 

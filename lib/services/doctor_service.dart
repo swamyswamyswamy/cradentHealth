@@ -7,6 +7,8 @@ import 'package:cradenthealth/models/doctors/bookAppointment_model.dart';
 import 'package:cradenthealth/models/doctors/booking_history_doctors_model.dart';
 import 'package:cradenthealth/models/doctors/doctor_model.dart';
 import 'package:cradenthealth/models/profile_model.dart';
+import 'package:cradenthealth/services/dependency_injection.dart';
+import 'package:cradenthealth/view/screens/app_bottom_navigation.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -90,14 +92,14 @@ class DoctorService {
     }
   }
 
-  Future<BookingHistoryDoctorsResponseModel>
-      fetchDoctorsBookingHistory() async {
+  Future<BookingHistoryDoctorsResponseModel> fetchDoctorsBookingHistory(
+      {required String status}) async {
     try {
       var request = http.Request(
           'GET',
           Uri.parse(
               '${AppBaseUrls.baseUrl}api/staff/getdoctorappointment/${AppTokens().userId}'));
-
+      request.body = json.encode({"status": status});
       http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 200) {
@@ -116,6 +118,41 @@ class DoctorService {
       // Handle the case where the server is down
       AppToastMsgs.failedToast("Server Error",
           "Failed to connect to the server. Please try again later.$e");
+      print("Error fetching ride history: $e");
+      throw Exception("error");
+    }
+  }
+
+  Future paymentDoctorBooking({required String bookingId}) async {
+    try {
+      var headers = {'Content-Type': 'application/json'};
+      var request = http.Request(
+          'POST',
+          Uri.parse(
+              '${AppBaseUrls.baseUrl}api/staff/process-payment/${AppTokens().userId}/${bookingId}'));
+
+      http.StreamedResponse response = await request.send();
+
+      print("payment screen api ${request.url}");
+      print("payment screen api ${response.statusCode}");
+      if (response.statusCode == 200) {
+        var responseString = await response.stream.bytesToString();
+        final decodedMap = json.decode(responseString);
+
+        AppToastMsgs.successToast("Success", decodedMap['message']);
+        Get.offAll(() => AppBottomNavigation());
+        DependencyInjection.apiInit();
+        // return DiagnosticTestResponse.fromJson(decodedMap);
+      } else {
+        var responseString = await response.stream.bytesToString();
+        final decodedMap = json.decode(responseString);
+        AppToastMsgs.failedToast("Error", decodedMap['message']);
+        // throw Exception(decodedMap['message']);
+      }
+    } catch (e) {
+      // Handle the case where the server is down
+      AppToastMsgs.failedToast("Server Error",
+          "Failed to connect to the server. Please try again later.");
       print("Error fetching ride history: $e");
       throw Exception("error");
     }

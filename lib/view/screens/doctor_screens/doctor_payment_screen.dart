@@ -11,21 +11,22 @@ import 'package:cradenthealth/view/screens/home/widgets/recent_lookups_widget.da
 import 'package:cradenthealth/view/widgets/doctor_profile_details_widget.dart';
 import 'package:cradenthealth/view/widgets/person_profile_details_widget.dart';
 import 'package:cradenthealth/view_model/api_controllers/diagnostics_controller.dart';
+import 'package:cradenthealth/view_model/api_controllers/doctors_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class DiagnosticPaymentScreen extends StatefulWidget {
-  String entryFrom;
-  DiagnosticPaymentScreen({super.key, required this.entryFrom});
+class DoctorPaymentScreen extends StatefulWidget {
+  DoctorPaymentScreen({
+    super.key,
+  });
 
   @override
-  State<DiagnosticPaymentScreen> createState() =>
-      _DiagnosticPaymentScreenState();
+  State<DoctorPaymentScreen> createState() => _DoctorPaymentScreenState();
 }
 
-class _DiagnosticPaymentScreenState extends State<DiagnosticPaymentScreen> {
-  final _diagnosticsController = Get.find<DiagnosticsController>();
+class _DoctorPaymentScreenState extends State<DoctorPaymentScreen> {
+  final _doctorsController = Get.find<DoctorsController>();
   @override
   void initState() {
     super.initState();
@@ -36,13 +37,11 @@ class _DiagnosticPaymentScreenState extends State<DiagnosticPaymentScreen> {
     return Scaffold(
         appBar: CustomAppBar(
           backgroundColor: AppColors.whiteColor,
-          title: widget.entryFrom == "Pharmacy"
-              ? "Apollo Pharmacy"
-              : "Vijaya Diagnostics",
+          title: "Payment Screen",
         ),
         backgroundColor: AppColors.whiteColor,
         body: Obx(() {
-          return _diagnosticsController.isLoadingDiagnosticCheckout.value
+          return _doctorsController.isLoadingBookDoctorAppointment.value
               ? Center(
                   child: CircularProgressIndicator(
                   color: AppColors.primaryColor,
@@ -81,113 +80,15 @@ class _DiagnosticPaymentScreenState extends State<DiagnosticPaymentScreen> {
                               padding: EdgeInsets.all(
                                   getProportionateScreenHeight(10)),
                               child: PersonProfileDetailsWidget(
-                                name: _diagnosticsController
-                                    .diagnosticCheckoutResponse
-                                    .value!
-                                    .booking!
-                                    .patientName!,
-                                age: _diagnosticsController
-                                    .diagnosticCheckoutResponse
-                                    .value!
-                                    .booking!
-                                    .age!,
-                                gender: _diagnosticsController
-                                    .diagnosticCheckoutResponse
-                                    .value!
-                                    .booking!
-                                    .gender!,
-                                imageUrl: _diagnosticsController
-                                    .diagnosticCheckoutResponse
-                                    .value!
-                                    .booking!
-                                    .diagnosticImage!,
+                                name: _doctorsController.appointmentModel.value!
+                                    .appointment!.doctorName!,
+                                age: "",
+                                gender: "",
+                                imageUrl: "",
                               )),
                         ),
                       ),
                       CustomSizedBoxHeight(height: 45),
-                      ListView.builder(
-                        itemCount: _diagnosticsController
-                            .diagnosticCheckoutResponse
-                            .value!
-                            .booking!
-                            .tests!
-                            .length,
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Padding(
-                            padding: EdgeInsets.only(
-                                bottom: getProportionateScreenHeight(16)),
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal:
-                                          getProportionateScreenWidth(16)),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            CustomText(
-                                                textName: _diagnosticsController
-                                                    .diagnosticCheckoutResponse
-                                                    .value!
-                                                    .booking!
-                                                    .tests![index]
-                                                    .testName!,
-                                                textColor: AppColors.blackColor,
-                                                fontWeightType:
-                                                    FontWeightType.medium,
-                                                fontFamily: FontFamily.inter,
-                                                fontSize: 16),
-                                            CustomText(
-                                                textName:
-                                                    "₹ ${_diagnosticsController.diagnosticCheckoutResponse.value!.booking!.tests![index].offerPrice!}",
-                                                textColor: AppColors.blackColor,
-                                                fontWeightType:
-                                                    FontWeightType.regular,
-                                                fontFamily: FontFamily.inter,
-                                                fontSize: 13),
-                                          ],
-                                        ),
-                                      ),
-                                      InkWell(
-                                        onTap: () {
-                                          print(
-                                              'Test with IDgfgfgf removed successfully.${_diagnosticsController.diagnosticCheckoutResponse.value!.booking!.tests![index].id!}');
-                                          _diagnosticsController.deleteTests(
-                                              testId: _diagnosticsController
-                                                  .diagnosticCheckoutResponse
-                                                  .value!
-                                                  .booking!
-                                                  .tests![index]
-                                                  .id!,
-                                              bookingId: _diagnosticsController
-                                                  .diagnosticCheckoutResponse
-                                                  .value!
-                                                  .bookingId!);
-                                        },
-                                        child: Icon(
-                                          Icons.delete_outlined,
-                                          color: AppColors.redColor,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                CustomSizedBoxHeight(height: 16),
-                                Divider(
-                                  color: AppColors.blackColor.withOpacity(0.2),
-                                  height: 16,
-                                )
-                              ],
-                            ),
-                          );
-                        },
-                      ),
                       Padding(
                         padding: EdgeInsets.symmetric(
                             horizontal: getProportionateScreenWidth(16)),
@@ -236,7 +137,7 @@ class _DiagnosticPaymentScreenState extends State<DiagnosticPaymentScreen> {
                                 Spacer(),
                                 CustomText(
                                     textName:
-                                        "₹ ${_diagnosticsController.diagnosticCheckoutResponse.value!.booking!.total}",
+                                        "₹ ${_doctorsController.appointmentModel.value!.appointment!.subtotal}",
                                     textColor: AppColors.blackColor,
                                     fontWeightType: FontWeightType.medium,
                                     fontFamily: FontFamily.inter,
@@ -273,7 +174,7 @@ class _DiagnosticPaymentScreenState extends State<DiagnosticPaymentScreen> {
                                 Spacer(),
                                 CustomText(
                                     textName:
-                                        "₹ ${_diagnosticsController.diagnosticCheckoutResponse.value!.booking!.gstOnTests}",
+                                        "₹ ${_doctorsController.appointmentModel.value!.appointment!.subtotal}",
                                     textColor: AppColors.blackColor,
                                     fontWeightType: FontWeightType.medium,
                                     fontFamily: FontFamily.inter,
@@ -303,7 +204,7 @@ class _DiagnosticPaymentScreenState extends State<DiagnosticPaymentScreen> {
                             Spacer(),
                             CustomText(
                                 textName:
-                                    "₹ ${_diagnosticsController.diagnosticCheckoutResponse.value!.booking!.subtotal}",
+                                    "₹ ${_doctorsController.appointmentModel.value!.appointment!.subtotal!}",
                                 textColor: AppColors.blackColor,
                                 fontWeightType: FontWeightType.medium,
                                 fontFamily: FontFamily.inter,
@@ -327,15 +228,16 @@ class _DiagnosticPaymentScreenState extends State<DiagnosticPaymentScreen> {
                             width: double.infinity,
                             height: 44,
                             onTap: () {
-                              if (_diagnosticsController
-                                  .isLoadingDiagnosticBooking.value) {
+                              if (_doctorsController
+                                  .isLoadingDoctorsPayment.value) {
                                 return null;
                               } else {
-                                _diagnosticsController.paymentDiagnosticsTests(
-                                    bookingId: _diagnosticsController
-                                        .diagnosticCheckoutResponse
-                                        .value!
-                                        .bookingId!);
+                                _doctorsController.paymentDoctorBooking(
+                                    bookingId: _doctorsController
+                                        .appointmentModel
+                                        .value
+                                        .appointment!
+                                        .appointmentId!);
                               }
 
                               // Get.to(DashBoardScreen());
@@ -344,8 +246,7 @@ class _DiagnosticPaymentScreenState extends State<DiagnosticPaymentScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                _diagnosticsController
-                                        .isLoadingDiagnosticBooking.value
+                                _doctorsController.isLoadingDoctorsPayment.value
                                     ? Container(
                                         height: 20,
                                         width: 20,
@@ -354,23 +255,22 @@ class _DiagnosticPaymentScreenState extends State<DiagnosticPaymentScreen> {
                                         ),
                                       )
                                     : SizedBox(),
-                                _diagnosticsController
-                                        .isLoadingDiagnosticBooking.value
+                                _doctorsController.isLoadingDoctorsPayment.value
                                     ? CustomSizedBoxWidth(width: 20)
                                     : SizedBox(),
                                 CustomText(
-                                  textName: _diagnosticsController
-                                          .isLoadingDiagnosticBooking.value
+                                  textName: _doctorsController
+                                          .isLoadingDoctorsPayment.value
                                       ? "isLoading....."
                                       : "Proceed",
-                                  fontSize: _diagnosticsController
-                                          .isLoadingDiagnosticBooking.value
+                                  fontSize: _doctorsController
+                                          .isLoadingDoctorsPayment.value
                                       ? 16
                                       : 18,
                                   // textAlign: TextAlign.center,
                                   fontFamily: FontFamily.poppins,
-                                  fontWeightType: _diagnosticsController
-                                          .isLoadingDiagnosticBooking.value
+                                  fontWeightType: _doctorsController
+                                          .isLoadingDoctorsPayment.value
                                       ? FontWeightType.regular
                                       : FontWeightType.semiBold,
                                   textColor: AppColors.whiteColor,
@@ -381,7 +281,7 @@ class _DiagnosticPaymentScreenState extends State<DiagnosticPaymentScreen> {
                         );
                       }),
 
-                      CustomSizedBoxHeight(height: 30)
+                      // CustomSizedBoxHeight(height: 30)
                     ],
                   ),
                 );

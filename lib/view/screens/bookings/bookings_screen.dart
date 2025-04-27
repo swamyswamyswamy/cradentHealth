@@ -36,7 +36,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
 
     Future.delayed(Duration.zero, () {
       // _diagnosticsController.fetchDiagnosticHistory();
-      _doctorsController.fetchDoctorsBookingHistory();
+      _doctorsController.fetchDoctorsBookingHistory(status: "");
     });
   }
 
@@ -74,6 +74,23 @@ class _BookingsScreenState extends State<BookingsScreen> {
                             onTap: () {
                               _bookingsController
                                   .updateselectedBookingTab(index);
+                              if (historyType == "Doctor Consultation") {
+                                _doctorsController.fetchDoctorsBookingHistory(
+                                  status: index == 0
+                                      ? "Present"
+                                      : index == 1
+                                          ? "Completed"
+                                          : "Cancelled",
+                                );
+                              } else {
+                                _diagnosticsController.fetchDiagnosticHistory(
+                                  status: index == 0
+                                      ? "Present"
+                                      : index == 1
+                                          ? "Completed"
+                                          : "Cancelled",
+                                );
+                              }
                             },
                             backgroundColor:
                                 _bookingsController.selectedBookingTab.value ==
@@ -130,9 +147,29 @@ class _BookingsScreenState extends State<BookingsScreen> {
                         setState(() {
                           historyType = selectedValue!;
                           if (historyType == "Doctor Consultation") {
-                            _doctorsController.fetchDoctorsBookingHistory();
+                            _doctorsController.fetchDoctorsBookingHistory(
+                              status: _bookingsController
+                                          .selectedBookingTab.value ==
+                                      0
+                                  ? "Present"
+                                  : _bookingsController
+                                              .selectedBookingTab.value ==
+                                          1
+                                      ? "Completed"
+                                      : "Cancelled",
+                            );
                           } else {
-                            _diagnosticsController.fetchDiagnosticHistory();
+                            _diagnosticsController.fetchDiagnosticHistory(
+                              status: _bookingsController
+                                          .selectedBookingTab.value ==
+                                      0
+                                  ? "Present"
+                                  : _bookingsController
+                                              .selectedBookingTab.value ==
+                                          1
+                                      ? "Completed"
+                                      : "Cancelled",
+                            );
                           }
                         });
                       },

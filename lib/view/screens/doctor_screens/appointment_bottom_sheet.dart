@@ -5,6 +5,7 @@ import 'package:cradenthealth/constants/app_mediaquery.dart';
 import 'package:cradenthealth/constants/app_sizedbox.dart';
 import 'package:cradenthealth/constants/app_text.dart';
 import 'package:cradenthealth/models/doctors/doctor_model.dart';
+import 'package:cradenthealth/view/screens/doctor_screens/doctor_payment_screen.dart';
 import 'package:cradenthealth/view_model/api_controllers/doctors_controller.dart';
 import 'package:cradenthealth/view_model/api_controllers/family_controller.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,20 @@ class AppointmentBottomSheet extends StatefulWidget {
 class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
   final _doctorsController = Get.find<DoctorsController>();
   final _familyController = Get.find<FamilyController>();
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () {
+      _doctorsController.selectedAvailableDate.value =
+          widget.doctorDetails.schedule![0].date!;
+      _doctorsController.selectedtimeSlot.value = widget
+          .doctorDetails
+          .schedule![_doctorsController.selectedAvailableDateIndex.value]
+          .timeSlots![0]
+          .time!;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -336,6 +351,60 @@ class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
                       ),
                     ),
                     CustomSizedBoxHeight(height: 20),
+                    // AppButton(
+                    //   width: double.infinity,
+                    //   height: 44,
+                    //   onTap: () {
+                    //     if (_doctorsController
+                    //         .isLoadingBookDoctorAppointment.value) return null;
+                    //     _doctorsController.bookDoctorAppointment(
+                    //         diagnosticId: widget.doctorDetails.id!,
+                    //         patientName:
+                    //             _familyController.selectedPatientAge.value,
+                    //         patientRelation:
+                    //             _familyController.selectedPatientGender.value,
+                    //         appointmentDate: _doctorsController
+                    //             .selectedAvailableDateIndex
+                    //             .toString(),
+                    //         appointmentTime: _doctorsController
+                    //             .selectedtimeSlotIndex
+                    //             .toString());
+                    //   },
+                    //   hasShadow: true,
+                    //   child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.center,
+                    //     children: [
+                    //       !_doctorsController
+                    //               .isLoadingBookDoctorAppointment.value
+                    //           ? SizedBox()
+                    //           : Container(
+                    //               height: 20,
+                    //               width: 20,
+                    //               child: CircularProgressIndicator(
+                    //                 color: AppColors.whiteColor,
+                    //               ),
+                    //             ),
+                    //       !_doctorsController
+                    //               .isLoadingBookDoctorAppointment.value
+                    //           ? SizedBox()
+                    //           : CustomSizedBoxWidth(width: 20),
+                    //       CustomText(
+                    //         textName: _doctorsController
+                    //                 .isLoadingBookDoctorAppointment.value
+                    //             ? "isLoading....."
+                    //             : "Book Now",
+                    //         fontSize: 16,
+                    //         // textAlign: TextAlign.center,
+                    //         fontFamily: FontFamily.robotoFlex,
+                    //         fontWeightType: _doctorsController
+                    //                 .isLoadingBookDoctorAppointment.value
+                    //             ? FontWeightType.regular
+                    //             : FontWeightType.semiBold,
+                    //         textColor: AppColors.whiteColor,
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                     AppButton(
                       height: 44,
                       onTap: () {
@@ -351,7 +420,7 @@ class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
                             appointmentTime: _doctorsController
                                 .selectedtimeSlotIndex
                                 .toString());
-                        // Get.to(HomeScreen());
+                        Get.to(DoctorPaymentScreen());
                       },
                       hasShadow: true,
                       label: "Book Now",
