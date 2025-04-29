@@ -15,23 +15,6 @@ class DiagnosticResponse {
   }
 }
 
-class DiagnosticTestResponse {
-  String? message;
-  List<TestModel>? tests;
-
-  DiagnosticTestResponse({this.message, this.tests});
-
-  DiagnosticTestResponse.fromJson(Map<String, dynamic> json) {
-    message = json['message']?.toString() ?? "";
-    if (json['tests'] != null) {
-      tests = <TestModel>[];
-      json['tests'].forEach((v) {
-        tests!.add(TestModel.fromJson(v));
-      });
-    }
-  }
-}
-
 class DiagnosticModel {
   String? id;
   String? name;
@@ -70,6 +53,32 @@ class DiagnosticModel {
   }
 }
 
+class DiagnosticTestResponse {
+  String? message;
+  List<TestModel>? tests;
+  List<PackageModel>? packages;
+
+  DiagnosticTestResponse({this.message, this.tests, this.packages});
+
+  DiagnosticTestResponse.fromJson(Map<String, dynamic> json) {
+    message = json['message']?.toString() ?? "";
+
+    if (json['tests'] != null) {
+      tests = <TestModel>[];
+      json['tests'].forEach((v) {
+        tests!.add(TestModel.fromJson(v));
+      });
+    }
+
+    if (json['packages'] != null) {
+      packages = <PackageModel>[];
+      json['packages'].forEach((v) {
+        packages!.add(PackageModel.fromJson(v));
+      });
+    }
+  }
+}
+
 class TestModel {
   String? testName;
   String? description;
@@ -93,6 +102,36 @@ class TestModel {
     price = json['price']?.toString() ?? "";
     offerPrice = json['offerPrice']?.toString() ?? "";
     image = json['image']?.toString() ?? "";
-    id = (json['_id'] ?? json['testId'])?.toString();
+    id = json['_id']?.toString();
+  }
+}
+
+class PackageModel {
+  String? packageName;
+  String? price;
+  String? offerPrice;
+  List<TestModel>? tests;
+  String? id;
+
+  PackageModel({
+    this.packageName,
+    this.price,
+    this.offerPrice,
+    this.tests,
+    this.id,
+  });
+
+  PackageModel.fromJson(Map<String, dynamic> json) {
+    packageName = json['packageName']?.toString() ?? "";
+    price = json['price']?.toString() ?? "";
+    offerPrice = json['offerPrice']?.toString() ?? "";
+    id = json['_id']?.toString();
+
+    if (json['tests'] != null) {
+      tests = <TestModel>[];
+      json['tests'].forEach((v) {
+        tests!.add(TestModel.fromJson(v));
+      });
+    }
   }
 }
