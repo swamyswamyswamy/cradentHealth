@@ -151,17 +151,6 @@ class _PackagesDiagnosticWidgetState extends State<PackagesDiagnosticWidget> {
                                                               .packageName
                                                     }));
 
-                                                    print(_diagnosticsController
-                                                        .selectedDiagnosticTests[
-                                                            0]
-                                                        .id);
-                                                    print(_diagnosticsController
-                                                        .selectedDiagnosticTests[
-                                                            0]
-                                                        .price);
-                                                    print(diagnosticTestsList[
-                                                            index]
-                                                        .id);
                                                     // Get.to(
                                                     //     DiagnosticPaymentScreen(
                                                     //   entryFrom: "Diagnostics",

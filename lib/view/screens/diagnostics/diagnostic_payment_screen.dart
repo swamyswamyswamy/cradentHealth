@@ -103,6 +103,48 @@ class _DiagnosticPaymentScreenState extends State<DiagnosticPaymentScreen> {
                         ),
                       ),
                       CustomSizedBoxHeight(height: 45),
+                      _diagnosticsController.diagnosticTestType.value ==
+                                  "tests" ||
+                              _diagnosticsController.diagnosticCheckoutResponse
+                                  .value!.booking!.tests!.isEmpty
+                          ? SizedBox()
+                          : Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: getProportionateScreenWidth(16)),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: CustomText(
+                                        textName:
+                                            "${_diagnosticsController.diagnosticCheckoutResponse.value!.booking!.packageName!}",
+                                        textColor: AppColors.blackColor,
+                                        fontWeightType: FontWeightType.semiBold,
+                                        fontFamily: FontFamily.inter,
+                                        fontSize: 20),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      _diagnosticsController.deleteTests(
+                                          packageId: _diagnosticsController
+                                              .diagnosticCheckoutResponse
+                                              .value!
+                                              .booking!
+                                              .packageId!,
+                                          testId: "",
+                                          bookingId: _diagnosticsController
+                                              .diagnosticCheckoutResponse
+                                              .value!
+                                              .bookingId!);
+                                    },
+                                    child: Icon(
+                                      Icons.delete_outlined,
+                                      color: AppColors.redColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                      CustomSizedBoxHeight(height: 10),
                       ListView.builder(
                         itemCount: _diagnosticsController
                             .diagnosticCheckoutResponse
@@ -152,27 +194,35 @@ class _DiagnosticPaymentScreenState extends State<DiagnosticPaymentScreen> {
                                           ],
                                         ),
                                       ),
-                                      InkWell(
-                                        onTap: () {
-                                          print(
-                                              'Test with IDgfgfgf removed successfully.${_diagnosticsController.diagnosticCheckoutResponse.value!.booking!.tests![index].id!}');
-                                          _diagnosticsController.deleteTests(
-                                              testId: _diagnosticsController
-                                                  .diagnosticCheckoutResponse
-                                                  .value!
-                                                  .booking!
-                                                  .tests![index]
-                                                  .id!,
-                                              bookingId: _diagnosticsController
-                                                  .diagnosticCheckoutResponse
-                                                  .value!
-                                                  .bookingId!);
-                                        },
-                                        child: Icon(
-                                          Icons.delete_outlined,
-                                          color: AppColors.redColor,
-                                        ),
-                                      )
+                                      _diagnosticsController
+                                                  .diagnosticTestType.value !=
+                                              "tests"
+                                          ? SizedBox()
+                                          : InkWell(
+                                              onTap: () {
+                                                print(
+                                                    'Test with IDgfgfgf removed successfully.');
+                                                print(
+                                                    'Test with IDgfgfgf removed successfully.${_diagnosticsController.diagnosticCheckoutResponse.value!.booking!.tests![index].id!}');
+                                                _diagnosticsController.deleteTests(
+                                                    packageId: "",
+                                                    testId: _diagnosticsController
+                                                        .diagnosticCheckoutResponse
+                                                        .value!
+                                                        .booking!
+                                                        .tests![index]
+                                                        .id!,
+                                                    bookingId:
+                                                        _diagnosticsController
+                                                            .diagnosticCheckoutResponse
+                                                            .value!
+                                                            .bookingId!);
+                                              },
+                                              child: Icon(
+                                                Icons.delete_outlined,
+                                                color: AppColors.redColor,
+                                              ),
+                                            )
                                     ],
                                   ),
                                 ),

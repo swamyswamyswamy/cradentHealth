@@ -74,6 +74,7 @@ class DiagnosticService {
     required String gender,
     required String patient_name,
     required String age,
+    required String packageId,
     required List tests,
   }) async {
     try {
@@ -83,7 +84,8 @@ class DiagnosticService {
       request.body = json.encode({
         "staffId": AppTokens().userId,
         "diagnosticId": diagnosticId,
-        "tests": tests,
+        if (packageId == "") "tests": tests,
+        if (packageId != "") "packageId": packageId,
         "appointment_date": "2025-04-15T09:00:00Z",
         "patient_name": patient_name,
         "gender": gender,
@@ -93,7 +95,7 @@ class DiagnosticService {
 
       http.StreamedResponse response = await request.send();
 
-      print("print the body checkout dia${response.statusCode}");
+      print("print the body checkout dia${request.body}");
       // var request = http.Request('GET',
       //     Uri.parse('${AppBaseUrls.baseUrl}api/admin/alltest/${diagnosticId}'));
 
@@ -121,14 +123,20 @@ class DiagnosticService {
   }
 
   Future removeDiagnosticsTests(
-      {required String bookingId, required String testId}) async {
+      {required String bookingId,
+      required String testId,
+      required String packageId}) async {
     try {
       var headers = {'Content-Type': 'application/json'};
       var request = http.Request(
           'PATCH',
           Uri.parse(
               '${AppBaseUrls.baseUrl}api/booking/remvoe-test/${AppTokens().userId}'));
-      request.body = json.encode({"bookingId": bookingId, "testId": testId});
+      request.body = json.encode({
+        "bookingId": bookingId,
+        if (testId != "") "testId": testId,
+        if (testId == "") "packageId": packageId
+      });
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
@@ -176,12 +184,12 @@ class DiagnosticService {
         var responseString = await response.stream.bytesToString();
         final decodedMap = json.decode(responseString);
         AppToastMsgs.failedToast("Error", decodedMap['message']);
-        throw Exception(decodedMap['message']);
+        // throw Exception(decodedMap['message']);
       }
     } catch (e) {
       // Handle the case where the server is down
       AppToastMsgs.failedToast("Server Error",
-          "Failed to connect to the server. Please try again later.");
+          "Failed to connect to the server. Please try again later.$e");
       print("Error fetching ride history: $e");
       throw Exception("error");
     }

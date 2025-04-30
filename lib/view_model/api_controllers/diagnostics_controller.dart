@@ -55,6 +55,7 @@ class DiagnosticsController extends GetxController {
     required String gender,
     required String patient_name,
     required String age,
+    required String packageId,
   }) async {
     try {
       isLoadingDiagnosticCheckout.value = true; // Set loading to false
@@ -64,6 +65,7 @@ class DiagnosticsController extends GetxController {
               gender: gender,
               patient_name: patient_name,
               age: age,
+              packageId: packageId,
               tests: tests);
       isLoadingDiagnosticCheckout.value = false; // Set loading to false
     } catch (e) {
@@ -75,34 +77,40 @@ class DiagnosticsController extends GetxController {
   }
 
   Future<void> deleteTests(
-      {required String testId, required String bookingId}) async {
+      {required String testId,
+      required String packageId,
+      required String bookingId}) async {
     // Find the index of the test in the list
-    print('Test with ID $testId removed successfully.');
-    int testIndex = diagnosticCheckoutResponse.value.booking!.tests!
-        .indexWhere((test) => test.id == testId);
+    // print('Test with ID $testId removed successfully.');
 
-    if (testIndex != -1) {
+    if (diagnosticTestType.value == "tests") {
+      int testIndex = diagnosticCheckoutResponse.value.booking!.tests!
+          .indexWhere((test) => test.id == testId);
+
       // Remove the test from the list
       diagnosticCheckoutResponse.value.booking!.tests!.removeAt(testIndex);
-      diagnosticCheckoutResponse.refresh();
-
-      try {
-        isLoadingDiagnosticTests.value = true; // Set loading to false
-        await diagnosticService.removeDiagnosticsTests(
-            bookingId: bookingId, testId: testId);
-        selectedDiagnosticTests.removeWhere((e) => e.id == testId);
-        isLoadingDiagnosticTests.value = false; // Set loading to false
-      } catch (e) {
-        // Handle error
-        isLoadingDiagnosticTests.value = false; // Set loading to false
-      } finally {
-        isLoadingDiagnosticTests.value = false; // Set loading to false
-      }
-
-      print('Test with ID $testId removed successfully.');
+      selectedDiagnosticTests.removeWhere((e) => e.id == testId);
     } else {
-      print('Test with ID $testId not found.');
+      diagnosticCheckoutResponse.value.booking!.tests!.clear();
+      selectedDiagnosticTests.removeWhere((e) => e.id == packageId);
     }
+
+    diagnosticCheckoutResponse.refresh();
+
+    try {
+      isLoadingDiagnosticTests.value = true; // Set loading to false
+      await diagnosticService.removeDiagnosticsTests(
+          packageId: packageId, bookingId: bookingId, testId: testId);
+
+      isLoadingDiagnosticTests.value = false; // Set loading to false
+    } catch (e) {
+      // Handle error
+      isLoadingDiagnosticTests.value = false; // Set loading to false
+    } finally {
+      isLoadingDiagnosticTests.value = false; // Set loading to false
+    }
+
+    print('Test with ID $testId removed successfully.');
   }
 
   var selectedDiagnosticTests = <TestModel>[].obs;
@@ -114,12 +122,19 @@ class DiagnosticsController extends GetxController {
   // List<String> get selectedNames =>
   //     selectedTests.map((e) => e.testName!).toList();
 
+  var diagnosticTestType = "tests".obs;
   void addDiagnosticTest(TestModel test) {
     if (selectedDiagnosticTests.any((e) => e.id == test.id)) {
       selectedDiagnosticTests.removeWhere((e) => e.id == test.id);
       print("selectedTests${selectedDiagnosticTests}");
     } else {
-      selectedDiagnosticTests.add(test);
+      if (diagnosticTestType != "tests" && selectedDiagnosticTests.isNotEmpty) {
+        selectedDiagnosticTests.clear();
+        selectedDiagnosticTests.add(test);
+      } else {
+        selectedDiagnosticTests.add(test);
+      }
+
       print("selectedTests${selectedDiagnosticTests}");
     }
   }

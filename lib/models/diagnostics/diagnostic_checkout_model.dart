@@ -36,6 +36,8 @@ class Booking {
   String? gstOnConsultation;
   String? total;
   String? status;
+  String? packageId;
+  String? packageName;
 
   Booking({
     this.patientName,
@@ -52,7 +54,9 @@ class Booking {
     this.gstOnTests,
     this.gstOnConsultation,
     this.total,
+    this.packageId,
     this.status,
+    this.packageName,
   });
 
   factory Booking.fromJson(Map<String, dynamic> json) {
@@ -73,6 +77,8 @@ class Booking {
       gstOnConsultation: json['gst_on_consultation']?.toString() ?? "",
       total: json['total']?.toString() ?? "",
       status: json['status']?.toString() ?? "",
+      packageId: json['packageId']?.toString() ?? "",
+      packageName: json['packageName']?.toString() ?? "",
     );
   }
 }

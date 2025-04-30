@@ -102,7 +102,7 @@ class TestModel {
     price = json['price']?.toString() ?? "";
     offerPrice = json['offerPrice']?.toString() ?? "";
     image = json['image']?.toString() ?? "";
-    id = json['_id']?.toString();
+    id = (json['_id'] ?? json['testId'])?.toString();
   }
 }
 

@@ -38,13 +38,13 @@ class _DiagnosticTestsScreenState extends State<DiagnosticTestsScreen> {
     super.initState();
 
     Future.delayed(Duration.zero, () {
+      _diagnosticsController.diagnosticTestType.value = "tests";
       _diagnosticsController.fetchDiagnosticsTests(
-          diagnosticId: "680fdd03edfd5aa0fe52e11c");
+          diagnosticId: widget.diagnosticId);
       _diagnosticsController.selectedDiagnosticTests.clear();
     });
   }
 
-  String _testType = "tests";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,9 +67,10 @@ class _DiagnosticTestsScreenState extends State<DiagnosticTestsScreen> {
               textColor: Colors.black,
               onChanged: (selectedValue) {
                 _diagnosticsController.selectedDiagnosticTests.clear();
-                setState(() {
-                  _testType = selectedValue!;
-                });
+
+                _diagnosticsController.diagnosticTestType.value =
+                    selectedValue!;
+
                 // _familyController.selectedPatientName.value =
                 //     selectedValue!.fullName!;
                 // _familyController.selectedPatientAge.value = selectedValue!.age!;
@@ -81,9 +82,11 @@ class _DiagnosticTestsScreenState extends State<DiagnosticTestsScreen> {
             ),
           ),
           CustomSizedBoxHeight(height: 20),
-          _testType == "tests"
-              ? TestsDiagnosticWidget()
-              : PackagesDiagnosticWidget()
+          Obx(() {
+            return _diagnosticsController.diagnosticTestType.value == "tests"
+                ? TestsDiagnosticWidget()
+                : PackagesDiagnosticWidget();
+          })
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -183,10 +186,23 @@ class _DiagnosticTestsScreenState extends State<DiagnosticTestsScreen> {
                                       .selectedPatientGender.value,
                                   age: _familyController
                                       .selectedPatientAge.value,
+                                  packageId: _diagnosticsController
+                                              .diagnosticTestType.value ==
+                                          "tests"
+                                      ? ""
+                                      : _diagnosticsController
+                                          .selectedDiagnosticTests
+                                          .map((e) => e.id)
+                                          .toList()[0]
+                                          .toString(),
                                   tests: _diagnosticsController
-                                      .selectedDiagnosticTests
-                                      .map((e) => e.id)
-                                      .toList());
+                                              .diagnosticTestType.value !=
+                                          "tests"
+                                      ? []
+                                      : _diagnosticsController
+                                          .selectedDiagnosticTests
+                                          .map((e) => e.id)
+                                          .toList());
 
                               // _diagnosticsController.addDiagnosticTest(
                               //     diagnosticTestsList[index]);
