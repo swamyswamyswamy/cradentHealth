@@ -45,7 +45,8 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-          backgroundColor: AppColors.whiteColor, title: "Diagnostics"),
+          backgroundColor: AppColors.whiteColor,
+          title: "Schedule A Consultation"),
       backgroundColor: AppColors.whiteColor,
       body: Obx(() {
         return _doctorsController.isLoading.value

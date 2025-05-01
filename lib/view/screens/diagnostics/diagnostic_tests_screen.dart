@@ -122,7 +122,7 @@ class _DiagnosticTestsScreenState extends State<DiagnosticTestsScreen> {
                               children: [
                                 CustomSizedBoxHeight(height: 7),
                                 CustomText(
-                                    textName: "Vijaya Diagnostics",
+                                    textName: widget.diagnoticName,
                                     textColor: AppColors.blackColor,
                                     fontWeightType: FontWeightType.regular,
                                     fontFamily: FontFamily.inter,
