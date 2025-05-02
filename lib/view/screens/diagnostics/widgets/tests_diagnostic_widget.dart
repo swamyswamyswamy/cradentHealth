@@ -1,3 +1,4 @@
+import 'package:cradenthealth/constants/app_base_urls.dart';
 import 'package:cradenthealth/constants/app_button.dart';
 import 'package:cradenthealth/constants/app_colors.dart';
 import 'package:cradenthealth/constants/app_dropdown.dart';
@@ -74,8 +75,13 @@ class _TestsDiagnosticWidgetState extends State<TestsDiagnosticWidget> {
                                           image: DecorationImage(
                                               fit: BoxFit.cover,
                                               image: NetworkImage(
-                                                  diagnosticTestsList[index]
-                                                      .image!))),
+                                                  AppBaseUrls.baseUrl.substring(
+                                                          0,
+                                                          AppBaseUrls.baseUrl
+                                                                  .length -
+                                                              1) +
+                                                      diagnosticTestsList[index]
+                                                          .image!))),
                                     ),
                                     CustomSizedBoxWidth(width: 14),
                                     Expanded(

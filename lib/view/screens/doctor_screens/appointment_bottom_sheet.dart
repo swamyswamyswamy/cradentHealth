@@ -1,3 +1,4 @@
+import 'package:cradenthealth/constants/app_base_urls.dart';
 import 'package:cradenthealth/constants/app_button.dart';
 import 'package:cradenthealth/constants/app_colors.dart';
 import 'package:cradenthealth/constants/app_images.dart';
@@ -89,7 +90,11 @@ class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
                                       fit: BoxFit.fill,
-                                      image: NetworkImage(
+                                      image: NetworkImage(AppBaseUrls.baseUrl
+                                              .substring(
+                                                  0,
+                                                  AppBaseUrls.baseUrl.length -
+                                                      1) +
                                           widget.doctorDetails.image!))),
                             ),
                           ),

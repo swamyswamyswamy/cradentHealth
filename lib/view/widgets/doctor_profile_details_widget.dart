@@ -1,3 +1,4 @@
+import 'package:cradenthealth/constants/app_base_urls.dart';
 import 'package:cradenthealth/constants/app_button.dart';
 import 'package:cradenthealth/constants/app_colors.dart';
 import 'package:cradenthealth/constants/app_images.dart';
@@ -34,7 +35,9 @@ class DoctorProfileDetailsWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: NetworkImage(diagnosticModel.image!))),
+                        image: NetworkImage(AppBaseUrls.baseUrl
+                                .substring(0, AppBaseUrls.baseUrl.length - 1) +
+                            diagnosticModel.image!))),
               ),
               CustomSizedBoxWidth(width: 14),
               Expanded(

@@ -1,77 +1,78 @@
+import 'package:cradenthealth/models/doctors/doctor_model.dart';
+
 class PrescriptionDoctorsResponseModel {
   String? message;
-  List<Booking>? bookings;
+  List<Appointment>? appointments;
 
-  PrescriptionDoctorsResponseModel({this.message, this.bookings});
+  PrescriptionDoctorsResponseModel({this.message, this.appointments});
 
   factory PrescriptionDoctorsResponseModel.fromJson(Map<String, dynamic> json) {
     return PrescriptionDoctorsResponseModel(
       message: json['message']?.toString() ?? "",
-      bookings: (json['bookings'] as List?)
-          ?.map((e) => Booking.fromJson(e))
+      appointments: (json['appointments'] as List?)
+          ?.map((e) => Appointment.fromJson(e))
           .toList(),
     );
   }
 }
 
-class Booking {
-  String? bookingId;
-  String? patientName;
-  int? patientAge;
-  String? patientGender;
-  String? staffName;
-  String? diagnosticName;
-  String? diagnosticImage;
-  String? diagnosticAddress;
-  int? consultationFee;
-  List<dynamic>? tests; // You can create a `Test` model if tests have structure
+class Appointment {
+  String? appointmentId;
   String? appointmentDate;
-  int? subtotal;
-  int? gstOnTests;
-  int? gstOnConsultation;
-  int? total;
+  String? appointmentTime;
+  String? patientName;
+  String? patientRelation;
   String? status;
+  int? total;
+  String? paymentStatus;
+  Staff? staff;
+  DoctorModel? doctor;
   String? prescriptionPdfUrl;
 
-  Booking({
-    this.bookingId,
-    this.patientName,
-    this.patientAge,
-    this.patientGender,
-    this.staffName,
-    this.diagnosticName,
-    this.diagnosticImage,
-    this.diagnosticAddress,
-    this.consultationFee,
-    this.tests,
+  Appointment({
+    this.appointmentId,
     this.appointmentDate,
-    this.subtotal,
-    this.gstOnTests,
-    this.gstOnConsultation,
-    this.total,
+    this.appointmentTime,
+    this.patientName,
+    this.patientRelation,
     this.status,
+    this.total,
+    this.paymentStatus,
+    this.staff,
+    this.doctor,
     this.prescriptionPdfUrl,
   });
 
-  factory Booking.fromJson(Map<String, dynamic> json) {
-    return Booking(
-      bookingId: json['bookingId']?.toString() ?? "",
-      patientName: json['patient_name']?.toString() ?? "",
-      patientAge: json['patient_age'] ?? 0,
-      patientGender: json['patient_gender']?.toString() ?? "",
-      staffName: json['staff_name']?.toString() ?? "",
-      diagnosticName: json['diagnostic_name']?.toString() ?? "",
-      diagnosticImage: json['diagnostic_image']?.toString() ?? "",
-      diagnosticAddress: json['diagnostic_address']?.toString() ?? "",
-      consultationFee: json['consultation_fee'] ?? 0,
-      tests: json['tests'] ?? [],
-      appointmentDate: json['appointment_date']?.toString() ?? "",
-      subtotal: json['subtotal'] ?? 0,
-      gstOnTests: json['gst_on_tests'] ?? 0,
-      gstOnConsultation: json['gst_on_consultation'] ?? 0,
+  factory Appointment.fromJson(Map<String, dynamic> json) {
+    return Appointment(
+      appointmentId: json['appointmentId']?.toString(),
+      appointmentDate: json['appointment_date']?.toString(),
+      appointmentTime: json['appointment_time']?.toString(),
+      patientName: json['patient_name']?.toString(),
+      patientRelation: json['patient_relation']?.toString(),
+      status: json['status']?.toString(),
       total: json['total'] ?? 0,
-      status: json['status']?.toString() ?? "",
+      paymentStatus: json['payment_status']?.toString(),
+      staff: json['staff'] != null ? Staff.fromJson(json['staff']) : null,
+      doctor:
+          json['doctor'] != null ? DoctorModel.fromJson(json['doctor']) : null,
       prescriptionPdfUrl: json['prescriptionPdfUrl']?.toString(),
+    );
+  }
+}
+
+class Staff {
+  String? id;
+  String? name;
+  String? email;
+
+  Staff({this.id, this.name, this.email});
+
+  factory Staff.fromJson(Map<String, dynamic> json) {
+    return Staff(
+      id: json['id']?.toString(),
+      name: json['name']?.toString(),
+      email: json['email']?.toString(),
     );
   }
 }
