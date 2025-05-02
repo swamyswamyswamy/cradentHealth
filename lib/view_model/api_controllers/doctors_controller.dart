@@ -3,6 +3,7 @@ import 'package:cradenthealth/models/diagnostics/wallet_model.dart';
 import 'package:cradenthealth/models/doctors/bookAppointment_model.dart';
 import 'package:cradenthealth/models/doctors/booking_history_doctors_model.dart';
 import 'package:cradenthealth/models/doctors/doctor_model.dart';
+import 'package:cradenthealth/models/doctors/prescription_model.dart';
 import 'package:cradenthealth/models/profile_model.dart';
 import 'package:cradenthealth/services/diagnostic_service.dart';
 import 'package:cradenthealth/services/doctor_service.dart';
@@ -14,6 +15,7 @@ class DoctorsController extends GetxController {
   RxList<DoctorModel> doctorModel = <DoctorModel>[].obs;
   var bookingHistoryDoctorsResponseModel =
       BookingHistoryDoctorsResponseModel().obs;
+  var prescriptionDoctorsResponseModel = PrescriptionDoctorsResponseModel().obs;
   var appointmentModel = AppointmentModel().obs;
 
   final DoctorService doctorService;
@@ -74,6 +76,20 @@ class DoctorsController extends GetxController {
       isLoadingDoctorsBookingHistory.value = true; // Set loading to false
       bookingHistoryDoctorsResponseModel.value =
           await doctorService.fetchDoctorsBookingHistory(status: status);
+      isLoadingDoctorsBookingHistory.value = false; // Set loading to false
+    } catch (e) {
+      // Handle error
+      isLoadingDoctorsBookingHistory.value = false; // Set loading to false
+    } finally {
+      isLoadingDoctorsBookingHistory.value = false; // Set loading to false
+    }
+  }
+
+  void fetchDoctorsPrescriptions() async {
+    try {
+      isLoadingDoctorsBookingHistory.value = true; // Set loading to false
+      prescriptionDoctorsResponseModel.value =
+          await doctorService.fetchDoctorsPrescriptions();
       isLoadingDoctorsBookingHistory.value = false; // Set loading to false
     } catch (e) {
       // Handle error

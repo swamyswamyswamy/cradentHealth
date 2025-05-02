@@ -1,3 +1,5 @@
+import 'package:cradenthealth/models/doctors/doctor_model.dart';
+
 class AppointmentModel {
   String? message;
   Appointment? appointment;
@@ -16,9 +18,10 @@ class AppointmentModel {
 
 class Appointment {
   String? appointmentId;
-  String? doctorName;
-  String? doctorSpecialization;
-  DateTime? appointmentDate;
+  DoctorModel? doctorDetails;
+  String? staffName;
+  String? appointmentDate;
+  String? appointmentTime;
   String? patientName;
   String? patientRelation;
   String? status;
@@ -27,9 +30,10 @@ class Appointment {
 
   Appointment({
     this.appointmentId,
-    this.doctorName,
-    this.doctorSpecialization,
+    this.doctorDetails,
+    this.staffName,
     this.appointmentDate,
+    this.appointmentTime,
     this.patientName,
     this.patientRelation,
     this.status,
@@ -40,11 +44,12 @@ class Appointment {
   factory Appointment.fromJson(Map<String, dynamic> json) {
     return Appointment(
       appointmentId: json['appointmentId'],
-      doctorName: json['doctor_name'],
-      doctorSpecialization: json['doctor_specialization'],
-      appointmentDate: json['appointment_date'] != null
-          ? DateTime.tryParse(json['appointment_date'])
+      doctorDetails: json['doctor_details'] != null
+          ? DoctorModel.fromJson(json['doctor_details'])
           : null,
+      staffName: json['staff_name'],
+      appointmentDate: json['appointment_date'],
+      appointmentTime: json['appointment_time'],
       patientName: json['patient_name'],
       patientRelation: json['patient_relation'],
       status: json['status'],

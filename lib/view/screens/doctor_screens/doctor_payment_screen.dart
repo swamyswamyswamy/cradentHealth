@@ -77,15 +77,90 @@ class _DoctorPaymentScreenState extends State<DoctorPaymentScreen> {
                           backgroundColor: AppColors.secondaryColor,
                           borderRadius: 5,
                           child: Padding(
-                              padding: EdgeInsets.all(
-                                  getProportionateScreenHeight(10)),
-                              child: PersonProfileDetailsWidget(
-                                name: _doctorsController.appointmentModel.value!
-                                    .appointment!.doctorName!,
-                                age: "",
-                                gender: "",
-                                imageUrl: "",
-                              )),
+                            padding: EdgeInsets.all(
+                                getProportionateScreenHeight(10)),
+                            child: Row(
+                              children: [
+                                Container(
+                                  height: getProportionateScreenHeight(90),
+                                  width: getProportionateScreenWidth(90),
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                          color: AppColors.primaryColor)),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(
+                                        getProportionateScreenHeight(5)),
+                                    child: Container(
+                                      height: getProportionateScreenHeight(90),
+                                      width: getProportionateScreenWidth(90),
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                              fit: BoxFit.fill,
+                                              image: NetworkImage(
+                                                  _doctorsController
+                                                      .appointmentModel
+                                                      .value
+                                                      .appointment!
+                                                      .doctorDetails!
+                                                      .image!))),
+                                    ),
+                                  ),
+                                ),
+                                CustomSizedBoxWidth(width: 20),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      RichText(
+                                        text: TextSpan(
+                                          text:
+                                              "${_doctorsController.appointmentModel.value.appointment!.doctorDetails!.name!} ",
+                                          style: GoogleFonts.poppins(
+                                              color: AppColors.blackColor,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w800),
+                                          children: [
+                                            TextSpan(
+                                              text:
+                                                  "( ${_doctorsController.appointmentModel.value.appointment!.doctorDetails!.qualification!} )",
+                                              style: GoogleFonts.poppins(
+                                                  color: AppColors.blackColor,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      CustomText(
+                                          textName: _doctorsController
+                                              .appointmentModel
+                                              .value
+                                              .appointment!
+                                              .doctorDetails!
+                                              .specialization!,
+                                          textColor: AppColors.blackColor,
+                                          fontWeightType:
+                                              FontWeightType.regular,
+                                          fontFamily: FontFamily.poppins,
+                                          fontSize: 16),
+                                      CustomSizedBoxHeight(height: 4),
+                                      CustomText(
+                                          textName:
+                                              "₹ ${_doctorsController.appointmentModel.value.appointment!.doctorDetails!.consultationFee!}",
+                                          textColor: AppColors.blackColor,
+                                          fontWeightType:
+                                              FontWeightType.semiBold,
+                                          fontFamily: FontFamily.poppins,
+                                          fontSize: 18),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
                         ),
                       ),
                       CustomSizedBoxHeight(height: 45),

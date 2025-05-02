@@ -6,6 +6,7 @@ import 'package:cradenthealth/models/diagnostics/diagnosticlist_model.dart';
 import 'package:cradenthealth/models/doctors/bookAppointment_model.dart';
 import 'package:cradenthealth/models/doctors/booking_history_doctors_model.dart';
 import 'package:cradenthealth/models/doctors/doctor_model.dart';
+import 'package:cradenthealth/models/doctors/prescription_model.dart';
 import 'package:cradenthealth/models/profile_model.dart';
 import 'package:cradenthealth/services/dependency_injection.dart';
 import 'package:cradenthealth/view/screens/app_bottom_navigation.dart';
@@ -153,6 +154,37 @@ class DoctorService {
       // Handle the case where the server is down
       AppToastMsgs.failedToast("Server Error",
           "Failed to connect to the server. Please try again later.");
+      print("Error fetching ride history: $e");
+      throw Exception("error");
+    }
+  }
+
+  Future<PrescriptionDoctorsResponseModel> fetchDoctorsPrescriptions(
+     ) async {
+    try {
+      var request = http.Request(
+          'GET',
+          Uri.parse(
+              '${AppBaseUrls.baseUrl}api/staff/getPrescription/${AppTokens().userId}'));
+      
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        var responseString = await response.stream.bytesToString();
+        final decodedMap = json.decode(responseString);
+        print("print the diagnotics booking historydfdffdf${decodedMap}");
+        // AppToastMsgs.successToast("Success", decodedMap['message']);
+        return PrescriptionDoctorsResponseModel.fromJson(decodedMap);
+      } else {
+        var responseString = await response.stream.bytesToString();
+        final decodedMap = json.decode(responseString);
+        AppToastMsgs.failedToast("Error", decodedMap['message']);
+        throw Exception(decodedMap['message']);
+      }
+    } catch (e) {
+      // Handle the case where the server is down
+      AppToastMsgs.failedToast("Server Error",
+          "Failed to connect to the server. Please try again later.$e");
       print("Error fetching ride history: $e");
       throw Exception("error");
     }
