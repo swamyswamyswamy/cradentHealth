@@ -2,6 +2,7 @@ import 'package:cradenthealth/models/diagnostics/diagnosticlist_model.dart';
 import 'package:cradenthealth/models/diagnostics/wallet_model.dart';
 import 'package:cradenthealth/models/doctors/bookAppointment_model.dart';
 import 'package:cradenthealth/models/doctors/booking_history_doctors_model.dart';
+import 'package:cradenthealth/models/doctors/doctor_blogs_model.dart';
 import 'package:cradenthealth/models/doctors/doctor_model.dart';
 import 'package:cradenthealth/models/doctors/prescription_model.dart';
 import 'package:cradenthealth/models/profile_model.dart';
@@ -16,6 +17,7 @@ class DoctorsController extends GetxController {
   var bookingHistoryDoctorsResponseModel =
       BookingHistoryDoctorsResponseModel().obs;
   var prescriptionDoctorsResponseModel = PrescriptionDoctorsResponseModel().obs;
+  var blogResponse = BlogResponse().obs;
   var appointmentModel = AppointmentModel().obs;
 
   final DoctorService doctorService;
@@ -26,6 +28,7 @@ class DoctorsController extends GetxController {
   var isLoadingDoctorsBookingHistory =
       false.obs; // Observable for loading state
   var isLoadingDoctorsPayment = false.obs; // Observable for loading state
+  var isLoadingDoctorsBlogs = false.obs; // Observable for loading state
   DoctorsController(this.doctorService);
 
   final selectedAvailableDateIndex = 0.obs; // Observable variable
@@ -111,6 +114,19 @@ class DoctorsController extends GetxController {
       isLoadingDoctorsPayment.value = false; // Set loading to false
     } finally {
       isLoadingDoctorsPayment.value = false; // Set loading to false
+    }
+  }
+
+  void fetchDoctorsBlogs() async {
+    try {
+      isLoadingDoctorsBlogs.value = true; // Set loading to false
+      blogResponse.value = await doctorService.fetchDoctorsBlogs();
+      isLoadingDoctorsBlogs.value = false; // Set loading to false
+    } catch (e) {
+      // Handle error
+      isLoadingDoctorsBlogs.value = false; // Set loading to false
+    } finally {
+      isLoadingDoctorsBlogs.value = false; // Set loading to false
     }
   }
 

@@ -118,6 +118,7 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
                                 Get.to(DoctorDetailsScreen(
                                   doctorDetails: _doctorsController
                                       .doctorModel.value[index],
+                                      blogDetails: false,
                                 ));
                                 // Get.to(DiagnosticTestsScreen(
                                 //   diagnosticId: _diagnosticsController

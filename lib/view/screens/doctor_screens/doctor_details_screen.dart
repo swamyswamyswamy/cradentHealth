@@ -14,7 +14,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 class DoctorDetailsScreen extends StatelessWidget {
   DoctorModel doctorDetails;
-  DoctorDetailsScreen({super.key, required this.doctorDetails});
+  bool blogDetails;
+  DoctorDetailsScreen(
+      {super.key, required this.doctorDetails, required this.blogDetails});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ class DoctorDetailsScreen extends StatelessWidget {
         backgroundColor: AppColors.whiteColor,
         surfaceTintColor: AppColors.whiteColor,
         title: CustomText(
-            textName: "Book A Consultation",
+            textName: blogDetails ? "Doctor Blog" : "Book A Consultation",
             textColor: AppColors.blackColor,
             fontWeightType: FontWeightType.semiBold,
             fontFamily: FontFamily.montserrat,
@@ -74,12 +76,14 @@ class DoctorDetailsScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      CustomText(
-                          textName: "₹ ${doctorDetails.consultationFee}",
-                          textColor: AppColors.blackColor,
-                          fontWeightType: FontWeightType.semiBold,
-                          fontFamily: FontFamily.poppins,
-                          fontSize: 18),
+                      blogDetails
+                          ? SizedBox()
+                          : CustomText(
+                              textName: "₹ ${doctorDetails.consultationFee}",
+                              textColor: AppColors.blackColor,
+                              fontWeightType: FontWeightType.semiBold,
+                              fontFamily: FontFamily.poppins,
+                              fontSize: 18),
                     ],
                   ),
                   CustomText(
@@ -132,28 +136,30 @@ class DoctorDetailsScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.only(
-            bottom: getProportionateScreenHeight(30),
-            right: getProportionateScreenWidth(16),
-            left: getProportionateScreenWidth(16)),
-        child: AppButton(
-          height: 44,
-          onTap: () {
-            showModalBottomSheet(
-                context: context,
-                isScrollControlled: true,
-                builder: (BuildContext) {
-                  return AppointmentBottomSheet(
-                    doctorDetails: doctorDetails,
-                  );
-                });
-            // Get.to(HomeScreen());
-          },
-          hasShadow: true,
-          label: "Book Now",
-        ),
-      ),
+      bottomNavigationBar: blogDetails
+          ? SizedBox()
+          : Padding(
+              padding: EdgeInsets.only(
+                  bottom: getProportionateScreenHeight(30),
+                  right: getProportionateScreenWidth(16),
+                  left: getProportionateScreenWidth(16)),
+              child: AppButton(
+                height: 44,
+                onTap: () {
+                  showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      builder: (BuildContext) {
+                        return AppointmentBottomSheet(
+                          doctorDetails: doctorDetails,
+                        );
+                      });
+                  // Get.to(HomeScreen());
+                },
+                hasShadow: true,
+                label: "Book Now",
+              ),
+            ),
     );
   }
 }

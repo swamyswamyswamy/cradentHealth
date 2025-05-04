@@ -48,11 +48,11 @@ class CategoriesScreens extends StatelessWidget {
       'image': AppImages.diagnosticsImage,
       'navigate': DiagnosticslistScreen(),
     },
-    // {
-    //   'title': "HRA",
-    //   'image': AppImages.hraImage,
-    //   'navigate': HraScreen(title: "HRA"),
-    // },
+    {
+      'title': "HRA",
+      'image': AppImages.hraImage,
+      'navigate': HraScreen(),
+    },
   ];
 
   @override
