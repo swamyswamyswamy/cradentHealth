@@ -40,13 +40,13 @@ class HraService {
     }
   }
 
-  Future addSupport({
+  Future  addHraQuestions({
     required String title,
     required String description,
     required String image,
   }) async {
     try {
-      final SupportController supportController = Get.find<SupportController>();
+     
       var headers = {'Authorization': 'Bearer ${AppTokens().accessToken}'};
       var request = http.MultipartRequest(
           'POST',
@@ -63,15 +63,15 @@ class HraService {
       if (response.statusCode == 200) {
         var responseString = await response.stream.bytesToString();
         final decodedMap = json.decode(responseString);
-        supportController.fetchSupport();
-        Get.back();
+       
+     
         AppToastMsgs.successToast("Success", decodedMap['message']);
-        return SupportsApiResponse.fromJson(decodedMap);
+        // return SupportsApiResponse.fromJson(decodedMap);
       } else {
         var responseString = await response.stream.bytesToString();
         final decodedMap = json.decode(responseString);
         AppToastMsgs.failedToast("Error", decodedMap['message']);
-        return SupportsApiResponse.fromJson(decodedMap);
+        // return SupportsApiResponse.fromJson(decodedMap);
       }
     } catch (e) {
       // Handle the case where the server is down
