@@ -64,8 +64,112 @@ class HraService {
         var responseString = await response.stream.bytesToString();
         final decodedMap = json.decode(responseString);
        
-     
-        AppToastMsgs.successToast("Success", decodedMap['message']);
+      Widget _resultItem({
+                    required String title,
+                    required String value,
+                    Color color = Colors.black,
+                  }) {
+                    return Column(
+                      children: [
+                        Text(
+                          title,
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.grey[700],
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        SizedBox(height: 4),
+                        Text(
+                          value,
+                          style: TextStyle(
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                            color: color,
+                          ),
+                        ),
+                      ],
+                    );
+                  }
+
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (BuildContext context) {
+                      return Dialog(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        insetPadding: EdgeInsets.all(20),
+                        child: Container(
+                          padding: EdgeInsets.all(24),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                'HRA Result',
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xFF63183F),
+                                  letterSpacing: 1.2,
+                                ),
+                              ),
+                              SizedBox(height: 20),
+                              Icon(
+                                Icons.emoji_events,
+                                color: Colors.amber[700],
+                                size: 60,
+                              ),
+                              SizedBox(height: 16),
+                              _resultItem(
+                                title: 'Correct Answers',
+                                value: '${decodedMap['data'].length}',
+                              ),
+                              SizedBox(height: 12),
+                              _resultItem(
+                                title: 'Points Earned',
+                                value: '${decodedMap['totalPoints']}',
+                                color: Colors.blue,
+                              ),
+                              SizedBox(height: 12),
+                              _resultItem(
+                                title: 'Category',
+                                value: decodedMap['riskCategory'],
+                                color: Colors.red,
+                              ),
+                              SizedBox(height: 24),
+                              SizedBox(
+                                width: double.infinity,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Color(0xFF63183F),
+                                    padding: EdgeInsets.symmetric(vertical: 14),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                  ),
+                                  onPressed: () => Navigator.pop(context),
+                                  child: Text(
+                                    'Continue',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+        // AppToastMsgs.successToast("Success", decodedMap['message']);
         // return SupportsApiResponse.fromJson(decodedMap);
       } else {
         var responseString = await response.stream.bytesToString();
