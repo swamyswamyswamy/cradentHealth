@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:cradenthealth/constants/app_animations.dart';
 import 'package:cradenthealth/constants/app_colors.dart';
 import 'package:cradenthealth/constants/app_images.dart';
 import 'package:cradenthealth/constants/app_mediaquery.dart';
 import 'package:cradenthealth/constants/app_sizedbox.dart';
 import 'package:cradenthealth/constants/app_text.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:pedometer/pedometer.dart';
 
 class SemiCircularProgressIndicator extends StatefulWidget {
@@ -52,9 +54,12 @@ class _SemiCircularProgressIndicatorState
   @override
   void dispose() {
     _timer.cancel();
+    _walkingDetectionTimer?.cancel();
     super.dispose();
   }
 
+  bool _isWalking = false;
+  Timer? _walkingDetectionTimer;
   void _initializePedometer() {
     _stepCountStream = Pedometer.stepCountStream;
     _stepCountStream.listen(_onStepCount).onError(_onStepCountError);
@@ -66,6 +71,17 @@ class _SemiCircularProgressIndicatorState
       _steps = event.steps;
       _distance = _steps *
           SemiCircularProgressIndicator._stepLength; // Calculate distance in km
+
+      _isWalking = true;
+
+      // Reset walking detection timer
+      _walkingDetectionTimer?.cancel();
+      _walkingDetectionTimer = Timer(Duration(seconds: 5), () {
+        // If no new steps in 5 seconds, consider user stopped walking
+        setState(() {
+          _isWalking = false;
+        });
+      });
     });
   }
 
@@ -107,11 +123,10 @@ class _SemiCircularProgressIndicatorState
             mainAxisSize: MainAxisSize.min,
             children: [
               CustomSizedBoxHeight(height: 26),
-              Image.asset(
-                AppImages.footImage,
-                height: getProportionateScreenHeight(40),
-                width: getProportionateScreenWidth(40),
-              ),
+              Lottie.asset(AppAnimations.stepAnimation,
+                  height: getProportionateScreenHeight(40),
+                  width: getProportionateScreenWidth(40),
+                  animate: _isWalking ? true : false),
               CustomSizedBoxHeight(height: 3),
               CustomText(
                   textName: "${_steps}",

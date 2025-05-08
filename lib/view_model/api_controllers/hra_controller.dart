@@ -26,16 +26,14 @@ class HraController extends GetxController {
     }
   }
 
-  void addSupport({
-    required String title,
-    required String description,
-    required String image,
+  void addHraQuestions({
+    required List answers,
   }) async {
     print("fdfmdfdf");
     try {
       isLoadingAddSupport.value = true; // Set loading to false
-      assessmentResponse.value = await hraService.addSupport(
-          title: title, description: description, image: image);
+      assessmentResponse.value =
+          await hraService.addHraQuestions(answers: answers);
       isLoadingAddSupport.value = false; // Set loading to false
     } catch (e) {
       // Handle error

@@ -169,24 +169,25 @@ class _HraScreenState extends State<HraScreen> {
         formattedOutput.add({
           "sectionId": sectionId,
           "questionId": questionId,
-          "answer": answer,
+          "selectedAnswer": answer,
         });
       });
     });
 
     debugPrint("Formatted Answer Array:\n$formattedOutput");
 
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text("Selected Answers"),
-        content: SingleChildScrollView(child: Text(formattedOutput.toString())),
-        actions: [
-          TextButton(
-              onPressed: () => Navigator.pop(context), child: const Text("OK")),
-        ],
-      ),
-    );
+    _hraController.addHraQuestions(answers: formattedOutput);
+    // showDialog(
+    //   context: context,
+    //   builder: (context) => AlertDialog(
+    //     title: const Text("Selected Answers"),
+    //     content: SingleChildScrollView(child: Text(formattedOutput.toString())),
+    //     actions: [
+    //       TextButton(
+    //           onPressed: () => Navigator.pop(context), child: const Text("OK")),
+    //     ],
+    //   ),
+    // );
   }
 
   @override
