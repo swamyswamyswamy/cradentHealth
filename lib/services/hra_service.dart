@@ -41,24 +41,22 @@ class HraService {
   }
 
   Future  addHraQuestions({
-    required String title,
-    required String description,
-    required String image,
+    required List answers,
+   
   }) async {
     try {
      
-      var headers = {'Authorization': 'Bearer ${AppTokens().accessToken}'};
-      var request = http.MultipartRequest(
-          'POST',
-          Uri.parse(
-              '${AppBaseUrls.baseUrl}api/staff/submitissue/${AppTokens().userId}'));
-      request.fields.addAll({'reason': title, 'description': description});
-      image == ""
-          ? null
-          : request.files.add(await http.MultipartFile.fromPath('file', image));
-      request.headers.addAll(headers);
+     var headers = {
+  'Content-Type': 'application/json'
+};
+var request = http.Request('POST', Uri.parse('${AppBaseUrls.baseUrl}api/staff/submit-hra/67f77487c68e727ecf682409'));
+request.body = json.encode({
+  "answers": answers
+});
+request.headers.addAll(headers);
 
-      http.StreamedResponse response = await request.send();
+http.StreamedResponse response = await request.send();
+
 
       if (response.statusCode == 200) {
         var responseString = await response.stream.bytesToString();
