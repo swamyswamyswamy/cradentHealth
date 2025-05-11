@@ -24,10 +24,10 @@ class StepsScreen extends StatelessWidget {
           CustomSizedBoxHeight(height: 25),
           Center(
             child: SemiCircularProgressIndicator(
-              progress: 0.75, // 75% progress
-              stepCount: 23166,
-              // Steps count),)
-            ),
+                // progress: 0.75, // 75% progress
+                // stepCount: 23166,
+                // Steps count),)
+                ),
           ),
           // CustomGraphScreen()
         ],

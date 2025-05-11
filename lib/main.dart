@@ -7,11 +7,13 @@ import 'package:cradenthealth/constants/localization/localStrings.dart';
 import 'package:cradenthealth/firebaseConfiguration.dart';
 import 'package:cradenthealth/localNotifications.dart';
 import 'package:cradenthealth/services/dependency_injection.dart';
+import 'package:cradenthealth/services/steps_service.dart';
 import 'package:cradenthealth/view/screens/app_bottom_navigation.dart';
 import 'package:cradenthealth/view/screens/auth/login_screen.dart';
 import 'package:cradenthealth/view/screens/bookings/bookings_screen.dart';
 import 'package:cradenthealth/view/screens/drawer_screens/drawer_screen.dart';
 import 'package:cradenthealth/view/screens/gym_fitness/gym_fitness_plans.dart';
+import 'package:cradenthealth/view_model/api_controllers/steps_controller.dart';
 import 'package:cradenthealth/view_model/ui_controllers/toke_controller.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -39,11 +41,42 @@ void main() async {
       statusBarIconBrightness: Brightness.light, // Light or dark icons
     ),
   );
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  // App Lifecycle changes (e.g., paused when in background)
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      // App goes to background
+      hitApi();
+    }
+  }
+
+  // Function to call your API
+  Future<void> hitApi() async {
+    final _stepsController = Get.find<StepsController>();
+    _stepsController.addSteps(steps: _stepsController.steps.toString());
+  }
+
   @override
   Widget build(BuildContext context) {
     AppMediaquery().init(context);
