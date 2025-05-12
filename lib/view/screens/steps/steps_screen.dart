@@ -10,6 +10,24 @@ class StepsScreen extends StatelessWidget {
   bool navigateBack;
   StepsScreen({super.key, this.navigateBack = true});
 
+  final List<Map<String, dynamic>> stepHistoryData = [
+    {"date": "2025-05-10", "steps": 8200},
+    {"date": "2025-05-09", "steps": 10450},
+    {"date": "2025-05-08", "steps": 7300},
+    {"date": "2025-05-07", "steps": 9500},
+    {"date": "2025-05-06", "steps": 6000},
+  ];
+
+  String getDayOfWeek(String dateStr) {
+    final date = DateTime.parse(dateStr);
+    return DateFormat('EEEE').format(date); // e.g., Monday
+  }
+
+  String formatDate(String dateStr) {
+    final date = DateTime.parse(dateStr);
+    return DateFormat('dd MMM yyyy').format(date); // e.g., 10 May 2025
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +53,57 @@ class StepsScreen extends StatelessWidget {
     );
   }
 }
+ ListView.builder(
+        padding: EdgeInsets.all(12),
+        itemCount: stepHistoryData.length,
+        itemBuilder: (context, index) {
+          final item = stepHistoryData[index];
+          final steps = item['steps'];
+          final date = item['date'];
 
+          return Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            color: Colors.white,
+            elevation: 4,
+            margin: EdgeInsets.symmetric(vertical: 8),
+            child: ListTile(
+              contentPadding: EdgeInsets.all(16),
+              leading: CircleAvatar(
+                backgroundColor: Color(0xFF63183F),
+                child: Icon(Icons.directions_walk, color: Colors.white),
+              ),
+              title: Text(
+                formatDate(date),
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              subtitle: Text(
+                getDayOfWeek(date),
+                style: TextStyle(color: Colors.grey[600]),
+              ),
+              trailing: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "$steps",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                      fontSize: 18,
+                    ),
+                  ),
+                  Text(
+                    "steps",
+                    style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+   
 // class CustomGraphScreen extends StatelessWidget {
 //   @override
 //   Widget build(BuildContext context) {
