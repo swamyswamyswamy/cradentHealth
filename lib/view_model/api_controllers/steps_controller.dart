@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cradenthealth/models/diagnostics/diagnosticlist_model.dart';
 import 'package:cradenthealth/models/diagnostics/wallet_model.dart';
 import 'package:cradenthealth/models/profile_model.dart';
+import 'package:cradenthealth/models/steps_model.dart';
 import 'package:cradenthealth/services/diagnostic_service.dart';
 import 'package:cradenthealth/services/profile_service.dart';
 import 'package:cradenthealth/services/steps_service.dart';
@@ -11,7 +12,7 @@ import 'package:get/get.dart';
 import 'package:pedometer/pedometer.dart';
 
 class StepsController extends GetxController {
-  var profileModelResponse = ProfileModelResponse().obs;
+  var stepSummaryResponse = StepSummaryResponse().obs;
 
   final StepsService stepsService;
 
@@ -96,17 +97,16 @@ class StepsController extends GetxController {
     }
   }
 
-  // void upadateProfile({required String profileImage}) async {
-  //   try {
-  //     // isLoading.value = true; // Set loading to false
-
-  //     await profileService.upadateProfile(profileImage: profileImage);
-  //     isLoading.value = false; // Set loading to false
-  //   } catch (e) {
-  //     // Handle error
-  //     isLoading.value = false; // Set loading to false
-  //   } finally {
-  //     isLoading.value = false; // Set loading to false
-  //   }
-  // }
+  void fetchStepsData() async {
+    try {
+      isLoading.value = true; // Set loading to false
+      stepSummaryResponse.value = await stepsService.fetchStepsData();
+      isLoading.value = false; // Set loading to false
+    } catch (e) {
+      // Handle error
+      isLoading.value = false; // Set loading to false
+    } finally {
+      isLoading.value = false; // Set loading to false
+    }
+  }
 }

@@ -2,14 +2,22 @@ import 'package:cradenthealth/constants/app_colors.dart';
 import 'package:cradenthealth/constants/app_sizedbox.dart';
 import 'package:cradenthealth/constants/appbar_component.dart';
 import 'package:cradenthealth/view/screens/steps/steps_semi_progressbar.dart';
+import 'package:cradenthealth/view_model/api_controllers/steps_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 // import 'package:fl_chart/fl_chart.dart';
 // import 'package:google_fonts/google_fonts.dart';
 
-class StepsScreen extends StatelessWidget {
+class StepsScreen extends StatefulWidget {
   bool navigateBack;
   StepsScreen({super.key, this.navigateBack = true});
 
+  @override
+  State<StepsScreen> createState() => _StepsScreenState();
+}
+
+class _StepsScreenState extends State<StepsScreen> {
   final List<Map<String, dynamic>> stepHistoryData = [
     {"date": "2025-05-10", "steps": 8200},
     {"date": "2025-05-09", "steps": 10450},
@@ -17,92 +25,112 @@ class StepsScreen extends StatelessWidget {
     {"date": "2025-05-07", "steps": 9500},
     {"date": "2025-05-06", "steps": 6000},
   ];
-
   String getDayOfWeek(String dateStr) {
-    final date = DateTime.parse(dateStr);
+    final date = DateFormat('dd/MM/yyyy').parse(dateStr);
     return DateFormat('EEEE').format(date); // e.g., Monday
   }
 
   String formatDate(String dateStr) {
-    final date = DateTime.parse(dateStr);
-    return DateFormat('dd MMM yyyy').format(date); // e.g., 10 May 2025
+    final date = DateFormat('dd/MM/yyyy').parse(dateStr);
+    return DateFormat('dd MMM yyyy').format(date); // e.g., 07 May 2025
+  }
+
+  final _stepsController = Get.find<StepsController>();
+  @override
+  void initState() {
+    super.initState();
+    _stepsController.fetchStepsData();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        isBackButtonVisible: navigateBack,
+        isBackButtonVisible: widget.navigateBack,
         backgroundColor: AppColors.whiteColor,
         title: "Activity tracker",
       ),
       backgroundColor: AppColors.whiteColor,
-      body: Column(
-        children: [
-          CustomSizedBoxHeight(height: 25),
-          Center(
-            child: SemiCircularProgressIndicator(
-                // progress: 0.75, // 75% progress
-                // stepCount: 23166,
-                // Steps count),)
-                ),
-          ),
-          // CustomGraphScreen()
-        ],
-      ),
+      body: Obx(() {
+        return _stepsController.isLoading.value
+            ? Center(child: CircularProgressIndicator())
+            : Column(
+                children: [
+                  CustomSizedBoxHeight(height: 25),
+                  Center(
+                    child: SemiCircularProgressIndicator(
+                        // progress: 0.75, // 75% progress
+                        // stepCount: 23166,
+                        // Steps count),)
+                        ),
+                  ),
+
+                  CustomSizedBoxHeight(height: 25),
+                  Expanded(
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      padding: EdgeInsets.all(12),
+                      itemCount: _stepsController
+                          .stepSummaryResponse.value.stepsSummary!.length,
+                      itemBuilder: (context, index) {
+                        final item = _stepsController
+                            .stepSummaryResponse.value.stepsSummary![index];
+                        final steps = item.stepsCount;
+                        final date = item.date;
+
+                        return Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          color: Colors.white,
+                          elevation: 4,
+                          margin: EdgeInsets.symmetric(vertical: 8),
+                          child: ListTile(
+                            contentPadding: EdgeInsets.all(16),
+                            leading: CircleAvatar(
+                              backgroundColor: Color(0xFF63183F),
+                              child: Icon(Icons.directions_walk,
+                                  color: Colors.white),
+                            ),
+                            title: Text(
+                              formatDate(date!),
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            subtitle: Text(
+                              getDayOfWeek(date),
+                              style: TextStyle(color: Colors.grey[600]),
+                            ),
+                            trailing: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "$steps",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black87,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                                Text(
+                                  "steps",
+                                  style: TextStyle(
+                                      color: Colors.grey[600], fontSize: 12),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  // CustomGraphScreen()
+                ],
+              );
+      }),
     );
   }
 }
- ListView.builder(
-        padding: EdgeInsets.all(12),
-        itemCount: stepHistoryData.length,
-        itemBuilder: (context, index) {
-          final item = stepHistoryData[index];
-          final steps = item['steps'];
-          final date = item['date'];
-
-          return Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-            ),
-            color: Colors.white,
-            elevation: 4,
-            margin: EdgeInsets.symmetric(vertical: 8),
-            child: ListTile(
-              contentPadding: EdgeInsets.all(16),
-              leading: CircleAvatar(
-                backgroundColor: Color(0xFF63183F),
-                child: Icon(Icons.directions_walk, color: Colors.white),
-              ),
-              title: Text(
-                formatDate(date),
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              subtitle: Text(
-                getDayOfWeek(date),
-                style: TextStyle(color: Colors.grey[600]),
-              ),
-              trailing: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "$steps",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
-                      fontSize: 18,
-                    ),
-                  ),
-                  Text(
-                    "steps",
-                    style: TextStyle(color: Colors.grey[600], fontSize: 12),
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
-      ),
+ 
    
 // class CustomGraphScreen extends StatelessWidget {
 //   @override
