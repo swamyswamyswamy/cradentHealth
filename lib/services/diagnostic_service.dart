@@ -34,7 +34,7 @@ class DiagnosticService {
     } catch (e) {
       // Handle the case where the server is down
       AppToastMsgs.failedToast("Server Error",
-          "Failed to connect to the server. Please try again later.");
+          "Failed to connect to the server. Please try again later.$e");
       print("Error fetching ride history: $e");
       throw Exception("error");
     }

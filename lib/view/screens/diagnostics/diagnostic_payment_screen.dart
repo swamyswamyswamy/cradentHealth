@@ -310,24 +310,24 @@ class _DiagnosticPaymentScreenState extends State<DiagnosticPaymentScreen> {
                             //   ],
                             // ),
                             CustomSizedBoxHeight(height: 21),
-                            Row(
-                              children: [
-                                CustomText(
-                                    textName: "Gst",
-                                    textColor: AppColors.blackColor,
-                                    fontWeightType: FontWeightType.regular,
-                                    fontFamily: FontFamily.inter,
-                                    fontSize: 14),
-                                Spacer(),
-                                CustomText(
-                                    textName:
-                                        "₹ ${_diagnosticsController.diagnosticCheckoutResponse.value!.booking!.gstOnTests}",
-                                    textColor: AppColors.blackColor,
-                                    fontWeightType: FontWeightType.medium,
-                                    fontFamily: FontFamily.inter,
-                                    fontSize: 14),
-                              ],
-                            ),
+                            // Row(
+                            //   children: [
+                            //     CustomText(
+                            //         textName: "Gst",
+                            //         textColor: AppColors.blackColor,
+                            //         fontWeightType: FontWeightType.regular,
+                            //         fontFamily: FontFamily.inter,
+                            //         fontSize: 14),
+                            //     Spacer(),
+                            //     CustomText(
+                            //         textName:
+                            //             "₹ ${_diagnosticsController.diagnosticCheckoutResponse.value!.booking!.gstOnTests}",
+                            //         textColor: AppColors.blackColor,
+                            //         fontWeightType: FontWeightType.medium,
+                            //         fontFamily: FontFamily.inter,
+                            //         fontSize: 14),
+                            //   ],
+                            // ),
                           ],
                         ),
                       ),

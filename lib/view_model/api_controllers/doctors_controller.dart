@@ -2,6 +2,7 @@ import 'package:cradenthealth/models/diagnostics/diagnosticlist_model.dart';
 import 'package:cradenthealth/models/diagnostics/wallet_model.dart';
 import 'package:cradenthealth/models/doctors/bookAppointment_model.dart';
 import 'package:cradenthealth/models/doctors/booking_history_doctors_model.dart';
+import 'package:cradenthealth/models/doctors/doctorCategoriesFilter_model';
 import 'package:cradenthealth/models/doctors/doctor_blogs_model.dart';
 import 'package:cradenthealth/models/doctors/doctor_model.dart';
 import 'package:cradenthealth/models/doctors/prescription_model.dart';
@@ -16,11 +17,11 @@ class DoctorsController extends GetxController {
   RxList<DoctorModel> doctorModel = <DoctorModel>[].obs;
   var bookingHistoryDoctorsResponseModel =
       BookingHistoryDoctorsResponseModel().obs;
-  var doctorCategoryFilterResponse =
-      DoctorCategoryFilterResponse().obs;
+
   var prescriptionDoctorsResponseModel = PrescriptionDoctorsResponseModel().obs;
   var blogResponse = BlogResponse().obs;
   var appointmentModel = AppointmentModel().obs;
+  var doctorCategoryFilterResponse = DoctorCategoryFilterResponse().obs;
 
   final DoctorService doctorService;
 
@@ -30,7 +31,8 @@ class DoctorsController extends GetxController {
   var isLoadingDoctorsBookingHistory =
       false.obs; // Observable for loading state
   var isLoadingDoctorsPayment = false.obs; // Observable for loading state
-  var isLoadingDoctorsFilterCategory = false.obs; // Observable for loading state
+  var isLoadingDoctorsFilterCategory =
+      false.obs; // Observable for loading state
   var isLoadingDoctorsBlogs = false.obs; // Observable for loading state
   DoctorsController(this.doctorService);
 
@@ -39,10 +41,17 @@ class DoctorsController extends GetxController {
   final selectedAvailableDate = "".obs; // Observable variable
   final selectedtimeSlot = "".obs; // Observable variable
 
-  void fetctDoctors() async {
+  void fetctDoctors({
+    required String categories,
+    required String consultationTypes,
+    required String consultation_fee,
+  }) async {
     try {
       isLoading.value = true; // Set loading to false
-      doctorModel.value = await doctorService.fetchDoctors();
+      doctorModel.value = await doctorService.fetchDoctors(
+          categories: categories,
+          consultationTypes: consultationTypes,
+          consultation_fee: consultation_fee);
       isLoading.value = false; // Set loading to false
     } catch (e) {
       // Handle error
@@ -132,10 +141,12 @@ class DoctorsController extends GetxController {
       isLoadingDoctorsBlogs.value = false; // Set loading to false
     }
   }
+
   void fetchDoctorFilterCategories() async {
     try {
       isLoadingDoctorsFilterCategory.value = true; // Set loading to false
-      blogResponse.value = await doctorService.fetchDoctorFilterCategories();
+      doctorCategoryFilterResponse.value =
+          await doctorService.fetchDoctorFilterCategories();
       isLoadingDoctorsFilterCategory.value = false; // Set loading to false
     } catch (e) {
       // Handle error

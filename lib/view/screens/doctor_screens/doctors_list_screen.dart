@@ -12,6 +12,7 @@ import 'package:cradenthealth/models/familyMember_model.dart';
 import 'package:cradenthealth/view/screens/bookings/bookings_screen.dart';
 import 'package:cradenthealth/view/screens/diagnostics/diagnostic_tests_screen.dart';
 import 'package:cradenthealth/view/screens/doctor_screens/doctor_details_screen.dart';
+import 'package:cradenthealth/view/screens/doctor_screens/filter_screen.dart';
 import 'package:cradenthealth/view/screens/home/widgets/recent_lookups_widget.dart';
 import 'package:cradenthealth/view/widgets/doctor_profile_details_widget.dart';
 import 'package:cradenthealth/view_model/api_controllers/diagnostics_controller.dart';
@@ -38,7 +39,8 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
   @override
   void initState() {
     super.initState();
-    _doctorsController.fetctDoctors();
+    _doctorsController.fetctDoctors(
+        categories: "", consultationTypes: "", consultation_fee: "");
     _familyController.fetchFamilyList();
   }
 
@@ -118,7 +120,7 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
                                 Get.to(DoctorDetailsScreen(
                                   doctorDetails: _doctorsController
                                       .doctorModel.value[index],
-                                      blogDetails: false,
+                                  blogDetails: false,
                                 ));
                                 // Get.to(DiagnosticTestsScreen(
                                 //   diagnosticId: _diagnosticsController
@@ -279,6 +281,23 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
                 ]),
               ));
       }),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+            ),
+            isScrollControlled: true, // optional for full height sheet
+            builder: (context) {
+              return FilterPage();
+            },
+          );
+        },
+        icon: Icon(Icons.filter_list),
+        label: Text('Filter'),
+        backgroundColor: Colors.teal,
+      ),
     );
   }
 }

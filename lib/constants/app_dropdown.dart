@@ -28,7 +28,7 @@ class CustomDropdown<T> extends StatefulWidget {
     this.hintTextColor,
     this.textColor,
     this.onChanged,
-    this.height = 55.0,
+    this.height = 60.0,
     this.borderRadius = 12.0,
   });
 

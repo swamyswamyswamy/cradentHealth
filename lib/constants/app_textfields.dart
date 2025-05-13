@@ -58,7 +58,7 @@ class _InputfieldState extends State<Inputfield> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          height: 50,
+          height: 55,
           child: TextFormField(
             obscureText: widget.isPasswordField ? _obscureText : false,
             onChanged: (text) {

@@ -5,6 +5,7 @@ import 'package:cradenthealth/constants/app_tokens.dart';
 import 'package:cradenthealth/models/diagnostics/diagnosticlist_model.dart';
 import 'package:cradenthealth/models/doctors/bookAppointment_model.dart';
 import 'package:cradenthealth/models/doctors/booking_history_doctors_model.dart';
+import 'package:cradenthealth/models/doctors/doctorCategoriesFilter_model';
 import 'package:cradenthealth/models/doctors/doctor_blogs_model.dart';
 import 'package:cradenthealth/models/doctors/doctor_model.dart';
 import 'package:cradenthealth/models/doctors/prescription_model.dart';
@@ -15,13 +16,19 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 class DoctorService {
-  Future<List<DoctorModel>> fetchDoctors() async {
+  Future<List<DoctorModel>> fetchDoctors({
+    required String categories,
+    required String consultationTypes,
+    required String consultation_fee,
+  }) async {
     try {
       var request = http.Request(
-          'GET', Uri.parse('${AppBaseUrls.baseUrl}api/admin/getdoctors?categories=Cardiology%2CENT&consultationTypes=In-Person%2CVideo%20Call&consultation_fee=500-1000'));
+          'GET',
+          Uri.parse(
+              '${AppBaseUrls.baseUrl}api/admin/getdoctors?categories=${categories}&consultationTypes=${consultationTypes}&consultation_fee=${consultation_fee}'));
 
       http.StreamedResponse response = await request.send();
-
+      print("Doctors fetchedfdffdd: ${request.url}");
       if (response.statusCode == 200) {
         var responseString = await response.stream.bytesToString();
         final decodedList = json.decode(responseString) as List;
@@ -217,6 +224,7 @@ class DoctorService {
       throw Exception("error");
     }
   }
+
   Future<DoctorCategoryFilterResponse> fetchDoctorFilterCategories() async {
     try {
       var request = http.Request(
@@ -227,7 +235,7 @@ class DoctorService {
       if (response.statusCode == 200) {
         var responseString = await response.stream.bytesToString();
         final decodedMap = json.decode(responseString);
-        print("print the diagnotics booking historydfdffdf${decodedMap}");
+        print("print the diagnotics bookfdfdkfdkfkdfdsf${decodedMap}");
         // AppToastMsgs.successToast("Success", decodedMap['message']);
         return DoctorCategoryFilterResponse.fromJson(decodedMap);
       } else {

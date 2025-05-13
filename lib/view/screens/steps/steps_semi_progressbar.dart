@@ -38,8 +38,8 @@ class SemiCircularProgressIndicator extends StatelessWidget {
               CustomSizedBoxHeight(height: 26),
               Obx(() => Lottie.asset(
                     AppAnimations.stepAnimation,
-                    height: getProportionateScreenHeight(40),
-                    width: getProportionateScreenWidth(40),
+                    height: getProportionateScreenHeight(60),
+                    width: getProportionateScreenWidth(60),
                     animate: _stepsController.isWalking.value,
                   )),
               CustomSizedBoxHeight(height: 3),

@@ -197,28 +197,28 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ]),
                             child: Column(
                               children: [
-                                Row(
-                                  children: [
-                                    CustomText(
-                                        textName: "Today",
-                                        textColor: AppColors.blackColor,
-                                        fontWeightType: FontWeightType.medium,
-                                        fontFamily: FontFamily.montserrat,
-                                        fontSize: 14),
-                                    CustomSizedBoxWidth(width: 5),
-                                    Icon(
-                                      Icons.expand_more,
-                                      color: AppColors.blackColor,
-                                    ),
-                                    Spacer(),
-                                    CustomText(
-                                        textName: "View Details >",
-                                        textColor: AppColors.blackColor,
-                                        fontWeightType: FontWeightType.medium,
-                                        fontFamily: FontFamily.montserrat,
-                                        fontSize: 9),
-                                  ],
-                                ),
+                                // Row(
+                                //   children: [
+                                //     CustomText(
+                                //         textName: "Today",
+                                //         textColor: AppColors.blackColor,
+                                //         fontWeightType: FontWeightType.medium,
+                                //         fontFamily: FontFamily.montserrat,
+                                //         fontSize: 14),
+                                //     CustomSizedBoxWidth(width: 5),
+                                //     Icon(
+                                //       Icons.expand_more,
+                                //       color: AppColors.blackColor,
+                                //     ),
+                                //     Spacer(),
+                                //     CustomText(
+                                //         textName: "View Details >",
+                                //         textColor: AppColors.blackColor,
+                                //         fontWeightType: FontWeightType.medium,
+                                //         fontFamily: FontFamily.montserrat,
+                                //         fontSize: 9),
+                                //   ],
+                                // ),
                                 CustomSizedBoxHeight(height: 18),
                                 SemiCircularProgressIndicator(
                                     // progress: 0.75, // 75% progress
