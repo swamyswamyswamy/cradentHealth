@@ -16,6 +16,8 @@ class DoctorsController extends GetxController {
   RxList<DoctorModel> doctorModel = <DoctorModel>[].obs;
   var bookingHistoryDoctorsResponseModel =
       BookingHistoryDoctorsResponseModel().obs;
+  var doctorCategoryFilterResponse =
+      DoctorCategoryFilterResponse().obs;
   var prescriptionDoctorsResponseModel = PrescriptionDoctorsResponseModel().obs;
   var blogResponse = BlogResponse().obs;
   var appointmentModel = AppointmentModel().obs;
@@ -28,6 +30,7 @@ class DoctorsController extends GetxController {
   var isLoadingDoctorsBookingHistory =
       false.obs; // Observable for loading state
   var isLoadingDoctorsPayment = false.obs; // Observable for loading state
+  var isLoadingDoctorsFilterCategory = false.obs; // Observable for loading state
   var isLoadingDoctorsBlogs = false.obs; // Observable for loading state
   DoctorsController(this.doctorService);
 
@@ -127,6 +130,18 @@ class DoctorsController extends GetxController {
       isLoadingDoctorsBlogs.value = false; // Set loading to false
     } finally {
       isLoadingDoctorsBlogs.value = false; // Set loading to false
+    }
+  }
+  void fetchDoctorFilterCategories() async {
+    try {
+      isLoadingDoctorsFilterCategory.value = true; // Set loading to false
+      blogResponse.value = await doctorService.fetchDoctorFilterCategories();
+      isLoadingDoctorsFilterCategory.value = false; // Set loading to false
+    } catch (e) {
+      // Handle error
+      isLoadingDoctorsFilterCategory.value = false; // Set loading to false
+    } finally {
+      isLoadingDoctorsFilterCategory.value = false; // Set loading to false
     }
   }
 
