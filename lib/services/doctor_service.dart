@@ -217,10 +217,10 @@ class DoctorService {
       throw Exception("error");
     }
   }
-  Future<BlogResponse> fetchDoctorFilterCategories() async {
+  Future<DoctorCategoryFilterResponse> fetchDoctorFilterCategories() async {
     try {
       var request = http.Request(
-          'GET', Uri.parse('${AppBaseUrls.baseUrl}api/doctor/blogs'));
+          'GET', Uri.parse('${AppBaseUrls.baseUrl}api/admin/doctorsbyfilter'));
 
       http.StreamedResponse response = await request.send();
 
@@ -229,7 +229,7 @@ class DoctorService {
         final decodedMap = json.decode(responseString);
         print("print the diagnotics booking historydfdffdf${decodedMap}");
         // AppToastMsgs.successToast("Success", decodedMap['message']);
-        return BlogResponse.fromJson(decodedMap);
+        return DoctorCategoryFilterResponse.fromJson(decodedMap);
       } else {
         var responseString = await response.stream.bytesToString();
         final decodedMap = json.decode(responseString);
