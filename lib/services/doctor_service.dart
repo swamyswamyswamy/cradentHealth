@@ -217,4 +217,31 @@ class DoctorService {
       throw Exception("error");
     }
   }
+  Future<BlogResponse> fetchDoctorFilterCategories() async {
+    try {
+      var request = http.Request(
+          'GET', Uri.parse('${AppBaseUrls.baseUrl}api/doctor/blogs'));
+
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        var responseString = await response.stream.bytesToString();
+        final decodedMap = json.decode(responseString);
+        print("print the diagnotics booking historydfdffdf${decodedMap}");
+        // AppToastMsgs.successToast("Success", decodedMap['message']);
+        return BlogResponse.fromJson(decodedMap);
+      } else {
+        var responseString = await response.stream.bytesToString();
+        final decodedMap = json.decode(responseString);
+        AppToastMsgs.failedToast("Error", decodedMap['message']);
+        throw Exception(decodedMap['message']);
+      }
+    } catch (e) {
+      // Handle the case where the server is down
+      AppToastMsgs.failedToast("Server Error",
+          "Failed to connect to the server. Please try again later.$e");
+      print("Error fetching ride history: $e");
+      throw Exception("error");
+    }
+  }
 }
