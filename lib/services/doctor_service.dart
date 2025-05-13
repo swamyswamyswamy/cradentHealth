@@ -18,7 +18,7 @@ class DoctorService {
   Future<List<DoctorModel>> fetchDoctors() async {
     try {
       var request = http.Request(
-          'GET', Uri.parse('${AppBaseUrls.baseUrl}api/admin/getdoctors'));
+          'GET', Uri.parse('${AppBaseUrls.baseUrl}api/admin/getdoctors?categories=Cardiology%2CENT&consultationTypes=In-Person%2CVideo%20Call&consultation_fee=500-1000'));
 
       http.StreamedResponse response = await request.send();
 
