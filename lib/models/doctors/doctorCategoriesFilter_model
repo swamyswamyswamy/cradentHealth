@@ -1,10 +1,10 @@
-class FilterResponse {
+class DoctorCategoryFilterResponse {
   final FilterOptions filters;
 
-  FilterResponse({required this.filters});
+  DoctorCategoryFilterResponse({required this.filters});
 
-  factory FilterResponse.fromJson(Map<String, dynamic> json) {
-    return FilterResponse(
+  factory DoctorCategoryFilterResponse.fromJson(Map<String, dynamic> json) {
+    return DoctorCategoryFilterResponse(
       filters: FilterOptions.fromJson(json['filters'] ?? {}),
     );
   }
