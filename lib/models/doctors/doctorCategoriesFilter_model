@@ -1,1 +1,86 @@
+class FilterResponse {
+  final FilterOptions filters;
+
+  FilterResponse({required this.filters});
+
+  factory FilterResponse.fromJson(Map<String, dynamic> json) {
+    return FilterResponse(
+      filters: FilterOptions.fromJson(json['filters'] ?? {}),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'filters': filters.toJson(),
+    };
+  }
+}
+
+class FilterOptions {
+  final List<FilterItem> department;
+  final List<FilterItem> sortBy;
+  final List<FilterItem> consultation;
+  final List<FilterItem> price;
+
+  FilterOptions({
+    this.department = const [],
+    this.sortBy = const [],
+    this.consultation = const [],
+    this.price = const [],
+  });
+
+  factory FilterOptions.fromJson(Map<String, dynamic> json) {
+    return FilterOptions(
+      department: (json['Department'] as List<dynamic>?)
+              ?.map((e) => FilterItem.fromJson(e))
+              .toList() ??
+          [],
+      sortBy: (json['Sort By'] as List<dynamic>?)
+              ?.map((e) => FilterItem.fromJson(e))
+              .toList() ??
+          [],
+      consultation: (json['Consultation'] as List<dynamic>?)
+              ?.map((e) => FilterItem.fromJson(e))
+              .toList() ??
+          [],
+      price: (json['Price'] as List<dynamic>?)
+              ?.map((e) => FilterItem.fromJson(e))
+              .toList() ??
+          [],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'Department': department.map((e) => e.toJson()).toList(),
+      'Sort By': sortBy.map((e) => e.toJson()).toList(),
+      'Consultation': consultation.map((e) => e.toJson()).toList(),
+      'Price': price.map((e) => e.toJson()).toList(),
+    };
+  }
+}
+
+class FilterItem {
+  final String id;
+  final String name;
+
+  FilterItem({
+    this.id = "",
+    this.name = "",
+  });
+
+  factory FilterItem.fromJson(Map<String, dynamic> json) {
+    return FilterItem(
+      id: json['id']?.toString() ?? "",
+      name: json['name']?.toString() ?? "",
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+    };
+  }
+}
 
