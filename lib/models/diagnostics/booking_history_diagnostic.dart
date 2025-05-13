@@ -1,4 +1,3 @@
-
 import 'package:cradenthealth/models/diagnostics/diagnosticlist_model.dart';
 
 class BookingsHistoryDiagnosticResponseModel {
@@ -7,7 +6,8 @@ class BookingsHistoryDiagnosticResponseModel {
 
   BookingsHistoryDiagnosticResponseModel({this.message, this.bookings});
 
-  factory BookingsHistoryDiagnosticResponseModel.fromJson(Map<String, dynamic> json) {
+  factory BookingsHistoryDiagnosticResponseModel.fromJson(
+      Map<String, dynamic> json) {
     return BookingsHistoryDiagnosticResponseModel(
       message: json['message']?.toString() ?? "",
       bookings:
@@ -28,6 +28,7 @@ class Booking {
   String? consultationFee;
   List<TestModel>? tests;
   String? appointmentDate;
+  String? appointment_time;
   String? gender;
   String? age;
   String? subtotal;
@@ -35,6 +36,7 @@ class Booking {
   String? gstOnConsultation;
   String? total;
   String? status;
+  String? visit;
 
   Booking({
     this.bookingId,
@@ -48,9 +50,11 @@ class Booking {
     this.consultationFee,
     this.tests,
     this.appointmentDate,
+    this.appointment_time,
     this.gender,
     this.age,
     this.subtotal,
+    this.visit,
     this.gstOnTests,
     this.gstOnConsultation,
     this.total,
@@ -71,8 +75,10 @@ class Booking {
       tests:
           (json['tests'] as List?)?.map((e) => TestModel.fromJson(e)).toList(),
       appointmentDate: json['appointment_date']?.toString() ?? "",
+      appointment_time: json['appointment_time']?.toString() ?? "",
       gender: json['gender']?.toString() ?? "",
       age: json['age']?.toString() ?? "",
+      visit: json['visit']?.toString() ?? "",
       subtotal: json['subtotal']?.toString() ?? "",
       gstOnTests: json['gst_on_tests']?.toString() ?? "",
       gstOnConsultation: json['gst_on_consultation']?.toString() ?? "",

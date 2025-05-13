@@ -115,7 +115,7 @@ class BookingHistoryDoctorsWidget extends StatelessWidget {
                                           .bookingHistoryDoctorsResponseModel
                                           .value
                                           .appointments![index]
-                                          .patientName!,
+                                          .gender!,
                                       textColor: AppColors.blackColor,
                                       fontWeightType: FontWeightType.regular,
                                       fontFamily: FontFamily.poppins,
@@ -132,7 +132,11 @@ class BookingHistoryDoctorsWidget extends StatelessWidget {
                                       fontFamily: FontFamily.poppins,
                                       fontSize: 16),
                                   CustomText(
-                                      textName: "Direct",
+                                      textName: _doctorsController
+                                          .bookingHistoryDoctorsResponseModel
+                                          .value
+                                          .appointments![index]
+                                          .visit!,
                                       textColor: AppColors.blackColor,
                                       fontWeightType: FontWeightType.regular,
                                       fontFamily: FontFamily.poppins,
@@ -148,7 +152,7 @@ class BookingHistoryDoctorsWidget extends StatelessWidget {
                                           .bookingHistoryDoctorsResponseModel
                                           .value
                                           .appointments![index]
-                                          .patientName!,
+                                          .appointmentDate!,
                                       textColor: AppColors.blackColor,
                                       fontWeightType: FontWeightType.regular,
                                       fontFamily: FontFamily.poppins,
@@ -164,7 +168,7 @@ class BookingHistoryDoctorsWidget extends StatelessWidget {
                                           .bookingHistoryDoctorsResponseModel
                                           .value
                                           .appointments![index]
-                                          .patientName!,
+                                          .appointment_time!,
                                       textColor: AppColors.blackColor,
                                       fontWeightType: FontWeightType.regular,
                                       fontFamily: FontFamily.poppins,

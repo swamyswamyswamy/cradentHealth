@@ -132,7 +132,11 @@ class BookingsHistoryDiagnoticWidget extends StatelessWidget {
                                       fontFamily: FontFamily.poppins,
                                       fontSize: 16),
                                   CustomText(
-                                      textName: "Direct",
+                                      textName: _diagnosticsController
+                                          .bookingsHistoryDiagnosticResponseModel
+                                          .value
+                                          .bookings![index]
+                                          .visit!,
                                       textColor: AppColors.blackColor,
                                       fontWeightType: FontWeightType.regular,
                                       fontFamily: FontFamily.poppins,
@@ -148,7 +152,7 @@ class BookingsHistoryDiagnoticWidget extends StatelessWidget {
                                           .bookingsHistoryDiagnosticResponseModel
                                           .value
                                           .bookings![index]
-                                          .patientName!,
+                                          .appointmentDate!,
                                       textColor: AppColors.blackColor,
                                       fontWeightType: FontWeightType.regular,
                                       fontFamily: FontFamily.poppins,
@@ -164,7 +168,7 @@ class BookingsHistoryDiagnoticWidget extends StatelessWidget {
                                           .bookingsHistoryDiagnosticResponseModel
                                           .value
                                           .bookings![index]
-                                          .patientName!,
+                                          .appointment_time!,
                                       textColor: AppColors.blackColor,
                                       fontWeightType: FontWeightType.regular,
                                       fontFamily: FontFamily.poppins,
