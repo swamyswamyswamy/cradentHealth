@@ -143,7 +143,7 @@ class _TokenLoaderState extends State<TokenLoader> {
       backgroundColor: AppColors.whiteColor,
       body: Center(
         child: Image.asset(
-          AppImages.loginImage, // Replace with your logo image asset path
+          AppImages.appLogo, // Replace with your logo image asset path
           height: 200,
           width: 200,
         ),
