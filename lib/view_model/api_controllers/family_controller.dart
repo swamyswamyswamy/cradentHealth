@@ -89,10 +89,10 @@ class FamilyController extends GetxController {
 
 
 
-void fetchFamilyList() async {
+void deleteFamilyMember() async {
     try {
       isLoading.value = true; // Set loading to false
-       await familyService.de();
+       await familyService.deleteFamilyMember();
       isLoading.value = false; // Set loading to false
     } catch (e) {
       // Handle error
