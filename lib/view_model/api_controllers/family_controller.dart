@@ -86,6 +86,21 @@ class FamilyController extends GetxController {
   var selectedPatientName = ''.obs;
   var selectedPatientAge = ''.obs;
   var selectedPatientGender = ''.obs;
+
+
+
+void fetchFamilyList() async {
+    try {
+      isLoading.value = true; // Set loading to false
+       await familyService.de();
+      isLoading.value = false; // Set loading to false
+    } catch (e) {
+      // Handle error
+      isLoading.value = false; // Set loading to false
+    } finally {
+      isLoading.value = false; // Set loading to false
+    }
+  }
   @override
   void onInit() {
     // fetchSupportService(); // Fetch data on controller initialization
