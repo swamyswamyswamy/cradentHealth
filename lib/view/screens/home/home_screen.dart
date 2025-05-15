@@ -10,6 +10,7 @@ import 'package:cradenthealth/view/screens/doctor_screens/doctors_list_screen.da
 import 'package:cradenthealth/view/screens/drawer_screens/wallet_screen.dart';
 import 'package:cradenthealth/view/screens/home/widgets/blogs_widget.dart';
 import 'package:cradenthealth/view/screens/home/widgets/recent_lookups_widget.dart';
+import 'package:cradenthealth/view/screens/hra/hra_screen.dart';
 import 'package:cradenthealth/view/screens/steps/steps_semi_progressbar.dart';
 import 'package:cradenthealth/view/widgets/home_shimmer_effect.dart';
 import 'package:cradenthealth/view_model/api_controllers/doctors_controller.dart';
@@ -39,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List<Map<String, dynamic>> categories = [
     {
-      'title': "Schedule a consultation",
+      'title': "Book a consultation",
       'image': AppImages.consultationImage,
       'navigate': DoctorsListScreen(),
     },
@@ -64,14 +65,14 @@ class _HomeScreenState extends State<HomeScreen> {
     //   'navigate': HraScreen(title: "EAP"),
     // },
     {
-      'title': "Diagnostics",
+      'title': "Lab tests & packages",
       'image': AppImages.diagnosticsImage,
       'navigate': DiagnosticslistScreen(),
     },
     {
       'title': "HRA",
       'image': AppImages.hraImage,
-      'navigate': CategoriesScreens(),
+      'navigate': HraScreen(),
     },
   ];
 
@@ -230,17 +231,17 @@ class _HomeScreenState extends State<HomeScreen> {
                             )),
                       ),
                       CustomSizedBoxHeight(height: 22),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: getProportionateScreenWidth(16)),
-                        child: CustomText(
-                            textName: "Categories",
-                            textColor: AppColors.blackColor,
-                            fontWeightType: FontWeightType.semiBold,
-                            fontFamily: FontFamily.montserrat,
-                            fontSize: 16),
-                      ),
-                      CustomSizedBoxHeight(height: 16),
+                      // Padding(
+                      //   padding: EdgeInsets.symmetric(
+                      //       horizontal: getProportionateScreenWidth(16)),
+                      //   child: CustomText(
+                      //       textName: "Categories",
+                      //       textColor: AppColors.blackColor,
+                      //       fontWeightType: FontWeightType.semiBold,
+                      //       fontFamily: FontFamily.montserrat,
+                      //       fontSize: 16),
+                      // ),
+                      // CustomSizedBoxHeight(height: 16),
                       IntrinsicHeight(
                         child: SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
@@ -286,30 +287,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          index == 2
-                                              ? SizedBox()
-                                              : Image.asset(
-                                                  category['image'],
-                                                  height:
-                                                      getProportionateScreenHeight(
-                                                          60),
-                                                  width:
-                                                      getProportionateScreenWidth(
-                                                          60),
-                                                ),
-                                          index == 2
-                                              ? SizedBox()
-                                              : CustomSizedBoxHeight(height: 8),
+                                          Image.asset(
+                                            category['image'],
+                                            height:
+                                                getProportionateScreenHeight(
+                                                    60),
+                                            width:
+                                                getProportionateScreenWidth(60),
+                                          ),
+                                          CustomSizedBoxHeight(height: 8),
                                           CustomText(
-                                            textName: index == 2
-                                                ? "View\nMore >>"
-                                                : category['title'],
+                                            textName: category['title'],
                                             textColor: AppColors.blackColor,
-                                            fontWeightType: index == 2
-                                                ? FontWeightType.semiBold
-                                                : FontWeightType.medium,
+                                            fontWeightType:
+                                                FontWeightType.medium,
                                             fontFamily: FontFamily.montserrat,
-                                            fontSize: index == 2 ? 10 : 8,
+                                            fontSize: 8,
                                           ),
                                         ],
                                       ),

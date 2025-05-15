@@ -19,7 +19,7 @@ class CategoriesScreens extends StatelessWidget {
 
   final List<Map<String, dynamic>> categories = [
     {
-      'title': "Schedule a consultation",
+      'title': "Book a consultation",
       'image': AppImages.consultationImage,
       'navigate': DoctorsListScreen(),
     },
@@ -44,7 +44,7 @@ class CategoriesScreens extends StatelessWidget {
     //   'navigate': HraScreen(title: "EAP"),
     // },
     {
-      'title': "Diagnostics",
+      'title': "Lab tests & packages",
       'image': AppImages.diagnosticsImage,
       'navigate': DiagnosticslistScreen(),
     },

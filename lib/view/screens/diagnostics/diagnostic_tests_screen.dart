@@ -57,30 +57,96 @@ class _DiagnosticTestsScreenState extends State<DiagnosticTestsScreen> {
           Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: getProportionateScreenWidth(16)),
-            child: CustomDropdown(
-              dropdownItems: ["tests", "packages"],
-              getItemName: (item) => item, // Simply returns the item itself
-              getItemId: (item) => item, // ID same as the item in this case
-              initialValue: 'tests', // Optional initial value
-              hintName: 'Select tests',
+            child: Obx(() {
+              return Row(
+                children: [
+                  Expanded(
+                    child: AppButton(
+                      backgroundColor:
+                          _diagnosticsController.diagnosticTestType.value ==
+                                  "tests"
+                              ? AppColors.primaryColor
+                              : AppColors.greyColor.withOpacity(0.3),
+                      onTap: () {
+                        _diagnosticsController.selectedDiagnosticTests.clear();
 
-              textColor: Colors.black,
-              onChanged: (selectedValue) {
-                _diagnosticsController.selectedDiagnosticTests.clear();
+                        _diagnosticsController.diagnosticTestType.value =
+                            "tests";
+                      },
+                      height: 45,
+                      child: Center(
+                        child: CustomText(
+                            textName: "Tests",
+                            textColor: _diagnosticsController
+                                        .diagnosticTestType.value ==
+                                    "tests"
+                                ? AppColors.whiteColor
+                                : AppColors.blackColor,
+                            fontWeightType: FontWeightType.medium,
+                            fontFamily: FontFamily.inter,
+                            fontSize: 16),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: AppButton(
+                      backgroundColor:
+                          _diagnosticsController.diagnosticTestType.value !=
+                                  "tests"
+                              ? AppColors.primaryColor
+                              : AppColors.greyColor.withOpacity(0.3),
+                      onTap: () {
+                        _diagnosticsController.selectedDiagnosticTests.clear();
 
-                _diagnosticsController.diagnosticTestType.value =
-                    selectedValue!;
-
-                // _familyController.selectedPatientName.value =
-                //     selectedValue!.fullName!;
-                // _familyController.selectedPatientAge.value = selectedValue!.age!;
-                // _familyController.selectedPatientGender.value =
-                //     selectedValue!.gender!;
-
-                // print('Selected: ${_familyController.selectedPatientName.value}');
-              },
-            ),
+                        _diagnosticsController.diagnosticTestType.value =
+                            "packages";
+                      },
+                      height: 45,
+                      child: Center(
+                        child: CustomText(
+                            textName: "Packages",
+                            textColor: _diagnosticsController
+                                        .diagnosticTestType.value !=
+                                    "tests"
+                                ? AppColors.whiteColor
+                                : AppColors.blackColor,
+                            fontWeightType: FontWeightType.medium,
+                            fontFamily: FontFamily.inter,
+                            fontSize: 16),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            }),
           ),
+          // Padding(
+          //   padding: EdgeInsets.symmetric(
+          //       horizontal: getProportionateScreenWidth(16)),
+          //   child: CustomDropdown(
+          //     dropdownItems: ["tests", "packages"],
+          //     getItemName: (item) => item, // Simply returns the item itself
+          //     getItemId: (item) => item, // ID same as the item in this case
+          //     initialValue: 'tests', // Optional initial value
+          //     hintName: 'Select tests',
+
+          //     textColor: Colors.black,
+          //     onChanged: (selectedValue) {
+          //       _diagnosticsController.selectedDiagnosticTests.clear();
+
+          //       _diagnosticsController.diagnosticTestType.value =
+          //           selectedValue!;
+
+          //       // _familyController.selectedPatientName.value =
+          //       //     selectedValue!.fullName!;
+          //       // _familyController.selectedPatientAge.value = selectedValue!.age!;
+          //       // _familyController.selectedPatientGender.value =
+          //       //     selectedValue!.gender!;
+
+          //       // print('Selected: ${_familyController.selectedPatientName.value}');
+          //     },
+          //   ),
+          // ),
           CustomSizedBoxHeight(height: 20),
           Obx(() {
             return _diagnosticsController.diagnosticTestType.value == "tests"
