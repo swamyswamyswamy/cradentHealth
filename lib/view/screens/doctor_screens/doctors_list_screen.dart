@@ -63,6 +63,7 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
                     horizontal: getProportionateScreenWidth(16)),
                 child: Column(children: [
                   CustomSizedBoxHeight(height: 24),
+
                   // Row(
                   //   children: [
                   //     Icon(
@@ -106,6 +107,63 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
                     },
                   ),
                   CustomSizedBoxHeight(height: 26),
+                  Container(
+                    height: 50,
+                    child: ListView.builder(
+                      itemCount: 2,
+                      scrollDirection: Axis.horizontal,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (BuildContext context, int index) {
+                        return Padding(
+                          padding: EdgeInsets.only(right: 15),
+                          child: AppButton(
+                            onTap: () {
+                              showModalBottomSheet(
+                                context: context,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(20)),
+                                ),
+                                isScrollControlled:
+                                    true, // optional for full height sheet
+                                builder: (context) {
+                                  return FilterPage();
+                                },
+                              );
+                            },
+                            backgroundColor: AppColors.greyColor,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: getProportionateScreenWidth(16)),
+                              child: Row(
+                                children: [
+                                  Center(
+                                    child: CustomText(
+                                        textName: index == 0
+                                            ? "Filter"
+                                            : "Speciality",
+                                        textColor: AppColors.blackColor,
+                                        fontWeightType: FontWeightType.regular,
+                                        fontFamily: FontFamily.poppins,
+                                        fontSize: 16),
+                                  ),
+                                  index == 0
+                                      ? SizedBox()
+                                      : CustomSizedBoxWidth(width: 10),
+                                  index == 0
+                                      ? SizedBox()
+                                      : Icon(
+                                          Icons.expand_more,
+                                        )
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  CustomSizedBoxHeight(height: 24),
                   ListView.builder(
                     itemCount: _doctorsController.doctorModel.value.length,
                     physics: NeverScrollableScrollPhysics(),
@@ -281,23 +339,14 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
                 ]),
               ));
       }),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-            ),
-            isScrollControlled: true, // optional for full height sheet
-            builder: (context) {
-              return FilterPage();
-            },
-          );
-        },
-        icon: Icon(Icons.filter_list),
-        label: Text('Filter'),
-        backgroundColor: Colors.teal,
-      ),
+      // floatingActionButton: FloatingActionButton.extended(
+      //   onPressed: () {
+
+      //   },
+      //   icon: Icon(Icons.filter_list),
+      //   label: Text('Filter'),
+      //   backgroundColor: Colors.teal,
+      // ),
     );
   }
 }

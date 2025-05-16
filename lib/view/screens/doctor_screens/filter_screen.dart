@@ -17,7 +17,7 @@ class _FilterPageState extends State<FilterPage> {
   final String mockJson = '''
   {
     "filters": {
-      "Department": [
+      "Speciality": [
         {"id": "1", "name": "Anesthesiology"},
         {"id": "2", "name": "Cardiology"},
         {"id": "3", "name": "ENT"}
