@@ -163,7 +163,7 @@ class _DiagnosticTestsScreenState extends State<DiagnosticTestsScreen> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                 child: Container(
-                  height: 62,
+                  height: 72,
                   width: double.infinity,
                   decoration: BoxDecoration(
                       boxShadow: [

@@ -104,33 +104,48 @@ class DoctorDetailsScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(
                   horizontal: getProportionateScreenWidth(16)),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
+              child: Container(
+                decoration:
+                    BoxDecoration(color: AppColors.whiteColor, boxShadow: [
+                  BoxShadow(
+                      offset: Offset(1, 3),
+                      spreadRadius: 2,
+                      blurRadius: 2,
+                      color: AppColors.blackColor.withOpacity(0.1))
+                ]),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: getProportionateScreenWidth(10),
+                      vertical: getProportionateScreenHeight(10)),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Icon(
-                        Icons.location_on_outlined,
-                        color: AppColors.redColor,
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.location_on_outlined,
+                            color: AppColors.redColor,
+                          ),
+                          CustomSizedBoxWidth(width: 10),
+                          CustomText(
+                              textName: doctorDetails.address!,
+                              textColor: AppColors.blackColor,
+                              fontWeightType: FontWeightType.regular,
+                              fontFamily: FontFamily.poppins,
+                              fontSize: 13),
+                        ],
                       ),
-                      CustomSizedBoxWidth(width: 10),
+                      CustomSizedBoxHeight(height: 19),
                       CustomText(
                           textName: doctorDetails.address!,
                           textColor: AppColors.blackColor,
                           fontWeightType: FontWeightType.regular,
                           fontFamily: FontFamily.poppins,
-                          fontSize: 13),
+                          fontSize: 12),
+                      CustomSizedBoxHeight(height: 15),
                     ],
                   ),
-                  CustomSizedBoxHeight(height: 19),
-                  CustomText(
-                      textName: doctorDetails.address!,
-                      textColor: AppColors.blackColor,
-                      fontWeightType: FontWeightType.regular,
-                      fontFamily: FontFamily.poppins,
-                      fontSize: 12),
-                  CustomSizedBoxHeight(height: 15),
-                ],
+                ),
               ),
             ),
           ],

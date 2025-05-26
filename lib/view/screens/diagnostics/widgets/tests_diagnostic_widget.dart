@@ -59,6 +59,7 @@ class _TestsDiagnosticWidgetState extends State<TestsDiagnosticWidget> {
                         children: [
                           AppButton(
                             backgroundColor: AppColors.whiteColor,
+                            hasShadow: true,
                             child: Padding(
                               padding: EdgeInsets.all(
                                   getProportionateScreenHeight(9)),
@@ -152,7 +153,8 @@ class _TestsDiagnosticWidgetState extends State<TestsDiagnosticWidget> {
                                                                   diagnosticTestsList[
                                                                           index]
                                                                       .id))
-                                                          ? AppColors.redColor
+                                                          ? AppColors
+                                                              .primaryColor
                                                           : AppColors
                                                               .primaryColor,
                                                   child: Padding(
@@ -195,10 +197,10 @@ class _TestsDiagnosticWidgetState extends State<TestsDiagnosticWidget> {
                             ),
                           ),
                           CustomSizedBoxHeight(height: 20),
-                          Divider(
-                            color: AppColors.blackColor.withOpacity(0.3),
-                            height: 0,
-                          )
+                          // Divider(
+                          //   color: AppColors.blackColor.withOpacity(0.3),
+                          //   height: 0,
+                          // )
                         ],
                       ),
                     );

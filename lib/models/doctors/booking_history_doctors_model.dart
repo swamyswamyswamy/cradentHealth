@@ -1,6 +1,6 @@
 class BookingHistoryDoctorsResponseModel {
   String? message;
-  List<Appointment>? appointments;
+  List<AppointmentBooking>? appointments;
 
   BookingHistoryDoctorsResponseModel({this.message, this.appointments});
 
@@ -9,13 +9,13 @@ class BookingHistoryDoctorsResponseModel {
     return BookingHistoryDoctorsResponseModel(
       message: json['message']?.toString() ?? "",
       appointments: (json['appointments'] as List?)
-          ?.map((e) => Appointment.fromJson(e))
+          ?.map((e) => AppointmentBooking.fromJson(e))
           .toList(),
     );
   }
 }
 
-class Appointment {
+class AppointmentBooking {
   String? appointmentId;
   String? doctorName;
   String? doctorSpecialization;
@@ -30,7 +30,7 @@ class Appointment {
   String? total;
   String? visit;
 
-  Appointment({
+  AppointmentBooking({
     this.appointmentId,
     this.doctorName,
     this.doctorSpecialization,
@@ -46,8 +46,8 @@ class Appointment {
     this.visit,
   });
 
-  factory Appointment.fromJson(Map<String, dynamic> json) {
-    return Appointment(
+  factory AppointmentBooking.fromJson(Map<String, dynamic> json) {
+    return AppointmentBooking(
       appointmentId: json['appointmentId']?.toString() ?? "",
       doctorName: json['doctor_name']?.toString() ?? "",
       doctorSpecialization: json['doctor_specialization']?.toString() ?? "",

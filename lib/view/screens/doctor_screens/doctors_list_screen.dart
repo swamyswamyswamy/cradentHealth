@@ -108,7 +108,7 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
                   ),
                   CustomSizedBoxHeight(height: 26),
                   Container(
-                    height: 50,
+                    height: 45,
                     child: ListView.builder(
                       itemCount: 2,
                       scrollDirection: Axis.horizontal,
@@ -190,6 +190,7 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
                               },
                               child: AppButton(
                                 backgroundColor: AppColors.secondaryColor,
+                                hasShadow: true,
                                 child: Padding(
                                   padding: EdgeInsets.all(
                                       getProportionateScreenHeight(9)),
@@ -249,7 +250,7 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
                                                       textName:
                                                           "₹ ${_doctorsController.doctorModel.value[index].consultationFee!}",
                                                       textColor:
-                                                          AppColors.redColor,
+                                                          AppColors.blackColor,
                                                       fontWeightType:
                                                           FontWeightType
                                                               .semiBold,

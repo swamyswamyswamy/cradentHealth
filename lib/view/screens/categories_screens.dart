@@ -8,6 +8,7 @@ import 'package:cradenthealth/view/screens/bookings/bookings_screen.dart';
 import 'package:cradenthealth/view/screens/diagnostics/diagnosticslist_screen.dart';
 import 'package:cradenthealth/view/screens/doctor_screens/doctors_list_screen.dart';
 import 'package:cradenthealth/view/screens/gym_fitness/gym_fitness_plans.dart';
+import 'package:cradenthealth/view/screens/hra/hra_policy_screen.dart';
 import 'package:cradenthealth/view/screens/hra/hra_screen.dart';
 import 'package:cradenthealth/view/screens/opticles/lenskart_specs_screen.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +52,7 @@ class CategoriesScreens extends StatelessWidget {
     {
       'title': "HRA",
       'image': AppImages.hraImage,
-      'navigate': HraScreen(),
+      'navigate': HealthAssessmentIntroScreen(),
     },
   ];
 

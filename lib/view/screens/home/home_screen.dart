@@ -10,6 +10,7 @@ import 'package:cradenthealth/view/screens/doctor_screens/doctors_list_screen.da
 import 'package:cradenthealth/view/screens/drawer_screens/wallet_screen.dart';
 import 'package:cradenthealth/view/screens/home/widgets/blogs_widget.dart';
 import 'package:cradenthealth/view/screens/home/widgets/recent_lookups_widget.dart';
+import 'package:cradenthealth/view/screens/hra/hra_policy_screen.dart';
 import 'package:cradenthealth/view/screens/hra/hra_screen.dart';
 import 'package:cradenthealth/view/screens/steps/steps_semi_progressbar.dart';
 import 'package:cradenthealth/view/widgets/home_shimmer_effect.dart';
@@ -72,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
     {
       'title': "HRA",
       'image': AppImages.hraImage,
-      'navigate': HraScreen(),
+      'navigate': HealthAssessmentIntroScreen(),
     },
   ];
 

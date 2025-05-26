@@ -64,16 +64,14 @@ class _DiagnosticPaymentScreenState extends State<DiagnosticPaymentScreen> {
                       //   ),
                       // ),
                       CustomSizedBoxHeight(height: 24),
-                      Divider(
-                        color: AppColors.blackColor.withOpacity(0.2),
-                        height: 0,
-                      ),
-                      CustomSizedBoxHeight(height: 22),
+
+                      // CustomSizedBoxHeight(height: 22),
                       Padding(
                         padding: EdgeInsets.symmetric(
                             horizontal: getProportionateScreenWidth(16)),
                         child: AppButton(
                           backgroundColor: AppColors.secondaryColor,
+                          hasShadow: true,
                           borderRadius: 5,
                           child: Padding(
                               padding: EdgeInsets.all(
@@ -183,14 +181,14 @@ class _DiagnosticPaymentScreenState extends State<DiagnosticPaymentScreen> {
                                                     FontWeightType.medium,
                                                 fontFamily: FontFamily.inter,
                                                 fontSize: 16),
-                                            CustomText(
-                                                textName:
-                                                    "₹ ${_diagnosticsController.diagnosticCheckoutResponse.value!.booking!.tests![index].offerPrice!}",
-                                                textColor: AppColors.blackColor,
-                                                fontWeightType:
-                                                    FontWeightType.regular,
-                                                fontFamily: FontFamily.inter,
-                                                fontSize: 13),
+                                            // CustomText(
+                                            //     textName:
+                                            //         "₹ ${_diagnosticsController.diagnosticCheckoutResponse.value!.booking!.tests![index].offerPrice!}",
+                                            //     textColor: AppColors.blackColor,
+                                            //     fontWeightType:
+                                            //         FontWeightType.regular,
+                                            //     fontFamily: FontFamily.inter,
+                                            //     fontSize: 13),
                                           ],
                                         ),
                                       ),
@@ -227,14 +225,18 @@ class _DiagnosticPaymentScreenState extends State<DiagnosticPaymentScreen> {
                                   ),
                                 ),
                                 CustomSizedBoxHeight(height: 16),
-                                Divider(
-                                  color: AppColors.blackColor.withOpacity(0.2),
-                                  height: 16,
-                                )
+                                // Divider(
+                                //   color: AppColors.blackColor.withOpacity(0.2),
+                                //   height: 16,
+                                // )
                               ],
                             ),
                           );
                         },
+                      ),
+                      Divider(
+                        color: AppColors.blackColor.withOpacity(0.2),
+                        height: 16,
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(

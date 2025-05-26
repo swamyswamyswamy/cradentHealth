@@ -65,7 +65,36 @@ class _StepsScreenState extends State<StepsScreen> {
                         ),
                   ),
 
-                  CustomSizedBoxHeight(height: 25),
+                  CustomSizedBoxHeight(height: 50),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      _stepsController.steps.value = 0;
+                    },
+                    icon: Icon(Icons.refresh,
+                        color: Colors.white, size: 16), // smaller icon
+                    label: Text(
+                      'Reset',
+                      style: TextStyle(
+                        fontSize: 15, // smaller font
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.redAccent,
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 6), // less padding
+                      minimumSize:
+                          Size(100, 40), // smaller button size constraint
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      elevation: 3,
+                      shadowColor: Colors.redAccent.withOpacity(0.4),
+                    ),
+                  ),
+
+                  // CustomSizedBoxHeight(height: 25),
                   Expanded(
                     child: ListView.builder(
                       shrinkWrap: true,

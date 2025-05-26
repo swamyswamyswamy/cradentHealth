@@ -15,4 +15,5 @@ class AppImages {
   static const String footImage = 'assets/images/footImage.png';
   static const String directionImage = 'assets/images/directionImage.png';
   static const String walletImage = 'assets/images/walletImage.png';
+  static const String hraImageSuccess = 'assets/images/hraImageSuccess.jpeg';
 }

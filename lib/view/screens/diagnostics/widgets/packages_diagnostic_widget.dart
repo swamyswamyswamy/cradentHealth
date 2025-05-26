@@ -59,6 +59,7 @@ class _PackagesDiagnosticWidgetState extends State<PackagesDiagnosticWidget> {
                       child: Column(
                         children: [
                           AppButton(
+                            hasShadow: true,
                             backgroundColor: AppColors.whiteColor,
                             child: Padding(
                               padding: EdgeInsets.all(
@@ -107,12 +108,32 @@ class _PackagesDiagnosticWidgetState extends State<PackagesDiagnosticWidget> {
                                           CustomText(
                                               textName:
                                                   diagnosticTestsList[index]
-                                                      .packageName!,
+                                                      .tests![0]
+                                                      .testName!,
                                               textColor: AppColors.blackColor,
                                               fontWeightType:
                                                   FontWeightType.regular,
                                               fontFamily: FontFamily.inter,
                                               fontSize: 10),
+                                          CustomSizedBoxHeight(height: 4),
+                                          Wrap(
+                                            spacing:
+                                                8, // horizontal space between test names
+                                            runSpacing:
+                                                4, // vertical space between lines
+                                            children: diagnosticTestsList[index]
+                                                .tests!
+                                                .map((test) {
+                                              return CustomText(
+                                                textName: test.testName ?? "",
+                                                textColor: AppColors.blackColor,
+                                                fontWeightType:
+                                                    FontWeightType.regular,
+                                                fontFamily: FontFamily.inter,
+                                                fontSize: 10,
+                                              );
+                                            }).toList(),
+                                          ),
                                           CustomSizedBoxHeight(height: 4),
                                           Row(
                                             children: [
@@ -165,7 +186,8 @@ class _PackagesDiagnosticWidgetState extends State<PackagesDiagnosticWidget> {
                                                                   diagnosticTestsList[
                                                                           index]
                                                                       .id))
-                                                          ? AppColors.redColor
+                                                          ? AppColors
+                                                              .primaryColor
                                                           : AppColors
                                                               .primaryColor,
                                                   child: Padding(
@@ -208,10 +230,10 @@ class _PackagesDiagnosticWidgetState extends State<PackagesDiagnosticWidget> {
                             ),
                           ),
                           CustomSizedBoxHeight(height: 20),
-                          Divider(
-                            color: AppColors.blackColor.withOpacity(0.3),
-                            height: 0,
-                          )
+                          // Divider(
+                          //   color: AppColors.blackColor.withOpacity(0.3),
+                          //   height: 0,
+                          // )
                         ],
                       ),
                     );

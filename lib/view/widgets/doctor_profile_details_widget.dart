@@ -22,6 +22,7 @@ class DoctorProfileDetailsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppButton(
       backgroundColor: AppColors.secondaryColor,
+      hasShadow: true,
       child: Padding(
         padding: EdgeInsets.all(getProportionateScreenHeight(9)),
         child: IntrinsicHeight(
@@ -56,7 +57,7 @@ class DoctorProfileDetailsWidget extends StatelessWidget {
                         ),
                         CustomText(
                             textName: "₹ 1500",
-                            textColor: AppColors.redColor,
+                            textColor: AppColors.blackColor,
                             fontWeightType: FontWeightType.semiBold,
                             fontFamily: FontFamily.inter,
                             fontSize: 13),
