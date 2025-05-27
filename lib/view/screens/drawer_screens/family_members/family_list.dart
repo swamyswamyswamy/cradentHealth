@@ -90,15 +90,39 @@ class _FamilyListState extends State<FamilyList> {
                             return Padding(
                               padding: EdgeInsets.only(
                                   bottom: getProportionateScreenHeight(20)),
-                              child: PersonProfileDetailsWidget(
-                                name: _familyController.familyResponseModel
-                                    .value.familyMembers![index].fullName!,
-                                age: _familyController.familyResponseModel.value
-                                    .familyMembers![index].age!,
-                                gender: _familyController.familyResponseModel
-                                    .value.familyMembers![index].gender!,
-                                imageUrl: _familyController.familyResponseModel
-                                    .value.familyMembers![index].eyeSight!,
+                              child: Stack(
+                                children: [
+                                  PersonProfileDetailsWidget(
+                                    name: _familyController.familyResponseModel
+                                        .value.familyMembers![index].fullName!,
+                                    age: _familyController.familyResponseModel
+                                        .value.familyMembers![index].age!,
+                                    gender: _familyController
+                                        .familyResponseModel
+                                        .value
+                                        .familyMembers![index]
+                                        .gender!,
+                                    imageUrl: _familyController
+                                        .familyResponseModel
+                                        .value
+                                        .familyMembers![index]
+                                        .eyeSight!,
+                                  ),
+                                  IconButton(
+                                      onPressed: () {
+                                        _familyController.deleteFamilyMember(
+                                            familyId: _familyController
+                                                .familyResponseModel
+                                                .value
+                                                .familyMembers![index]
+                                                .id!);
+                                      },
+                                      icon: Icon(
+                                        Icons.delete,
+                                        color: AppColors.redColor,
+                                      ))
+                                ],
+                                alignment: Alignment.topRight,
                               ),
                             );
                           },

@@ -87,12 +87,10 @@ class FamilyController extends GetxController {
   var selectedPatientAge = ''.obs;
   var selectedPatientGender = ''.obs;
 
-
-
-void deleteFamilyMember() async {
+  void deleteFamilyMember({required String familyId}) async {
     try {
-      isLoading.value = true; // Set loading to false
-       await familyService.deleteFamilyMember();
+      // isLoading.value = true; // Set loading to false
+      await familyService.deleteFamilyMember(familyId: familyId);
       isLoading.value = false; // Set loading to false
     } catch (e) {
       // Handle error
@@ -101,6 +99,7 @@ void deleteFamilyMember() async {
       isLoading.value = false; // Set loading to false
     }
   }
+
   @override
   void onInit() {
     // fetchSupportService(); // Fetch data on controller initialization

@@ -105,22 +105,22 @@ class FamilyService {
       throw Exception("error");
     }
   }
- Future  deleteFamilyMember() async {
+
+  Future deleteFamilyMember({required String familyId}) async {
+    final _familyController = Get.find<FamilyController>();
     try {
       var request = http.Request(
-          'GET',
+          'DELETE',
           Uri.parse(
-              '${AppBaseUrls.baseUrl}api/staff/getallfamily/${AppTokens().userId}'));
+              '${AppBaseUrls.baseUrl}api/staff/removefamily/${AppTokens().userId}/${familyId}'));
 
       http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 200) {
-
         var responseString = await response.stream.bytesToString();
         final decodedMap = json.decode(responseString);
-       
+        _familyController.fetchFamilyList();
         AppToastMsgs.successToast("Success", decodedMap['message']);
-
 
         // return FamilyResponseModel.fromJson(decodedMap);
       } else {
